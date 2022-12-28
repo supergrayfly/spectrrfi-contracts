@@ -3,7 +3,7 @@
 This file lists all the different libraries - and their licenses - used by
 this project:
 
-## @chainlink/contracts, @nomicfoundation/hardhat-toolbox, @openzeppelin/contracts, ethers, hardhat, hardhat-abi-exporter, solidity-docgen
+## @chainlink/contracts, @nomicfoundation/hardhat-toolbox, @openzeppelin/contracts, ethers, hardhat, hardhat-abi-exporter, solidity-docgen, prettier, prettier-plugin-solidity
 
 MIT LICENSE
 
@@ -11,6 +11,8 @@ Copyright (c) 2018 SmartContract Chainlink, Ltd.\
 Copyright (c) 2022 Nomic Labs LLC\
 Copyright (c) 2016-2022 zOS Global Limited and contributors\
 Copyright (c) 2020 Nick Barry\
+Copyright (c) 2021 prettier-solidity
+Copyright (c) James Long and contributors
 Copyright (c) 2019 Richard Moore
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
