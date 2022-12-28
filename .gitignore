@@ -1,0 +1,6 @@
+# Ignore following
+artifacts 
+cache 
+flat.sol 
+node_modules
+.env

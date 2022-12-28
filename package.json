@@ -1,0 +1,23 @@
+{
+  "name": "spectre-finance",
+  "version": "1.0.0",
+  "description": "Spectre Finance Smart Contracts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "hardhat compile",
+    "docgen": "hardhat docgen",
+    "deploy": "hardhat run ./scripts/deploy.js"
+  },
+  "author": "Superfly",
+  "license": "BSD-3-Clause-Attribution",
+  "devDependencies": {
+    "@chainlink/contracts": "^0.4.2",
+    "@nomicfoundation/hardhat-toolbox": "^1.0.2",
+    "@openzeppelin/contracts": "^4.7.3",
+    "dotenv": "^16.0.3",
+    "ethers": "^5.6.9",
+    "hardhat": "^2.10.1",
+    "hardhat-abi-exporter": "^2.10.0",
+    "solidity-docgen": "^0.6.0-beta.29"
+  }
+}
