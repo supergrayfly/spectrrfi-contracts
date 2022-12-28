@@ -1,5 +1,3 @@
-/** @format */
-
 require('@nomicfoundation/hardhat-toolbox');
 require('hardhat-abi-exporter');
 require('solidity-docgen')

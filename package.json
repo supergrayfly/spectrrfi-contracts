@@ -1,14 +1,14 @@
 {
-  "name": "spectre-finance",
+  "name": "spectrr-finance",
   "version": "1.0.0",
-  "description": "Spectre Finance Smart Contracts",
+  "description": "Spectrr Finance Smart Contracts",
   "scripts": {
     "pretty": "prettier --write 'contracts/*'", 
     "compile": "hardhat compile",
     "docgen": "hardhat docgen",
     "deploy": "hardhat run ./scripts/deploy.js"
   },
-  "author": "Superfly",
+  "author": "Supergrayfly",
   "license": "BSD-3-Clause-Attribution",
   "devDependencies": {
     "@chainlink/contracts": "^0.4.2",
