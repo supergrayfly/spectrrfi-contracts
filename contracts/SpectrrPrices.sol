@@ -10,16 +10,19 @@ contract SpectrrPrices {
     /// @notice The maximum timeframe in seconds, at which the price request must be fulfilled.
     uint256 public constant MAX_RESPONSE_TIME = 15;
 
-    function getChainlinkPrice(address _chainlinkAddr) public view returns (int256) {
+    function getChainlinkPrice(
+        address _chainlinkAddr
+    ) public view returns (int256) {
         AggregatorV3Interface priceFeed = AggregatorV3Interface(_chainlinkAddr);
-        
-				(, int256 price, uint256 startedAt, uint256 updatedAt, ) = priceFeed.latestRoundData();
-        
-				checkPrice(price, startedAt, updatedAt);
+
+        (, int256 price, uint256 startedAt, uint256 updatedAt, ) = priceFeed
+            .latestRoundData();
+
+        checkPrice(price, startedAt, updatedAt);
 
         return price;
     }
-    
+
     /// @notice Checks if the price is valid
     /// @dev It firsts ensures that the price is positive, and then if the request was fulfilled in the required time frame.
     /// @param _price Price of the token
@@ -37,4 +40,3 @@ contract SpectrrPrices {
         );
     }
 }
-

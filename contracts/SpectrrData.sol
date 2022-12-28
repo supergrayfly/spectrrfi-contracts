@@ -6,13 +6,13 @@ pragma solidity >=0.4.22 <0.9.0;
 /// @notice Defines and initializes the data for the SpectrrCore Contract
 contract SpectrrData {
     /// @notice The minimum collateral to debt ratio allowing a liquidation
-    uint256 public constant MIN_RATIO_LIQUIDATION = 13 * 10**17;
+    uint256 public constant MIN_RATIO_LIQUIDATION = 13 * 10 ** 17;
 
     /// @notice The collateral to debt ratio when the value of the collateral is equal to the value of the debt.
-    uint256 public constant RATIO_LIQUIDATION_LOSS = 1 * 10**18;
+    uint256 public constant RATIO_LIQUIDATION_LOSS = 1 * 10 ** 18;
 
     /// @notice The initial collateral to debt ratio needed to create an offer.
-    uint256 public constant RATIO_COLLATERAL_TO_DEBT = 18 * 10**17;
+    uint256 public constant RATIO_COLLATERAL_TO_DEBT = 18 * 10 ** 17;
 
     /** @dev Number of existing sale offers, initialized as 0 in the beggining,
         and incremented by one at every sale offer creation.
@@ -30,16 +30,23 @@ contract SpectrrData {
     /// @dev Map of offer id (buyOffersCount) and buy offer struct
     mapping(uint256 => BuyOffer) public buyOffers;
 
-		/// @dev Enum set tracking the state of an offer
-		enum OfferState { open, accepted, closed }
+    /// @dev Enum set tracking the state of an offer
+    enum OfferState {
+        open,
+        accepted,
+        closed
+    }
 
-		/// @dev Enum set tracking lock the state of an offer
-		enum OfferLockState { locked, unlocked }
+    /// @dev Enum set tracking lock the state of an offer
+    enum OfferLockState {
+        locked,
+        unlocked
+    }
 
     /// @dev SaleOffer struct, containing all the data composing a sale offer.
     struct SaleOffer {
-				OfferState offerState; //0
-				OfferLockState offerLockState; //1
+        OfferState offerState; //0
+        OfferLockState offerLockState; //1
         uint256 offerId; //2
         uint256 selling; //3
         uint256 sellFor; //4
@@ -55,8 +62,8 @@ contract SpectrrData {
 
     /// @dev BuyOffer struct, containing all the data composing a buy offer.
     struct BuyOffer {
-				OfferState offerState;
-				OfferLockState offerLockState;
+        OfferState offerState;
+        OfferLockState offerLockState;
         uint256 offerId;
         uint256 buying;
         uint256 buyFor;
@@ -129,7 +136,7 @@ contract SpectrrData {
         uint8 buyingId,
         uint256 buyFor,
         uint8 buyForId,
-				uint256 exRate,
+        uint256 exRate,
         uint8 collateralId,
         uint256 repayInSec,
         address buyer,
@@ -198,4 +205,3 @@ contract SpectrrData {
         buyOffers[_offerId].offerLockState = OfferLockState.unlocked;
     }
 }
-

@@ -12,33 +12,32 @@ import "./SpectrrData.sol";
 contract SpectrrUtils is SpectrrPrices, SpectrrData, Ownable {
     /// @notice address where transaction fees will be sent
     address public feeAddr = 0xCaCafa495d0d08bbcb3252160BE03F918aDEffB4;
-		
+
     /** @notice Fee corresponding to 0.5% (amount * (100 / 0.5) = 200),
 				taken from every accept sale/buy offer transaction.
         In the case of a sale offer it is paid by the buyer.
         In the case of a buy offer it is paid by the seller.
     */
     uint16 public constant FEE_PERCENT = 200;
-		
-		/// @notice The number of tokens tradable by this contract
-		/// @dev Used as a counter for the tokens mapping
+
+    /// @notice The number of tokens tradable by this contract
+    /// @dev Used as a counter for the tokens mapping
     uint8 public tokenCount = 0;
 
-		/// @dev Map of the number of tokens and Token struct
-		mapping(uint8 => Token) public tokens;
-	
-		/// @dev Token struct, containing info on a ERC20 token
+    /// @dev Map of the number of tokens and Token struct
+    mapping(uint8 => Token) public tokens;
+
+    /// @dev Token struct, containing info on a ERC20 token
     struct Token {
         uint8 tokenId;
-				uint8 priceDecimals;
+        uint8 priceDecimals;
         string tokenName;
         IERC20 Itoken;
         address tokenAddr;
         address chainlinkAddr;
-
     }
-		
-		/// @notice Event emitted when a new token is added
+
+    /// @notice Event emitted when a new token is added
     event NewToken(
         uint8 tokenId,
         string name,
@@ -48,24 +47,24 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, Ownable {
 
     /// @notice Event emitted when the fee address is changed
     event FeeAddrChanged(address newAddr, uint256 timestamp);
-		
-		/// @notice Gets the current block timestamp
-		/// @return uint256 The current block timestamp
-		function getBlockTimestamp() external view returns(uint256) {
-						return block.timestamp;
-		}
 
-		/// @notice Adds a token to the array of tokens tradable by this contract
-		/// @dev Only callable by owner
-		/// @param _tokenName Name of the token to add in the following format: "btc"
-		/// @param _tokenAddr Address of the token
-		/// @param _chainlinkAddr Address of the chainlink contract used to take the price from
-		/// @param _priceDecimals Number of decimals the chainlink price has
+    /// @notice Gets the current block timestamp
+    /// @return uint256 The current block timestamp
+    function getBlockTimestamp() external view returns (uint256) {
+        return block.timestamp;
+    }
+
+    /// @notice Adds a token to the array of tokens tradable by this contract
+    /// @dev Only callable by owner
+    /// @param _tokenName Name of the token to add in the following format: "btc"
+    /// @param _tokenAddr Address of the token
+    /// @param _chainlinkAddr Address of the chainlink contract used to take the price from
+    /// @param _priceDecimals Number of decimals the chainlink price has
     function addToken(
         string memory _tokenName,
         address _tokenAddr,
         address _chainlinkAddr,
-				uint8 _priceDecimals
+        uint8 _priceDecimals
     ) external onlyOwner {
         uint8 id = ++tokenCount;
 
@@ -73,7 +72,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, Ownable {
 
         Token memory token = Token(
             id,
-						_priceDecimals,
+            _priceDecimals,
             _tokenName,
             Itoken,
             _tokenAddr,
@@ -84,29 +83,31 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, Ownable {
 
         emit NewToken(id, _tokenName, _tokenAddr, _chainlinkAddr);
     }
-		
-		/// @notice Gets the interface of a token based on its id
-		/// @param _tokenId Id of the token we want the interface
-		/// @return IERC20 The Interface of the token
+
+    /// @notice Gets the interface of a token based on its id
+    /// @param _tokenId Id of the token we want the interface
+    /// @return IERC20 The Interface of the token
     function getToken(uint8 _tokenId) public view returns (IERC20) {
         require(_tokenId <= tokenCount && _tokenId > 0, "Token id not valid");
 
-				return tokens[_tokenId].Itoken;
+        return tokens[_tokenId].Itoken;
     }
-		
-		/// @notice Gets the price of a token from Chainlink
-		/// @param _tokenId Id of the token we want the price
-		/// @return uint256 The price of the token
+
+    /// @notice Gets the price of a token from Chainlink
+    /// @param _tokenId Id of the token we want the price
+    /// @return uint256 The price of the token
     function idToPrice(uint8 _tokenId) public view returns (uint256) {
         require(_tokenId <= tokenCount && _tokenId > 0, "Token id not valid");
-        
-				uint256 price = uint256(getChainlinkPrice(tokens[_tokenId].chainlinkAddr));
 
-				return price * 10**(18 - tokens[_tokenId].priceDecimals);
+        uint256 price = uint256(
+            getChainlinkPrice(tokens[_tokenId].chainlinkAddr)
+        );
+
+        return price * 10 ** (18 - tokens[_tokenId].priceDecimals);
     }
 
-		/// @notice Transfers tokens from the sender to this contract
-		/// @dev Only callable internally by this contract
+    /// @notice Transfers tokens from the sender to this contract
+    /// @dev Only callable internally by this contract
     function transferSenderToContract(
         address _sender,
         uint256 _amount,
@@ -115,9 +116,9 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, Ownable {
         IERC20 token = getToken(_amountId);
         token.transferFrom(_sender, address(this), _amount);
     }
-	
-		/// @notice Transfers tokens from this contract to the sender of the tx
-		/// @dev Only callable internally by this contract
+
+    /// @notice Transfers tokens from this contract to the sender of the tx
+    /// @dev Only callable internally by this contract
     function transferContractToSender(
         address _sender,
         uint256 _amount,
@@ -134,7 +135,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, Ownable {
 
         emit FeeAddrChanged(_newFeeAddr, block.timestamp);
     }
-		
+
     /// @notice Calculates the liquidation price of the collateral token
     /// @return liquidationPrice Price of the collateral token at which a liquidation will be possible
     function getLiquidationPriceCollateral(
@@ -145,7 +146,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, Ownable {
     ) public view returns (uint256) {
         uint256 liquidationPrice = (_liquidationLimit *
             _amountFor *
-            idToPrice(_amountForId)) / (_collateral * 10**18);
+            idToPrice(_amountForId)) / (_collateral * 10 ** 18);
 
         return liquidationPrice;
     }
@@ -160,7 +161,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, Ownable {
     ) public view returns (uint256) {
         uint256 liquidationPrice = (_collateral *
             idToPrice(_collateralId) *
-            10**18) / (_liquidationLimit * _amountFor);
+            10 ** 18) / (_liquidationLimit * _amountFor);
 
         return liquidationPrice;
     }
@@ -215,7 +216,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, Ownable {
         uint256 _collateralToDebtRatio
     ) public view returns (uint256) {
         uint256 collateral = (((_amount * idToPrice(_amountId)) /
-            idToPrice(_collateralId)) * _collateralToDebtRatio) / 10**18;
+            idToPrice(_collateralId)) * _collateralToDebtRatio) / 10 ** 18;
         return collateral;
     }
 
@@ -234,8 +235,9 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, Ownable {
         if (_amount == 0 || _collateral == 0) {
             return 0;
         } else {
-            uint256 ratio = (_collateral * idToPrice(_collateralId) * 10**18) /
-                (_amount * idToPrice(_amountId));
+            uint256 ratio = (_collateral *
+                idToPrice(_collateralId) *
+                10 ** 18) / (_amount * idToPrice(_amountId));
             return ratio;
         }
     }
@@ -270,11 +272,10 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, Ownable {
     /// @param _timeAccepted Time at which the offer was accepted
     /// @param _repayInSec Repayment period of the offer
     /// @return bool If the offer can be liquidated or not
-    function canLiquidateTimeOver(uint256 _timeAccepted, uint256 _repayInSec)
-        public
-        view
-        returns (bool)
-    {
+    function canLiquidateTimeOver(
+        uint256 _timeAccepted,
+        uint256 _repayInSec
+    ) public view returns (bool) {
         if (_repayInSec == 0 || _timeAccepted == 0) {
             return false;
         } else {
@@ -468,64 +469,63 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, Ownable {
         IERC20 token = getToken(_amountId);
         token.transferFrom(_sender, feeAddr, (_amount / FEE_PERCENT));
     }
-		
-		/// @notice Checks if amount is positive, reverts if false
-		/// @param _amount Amount to check
-		function checkIsPositive(uint256 _amount) internal pure {
-			require(_amount > 0, "Amount must be positive");
-		} 
-		
-		/// @notice Checks if id is in the range of tradable tokens
-		/// @param _id Id of the token
-		function checkTokenId(uint _id) internal view {
+
+    /// @notice Checks if amount is positive, reverts if false
+    /// @param _amount Amount to check
+    function checkIsPositive(uint256 _amount) internal pure {
+        require(_amount > 0, "Amount must be positive");
+    }
+
+    /// @notice Checks if id is in the range of tradable tokens
+    /// @param _id Id of the token
+    function checkTokenId(uint _id) internal view {
         require(_id > 0 && _id <= tokenCount, "Invalid Id");
-		}
-		
-		/// @notice Checks if id of two tokens are the same, reverts if true
-		/// @param _id Id of first token
-		/// @param __id id of second token
-		function checkIsSameId(uint8 _id, uint8 __id) internal pure {
-				require(_id != __id, "Id's are the same");
-		}
-		
-		/// @notice Checks if offer is open (i.e. not accepted or closed), reverts if false
-		/// @param _offerState Current state of the offer
-		function checkOfferIsOpen(OfferState _offerState) internal pure {
-						require(_offerState != OfferState.accepted, "Offer is accepted");
-						require(_offerState != OfferState.closed, "Offer is closed");
-		}
+    }
 
-		/// @notice Checks if offer is accepted (i.e. not open or closed), reverts if false
-		/// @param _offerState Current state of the offer
-		function checkOfferIsAccepted(OfferState _offerState) internal pure {
-				require(_offerState != OfferState.closed, "Offer is closed");
-			  require(_offerState != OfferState.open, "Offer is open");
-		}
+    /// @notice Checks if id of two tokens are the same, reverts if true
+    /// @param _id Id of first token
+    /// @param __id id of second token
+    function checkIsSameId(uint8 _id, uint8 __id) internal pure {
+        require(_id != __id, "Id's are the same");
+    }
 
-		/// @notice Checks if offer is closed (i.e. not open or closed), reverts if false
-		/// @param _offerState Current state of the offer
-		function checkOfferIsClosed(OfferState _offerState) internal pure {
-				require( _offerState != OfferState.accepted, "Offer is accepted");
-				require(_offerState != OfferState.open, "Offer is open");
-		}
+    /// @notice Checks if offer is open (i.e. not accepted or closed), reverts if false
+    /// @param _offerState Current state of the offer
+    function checkOfferIsOpen(OfferState _offerState) internal pure {
+        require(_offerState != OfferState.accepted, "Offer is accepted");
+        require(_offerState != OfferState.closed, "Offer is closed");
+    }
 
-		/// @notice Checks if address matches with sender of transaction, reverts if true
-		/// @param _addr Address to compare with msg.sender
-		function checkNotSender(address _addr) internal view {
-			require(_addr != msg.sender, "Unvalid Sender");
-		}
-		
-		/// @notice Checks if address matches with sender of transaction, reverts if false
-		/// @param _addr Address to compare with msg.snder
-		function checkSender(address _addr) internal view {
-			 require(_addr == msg.sender, "Unvalid Sender");
-		}
+    /// @notice Checks if offer is accepted (i.e. not open or closed), reverts if false
+    /// @param _offerState Current state of the offer
+    function checkOfferIsAccepted(OfferState _offerState) internal pure {
+        require(_offerState != OfferState.closed, "Offer is closed");
+        require(_offerState != OfferState.open, "Offer is open");
+    }
 
-		/// @notice Checks if amount sent is bigger than debt, reverts if true
-		/// @param _amount The amount to sender
-		/// @param _debt The debt owed
-		function checkIsLessThan(uint256 _amount, uint256 _debt) internal pure {
-			require(_amount < _debt, "Amount greater than debt");
-		}
+    /// @notice Checks if offer is closed (i.e. not open or closed), reverts if false
+    /// @param _offerState Current state of the offer
+    function checkOfferIsClosed(OfferState _offerState) internal pure {
+        require(_offerState != OfferState.accepted, "Offer is accepted");
+        require(_offerState != OfferState.open, "Offer is open");
+    }
+
+    /// @notice Checks if address matches with sender of transaction, reverts if true
+    /// @param _addr Address to compare with msg.sender
+    function checkNotSender(address _addr) internal view {
+        require(_addr != msg.sender, "Unvalid Sender");
+    }
+
+    /// @notice Checks if address matches with sender of transaction, reverts if false
+    /// @param _addr Address to compare with msg.snder
+    function checkSender(address _addr) internal view {
+        require(_addr == msg.sender, "Unvalid Sender");
+    }
+
+    /// @notice Checks if amount sent is bigger than debt, reverts if true
+    /// @param _amount The amount to sender
+    /// @param _debt The debt owed
+    function checkIsLessThan(uint256 _amount, uint256 _debt) internal pure {
+        require(_amount < _debt, "Amount greater than debt");
+    }
 }
-
