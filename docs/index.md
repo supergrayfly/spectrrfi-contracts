@@ -636,6 +636,103 @@ modifier lockBuyOffer(uint256 _offerId)
 
 _Same as modifier above, but for buy offers_
 
+## SpectrrManager
+
+### feeAddr
+
+```solidity
+address feeAddr
+```
+
+address where transaction fees will be sent
+
+### FEE_PERCENT
+
+```solidity
+uint16 FEE_PERCENT
+```
+
+Fee corresponding to 0.1% (amount * (100 / 0.1) = amount * 1000),
+				taken from every accept sale/buy offer transaction.
+        In the case of a sale offer it is paid by the buyer.
+        In the case of a buy offer it is paid by the seller.
+
+### tokenCount
+
+```solidity
+uint8 tokenCount
+```
+
+The number of tokens tradable by this contract
+
+_Used as a counter for the tokens mapping_
+
+### tokens
+
+```solidity
+mapping(uint8 => struct SpectrrManager.Token) tokens
+```
+
+_Map of the number of tokens and Token struct_
+
+### Token
+
+```solidity
+struct Token {
+  uint8 tokenId;
+  uint8 priceDecimals;
+  string tokenName;
+  contract IERC20 Itoken;
+  address tokenAddr;
+  address chainlinkAddr;
+}
+```
+
+### NewToken
+
+```solidity
+event NewToken(uint8 tokenId, string name, address tokenAddr, address chainlinkAddr)
+```
+
+Event emitted when a new token is added
+
+### FeeAddrChanged
+
+```solidity
+event FeeAddrChanged(address newAddr, uint256 timestamp)
+```
+
+Event emitted when the fee address is changed
+
+### addToken
+
+```solidity
+function addToken(string _tokenName, address _tokenAddr, address _chainlinkAddr, uint8 _priceDecimals) external
+```
+
+Adds a token to the array of tokens tradable by this contract
+
+_Only callable by owner_
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tokenName | string | Name of the token to add in the following format: "btc" |
+| _tokenAddr | address | Address of the token |
+| _chainlinkAddr | address | Address of the chainlink contract used to take the price from |
+| _priceDecimals | uint8 | Number of decimals the chainlink price has |
+
+### changeFeeAddr
+
+```solidity
+function changeFeeAddr(address _newFeeAddr) external
+```
+
+Changes the fee address
+
+_Only callable by the current owner_
+
 ## SpectrrPrices
 
 Fetches the prices of various currency pairs
@@ -676,72 +773,6 @@ _It firsts ensures that the price is positive, and then if the request was fulfi
 
 This contract handles 'secondary' functions, such as transferring tokens and calculating collateral.
 
-### feeAddr
-
-```solidity
-address feeAddr
-```
-
-address where transaction fees will be sent
-
-### FEE_PERCENT
-
-```solidity
-uint16 FEE_PERCENT
-```
-
-Fee corresponding to 0.5% (amount * (100 / 0.5) = 200),
-				taken from every accept sale/buy offer transaction.
-        In the case of a sale offer it is paid by the buyer.
-        In the case of a buy offer it is paid by the seller.
-
-### tokenCount
-
-```solidity
-uint8 tokenCount
-```
-
-The number of tokens tradable by this contract
-
-_Used as a counter for the tokens mapping_
-
-### tokens
-
-```solidity
-mapping(uint8 => struct SpectrrUtils.Token) tokens
-```
-
-_Map of the number of tokens and Token struct_
-
-### Token
-
-```solidity
-struct Token {
-  uint8 tokenId;
-  uint8 priceDecimals;
-  string tokenName;
-  contract IERC20 Itoken;
-  address tokenAddr;
-  address chainlinkAddr;
-}
-```
-
-### NewToken
-
-```solidity
-event NewToken(uint8 tokenId, string name, address tokenAddr, address chainlinkAddr)
-```
-
-Event emitted when a new token is added
-
-### FeeAddrChanged
-
-```solidity
-event FeeAddrChanged(address newAddr, uint256 timestamp)
-```
-
-Event emitted when the fee address is changed
-
 ### getBlockTimestamp
 
 ```solidity
@@ -755,25 +786,6 @@ Gets the current block timestamp
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | [0] | uint256 | uint256 The current block timestamp |
-
-### addToken
-
-```solidity
-function addToken(string _tokenName, address _tokenAddr, address _chainlinkAddr, uint8 _priceDecimals) external
-```
-
-Adds a token to the array of tokens tradable by this contract
-
-_Only callable by owner_
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _tokenName | string | Name of the token to add in the following format: "btc" |
-| _tokenAddr | address | Address of the token |
-| _chainlinkAddr | address | Address of the chainlink contract used to take the price from |
-| _priceDecimals | uint8 | Number of decimals the chainlink price has |
 
 ### getToken
 
@@ -834,16 +846,6 @@ function transferContractToSender(address _sender, uint256 _amount, uint8 _amoun
 Transfers tokens from this contract to the sender of the tx
 
 _Only callable internally by this contract_
-
-### changeFeeAddr
-
-```solidity
-function changeFeeAddr(address _newFeeAddr) external
-```
-
-Changes the fee address
-
-_Only callable by the current owner_
 
 ### getLiquidationPriceCollateral
 
