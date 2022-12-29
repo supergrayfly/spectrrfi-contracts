@@ -17,7 +17,7 @@ which other users can then accept.
 - Testnet: Polygon Mumbai 
 (Because The Graph hosted service does not directly support Fantom testnet indexing)
 
-# Testing
+# Installation
 
 To get this repository on your machine:
 ```
