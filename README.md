@@ -17,6 +17,22 @@ which other users can then accept.
 - Testnet: Polygon Mumbai 
 (Because The Graph hosted service does not directly support Fantom testnet indexing)
 
+# Testing
+
+To get this repository on your machine:
+```
+> git clone https://gitlab.com/spectrrfi/contracts
+> cd contracts/
+> npm install --save-dev
+```
+
+To deploy the contracts:
+```
+> npm run deploy
+// deploy to specific chain (check the file 'hardhat.config.js' for available chain options)
+> npm run deploy --network fantom_mainnet
+```
+
 # Miscellaneous
 
 - Prices taken from Chainlink
