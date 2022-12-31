@@ -5,12 +5,11 @@ require('dotenv').config()
 
 const privKey = process.env.PRIV_KEY
 
-/** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   defaultNetwork: 'fantom_testnet',
   networks: {
      mumbai_testnet: {
-			 url: 'https://rpc-mumbai.maticvigil.com/',
+       url: 'https://rpc-mumbai.maticvigil.com/',
        accounts: [privKey],
        gasPrice: 1500000000,
      },
