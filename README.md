@@ -2,14 +2,23 @@
 
 Interest-Free Lending and Borrowing Decentralised Application.
 
+# Motivation
+
+- Provide an alternative to interest-based lending and borrowing DApps
+- Buy Lambo
+
 # Design Choices
 
 - Lending and borrowing with no interest, 
-profit is made by selling or buying an asset for a different asset at a vlue higher than the market
+profit is made by selling or buying an asset for a different asset at a vlue higher than the market (following Islamic Finance Principles)
 - Lending and borrowing process is offer based. Meaning that users post sale and buy offers, 
-which other users can then accept.
-- Contract is not upgradable.
-- There is no governace token.
+which other users can then accept (peer-to-peer, permissionless).
+- Contract is not upgradable (no rule changes).
+- There is no governace token (not necessary for contract functionning).
+- Prices are taken from Chainlink.
+- 0.1% fee is taken when offers are accepted 
+(paid by buyer in case of sale offer,
+paid by seller in case of buy offer).
 
 # Supported Networks
 
@@ -32,11 +41,6 @@ To deploy the contracts:
 // deploy to specific chain (check the file 'hardhat.config.js' for available chain options)
 > npm run deploy --network fantom_mainnet
 ```
-
-# Miscellaneous
-
-- Prices taken from Chainlink
-- 0.1% fee taken when offers are accepted.
 
 # Contributing
 
