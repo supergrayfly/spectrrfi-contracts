@@ -4,7 +4,7 @@ Interest-Free Lending and Borrowing Decentralised Application.
 
 # Motivation
 
-- Provide an alternative to interest-based lending and borrowing DApps
+- Provide an alternative to interest based lending and borrowing DApps
 - Buy Lambo
 
 # Design Choices
