@@ -42,6 +42,11 @@ To deploy the contracts:
 > npm run deploy --network fantom_mainnet
 ```
 
+# Disclaimer
+
+- "PROVIDED AS IS", No Warranty or Liability Whatsoever.
+- Trading Cryptocurrencies is Very Risky.
+
 # Contributing
 
 Feel free to contribute in any way to this project.
