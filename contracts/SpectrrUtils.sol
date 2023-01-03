@@ -106,8 +106,8 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
         IERC20 token = getToken(_collateralId);
 
         token.transferFrom(_sender, address(this), _collateral);
-        transferContractToSender(_sender, _amount, _amountId);
         transferFee(_amount, _amountId, _sender);
+        transferContractToSender(_sender, _amount, _amountId);
     }
 
     /// @notice Transfers token from the buyer to the seller of an offer
