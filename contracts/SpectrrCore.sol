@@ -96,7 +96,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
     }
 
     /// @notice Accepts a sale offer by transferring the required collateral from the buyer to the contract
-    /// @notice There is a 0.5% fee of the selling amount, paid by the buyer to the fee address.
+    /// @notice There is a 0.1% fee of the selling amount, paid by the buyer to the fee address.
     /// @param _offerId Id of the sale offer to accept
     /** @param _collateralId Id of the token to be pledged as collateral,
         cannot be same than id of selling token.
@@ -416,7 +416,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
     }
 
     /// @notice Accepts a buy offer by transferring the amount buying from the seller to the buyer
-    /// @notice There is a 0.5% fee of the buying amount, paid by the seller.
+    /// @notice There is a 0.1% fee of the buying amount, paid by the seller.
     /// @param _offerId Id of the buy offer to accept
     function acceptBuyOffer(
         uint256 _offerId
