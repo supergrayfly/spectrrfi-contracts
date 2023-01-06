@@ -10,7 +10,7 @@ Interest-Free Lending and Borrowing Decentralised Application.
 # Design Choices
 
 - Lending and borrowing with no interest, 
-profit is made by selling or buying an asset for a different asset at a vlue higher than the market (following Islamic Finance Principles)
+profit is made by selling or buying an asset for a different asset at a value higher than the market
 - Lending and borrowing process is offer based. Meaning that users post sale and buy offers, 
 which other users can then accept (peer-to-peer, permissionless).
 - Contract is not upgradable (no rule changes).
