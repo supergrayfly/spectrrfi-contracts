@@ -22,8 +22,8 @@ paid by seller in case of buy offer).
 
 # Supported Networks
 
-- Mainnet: Fantom Opera
-- Testnet: Polygon Mumbai 
+- Mainnet: Fantom Opera (available at spectrr.eth)
+- Testnet: Polygon Mumbai (available @ test.spectrr.eth)
 (Because The Graph hosted service does not directly support Fantom testnet indexing)
 
 # Installation
