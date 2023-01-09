@@ -35,7 +35,7 @@ SOFTWARE.
 
 ## dotenv
 
-BSD-2-Clause
+BSD-2-Clause LICENSE
 
 Copyright (c) 2015, Scott Motte\
 All rights reserved.
