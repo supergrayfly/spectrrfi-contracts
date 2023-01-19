@@ -1,11 +1,11 @@
 # Spectrr Finance Solidity Smart Contracts
 
-Interest-Free Lending and Borrowing Decentralised Application.
+Interest-Free Lending and Borrowing Like Decentralised Application.
 
 # Motivation
 
 - Provide an alternative to interest based lending and borrowing DApps
-- Buy Lambo
+- Buy Bugatti
 
 # Design Choices
 
@@ -24,7 +24,7 @@ paid by seller in case of buy offer).
 
 - Mainnet: Fantom Opera (available at spectrr.eth)
 - Testnet: Polygon Mumbai (available at test.spectrr.eth)
-(Because The Graph hosted service does not directly support Fantom testnet indexing)
+(Because The Graph hosted service does not directly support Fantom testnet [indexing](https://thegraph.com/docs/en/deploying/deploying-a-subgraph-to-hosted/])
 
 # Installation
 
