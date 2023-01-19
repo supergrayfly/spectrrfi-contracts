@@ -287,7 +287,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
                 collateralId,
                 buyer,
                 seller,
-                RATIO_LIQUIDATION_LOSS
+                RATIO_LIQUIDATION_IS_LOSS
             );
         } else {
             liquidateAssets(
@@ -298,7 +298,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
                 seller,
                 buyer,
                 msg.sender,
-                RATIO_LIQUIDATION_LOSS
+                RATIO_LIQUIDATION_IS_LOSS
             );
         }
 
@@ -333,7 +333,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
             collateralId,
             buyer,
             seller,
-            RATIO_LIQUIDATION_LOSS
+            RATIO_LIQUIDATION_IS_LOSS
         );
 
         saleOffers[_offerId].offerState = OfferState.closed;
@@ -592,7 +592,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
                 collateralId,
                 buyer,
                 seller,
-                RATIO_LIQUIDATION_LOSS
+                RATIO_LIQUIDATION_IS_LOSS
             );
         } else {
             liquidateAssets(
@@ -603,7 +603,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
                 seller,
                 buyer,
                 msg.sender,
-                RATIO_LIQUIDATION_LOSS
+                RATIO_LIQUIDATION_IS_LOSS
             );
         }
 
@@ -645,7 +645,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
                 collateralId,
                 buyer,
                 seller,
-                RATIO_LIQUIDATION_LOSS
+                RATIO_LIQUIDATION_IS_LOSS
             );
         } else {
             revert("Sender can be liquidated");
@@ -844,7 +844,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
                     saleOffers[_offerId].collateral,
                     saleOffers[_offerId].sellForId,
                     saleOffers[_offerId].collateralId
-                ) >= RATIO_LIQUIDATION_LOSS
+                ) >= RATIO_LIQUIDATION_IS_LOSS
             ) {
                 return false;
             } else {
@@ -860,7 +860,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
                     buyOffers[_offerId].collateral,
                     buyOffers[_offerId].buyForId,
                     buyOffers[_offerId].collateralId
-                ) >= RATIO_LIQUIDATION_LOSS
+                ) >= RATIO_LIQUIDATION_IS_LOSS
             ) {
                 return false;
             } else {

@@ -9,7 +9,7 @@ contract SpectrrData {
     uint256 public constant MIN_RATIO_LIQUIDATION = 13 * 10 ** 17;
 
     /// @notice The collateral to debt ratio when the value of the collateral is equal to the value of the debt.
-    uint256 public constant RATIO_LIQUIDATION_LOSS = 1 * 10 ** 18;
+    uint256 public constant RATIO_LIQUIDATION_IS_LOSS = 1 * 10 ** 18;
 
     /// @notice The initial collateral to debt ratio needed to create an offer.
     uint256 public constant RATIO_COLLATERAL_TO_DEBT = 18 * 10 ** 17;
@@ -37,7 +37,7 @@ contract SpectrrData {
         closed
     }
 
-    /// @dev Enum set tracking lock the state of an offer
+    /// @dev Enum set tracking the lock state of an offer
     enum OfferLockState {
         locked,
         unlocked

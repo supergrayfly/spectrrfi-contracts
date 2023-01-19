@@ -149,7 +149,7 @@ function acceptBuyOffer(uint256 _offerId) external
 ```
 
 Accepts a buy offer by transferring the amount buying from the seller to the buyer
-There is a 0.5% fee of the buying amount, paid by the seller.
+There is a 0.1% fee of the buying amount, paid by the seller.
 
 #### Parameters
 
@@ -395,10 +395,10 @@ uint256 MIN_RATIO_LIQUIDATION
 
 The minimum collateral to debt ratio allowing a liquidation
 
-### RATIO_LIQUIDATION_LOSS
+### RATIO_LIQUIDATION_IS_LOSS
 
 ```solidity
-uint256 RATIO_LIQUIDATION_LOSS
+uint256 RATIO_LIQUIDATION_IS_LOSS
 ```
 
 The collateral to debt ratio when the value of the collateral is equal to the value of the debt.
@@ -637,6 +637,8 @@ modifier lockBuyOffer(uint256 _offerId)
 _Same as modifier above, but for buy offers_
 
 ## SpectrrManager
+
+This contracrt handles functions that can only be called by the dev address (e.g.: Adding new tradable tokens).
 
 ### feeAddr
 

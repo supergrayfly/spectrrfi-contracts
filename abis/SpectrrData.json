@@ -479,7 +479,7 @@
   },
   {
     "inputs": [],
-    "name": "RATIO_LIQUIDATION_LOSS",
+    "name": "RATIO_LIQUIDATION_IS_LOSS",
     "outputs": [
       {
         "internalType": "uint256",
