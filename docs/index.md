@@ -626,7 +626,7 @@ _Modifier used to protect from reentrancy.
         Called when a function changing the state of a sale offer struct is entered,
         it prevents changes made to the struct by anyone aside from the current msg.sender.
         It differs from the nonReentrant modifier, 
-        as the latter restricts only the msg.sender from calling other functions in the contract._
+        as the latter only restricts the msg.sender from calling other functions in the contract._
 
 ### lockBuyOffer
 
@@ -737,39 +737,13 @@ _Only callable by the current owner_
 
 ## SpectrrPrices
 
-Fetches the prices of various currency pairs
-
-### MAX_RESPONSE_TIME
-
-```solidity
-uint256 MAX_RESPONSE_TIME
-```
-
-The maximum timeframe in seconds, at which the price request must be fulfilled.
+Fetches the prices of various currency pairs from Chainlink price feed oracles
 
 ### getChainlinkPrice
 
 ```solidity
 function getChainlinkPrice(address _chainlinkAddr) public view returns (int256)
 ```
-
-### checkPrice
-
-```solidity
-function checkPrice(int256 _price, uint256 _startedAt, uint256 _timestamp) internal pure
-```
-
-Checks if the price is valid
-
-_It firsts ensures that the price is positive, and then if the request was fulfilled in the required time frame._
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _price | int256 | Price of the token |
-| _startedAt | uint256 | Time at which the request was initiated |
-| _timestamp | uint256 | Time at which the request was fulfilled |
 
 ## SpectrrUtils
 
@@ -1100,7 +1074,7 @@ _Only callable internally by this contract_
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _amount | uint256 | Amount on which 0.5% will be taken |
+| _amount | uint256 | Amount on which 0.1% will be taken |
 | _amountId | uint8 | Id of the amount |
 | _sender | address | Address of the sender |
 
@@ -1118,10 +1092,10 @@ Checks if amount is positive, reverts if false
 | ---- | ---- | ----------- |
 | _amount | uint256 | Amount to check |
 
-### checkTokenId
+### checkIdInRange
 
 ```solidity
-function checkTokenId(uint256 _id) internal view
+function checkIdInRange(uint256 _id) internal view
 ```
 
 Checks if id is in the range of tradable tokens
@@ -1132,10 +1106,10 @@ Checks if id is in the range of tradable tokens
 | ---- | ---- | ----------- |
 | _id | uint256 | Id of the token |
 
-### checkIsSameId
+### checkIfIsSameId
 
 ```solidity
-function checkIsSameId(uint8 _id, uint8 __id) internal pure
+function checkIfIsSameId(uint8 _id, uint8 __id) internal pure
 ```
 
 Checks if id of two tokens are the same, reverts if true
@@ -1189,10 +1163,10 @@ Checks if offer is closed (i.e. not open or closed), reverts if false
 | ---- | ---- | ----------- |
 | _offerState | enum SpectrrData.OfferState | Current state of the offer |
 
-### checkNotSender
+### checkAddressNotSender
 
 ```solidity
-function checkNotSender(address _addr) internal view
+function checkAddressNotSender(address _addr) internal view
 ```
 
 Checks if address matches with sender of transaction, reverts if true
@@ -1203,10 +1177,10 @@ Checks if address matches with sender of transaction, reverts if true
 | ---- | ---- | ----------- |
 | _addr | address | Address to compare with msg.sender |
 
-### checkSender
+### checkAddressSender
 
 ```solidity
-function checkSender(address _addr) internal view
+function checkAddressSender(address _addr) internal view
 ```
 
 Checks if address matches with sender of transaction, reverts if false

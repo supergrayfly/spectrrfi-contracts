@@ -53,9 +53,9 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
     ) external nonReentrant returns (uint256) {
         checkIsPositive(_selling);
         checkIsPositive(_exRate);
-        checkTokenId(_sellingId);
-        checkTokenId(_sellForId);
-        checkIsSameId(_sellForId, _sellingId);
+        checkIdInRange(_sellingId);
+        checkIdInRange(_sellForId);
+        checkIfIsSameId(_sellForId, _sellingId);
 
         transferSenderToContract(msg.sender, _selling, _sellingId);
 
@@ -106,8 +106,8 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
         uint8 _collateralId
     ) external nonReentrant lockSaleOffer(_offerId) {
         checkOfferIsOpen(saleOffers[_offerId].offerState);
-        checkNotSender(saleOffers[_offerId].seller);
-        checkIsSameId(_collateralId, saleOffers[_offerId].sellingId);
+        checkAddressNotSender(saleOffers[_offerId].seller);
+        checkIfIsSameId(_collateralId, saleOffers[_offerId].sellingId);
 
         uint256 collateral = getCollateral(
             saleOffers[_offerId].sellFor,
@@ -145,7 +145,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
         uint256 _offerId
     ) external nonReentrant lockSaleOffer(_offerId) {
         checkOfferIsOpen(saleOffers[_offerId].offerState);
-        checkSender(saleOffers[_offerId].seller);
+        checkAddressSender(saleOffers[_offerId].seller);
 
         transferContractToSender(
             msg.sender,
@@ -168,7 +168,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
     ) external nonReentrant lockSaleOffer(_offerId) {
         checkIsPositive(_amount);
         checkOfferIsAccepted(saleOffers[_offerId].offerState);
-        checkSender(saleOffers[_offerId].buyer);
+        checkAddressSender(saleOffers[_offerId].buyer);
 
         uint8 collateralId = saleOffers[_offerId].collateralId;
 
@@ -193,7 +193,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
 
         address buyer = saleOffers[_offerId].buyer;
 
-        checkSender(buyer);
+        checkAddressSender(buyer);
 
         address seller = saleOffers[_offerId].seller;
         uint256 toRepay = saleOffers[_offerId].sellFor;
@@ -224,7 +224,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
         checkIsPositive(_amount);
         checkIsLessThan(_amount, saleOffers[_offerId].sellFor);
         checkOfferIsAccepted(saleOffers[_offerId].offerState);
-        checkSender(saleOffers[_offerId].buyer);
+        checkAddressSender(saleOffers[_offerId].buyer);
 
         uint256 toRepay = _amount;
         uint8 toRepayId = saleOffers[_offerId].sellForId;
@@ -318,7 +318,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
 
         address buyer = saleOffers[_offerId].buyer;
 
-        checkSender(buyer);
+        checkAddressSender(buyer);
 
         uint256 amount = saleOffers[_offerId].sellFor;
         uint256 collateral = saleOffers[_offerId].collateral;
@@ -364,10 +364,10 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
     ) external nonReentrant returns (uint256) {
         checkIsPositive(_buying);
         checkIsPositive(_exRate);
-        checkTokenId(_buyingId);
-        checkTokenId(_buyForId);
-        checkIsSameId(_buyingId, _buyForId);
-        checkIsSameId(_collateralId, _buyingId);
+        checkIdInRange(_buyingId);
+        checkIdInRange(_buyForId);
+        checkIfIsSameId(_buyingId, _buyForId);
+        checkIfIsSameId(_collateralId, _buyingId);
 
         uint256 buyFor = (_exRate * _buying) / 10 ** 18;
         uint256 collateral = getCollateral(
@@ -422,7 +422,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
         uint256 _offerId
     ) external nonReentrant lockBuyOffer(_offerId) {
         checkOfferIsOpen(buyOffers[_offerId].offerState);
-        checkNotSender(buyOffers[_offerId].buyer);
+        checkAddressNotSender(buyOffers[_offerId].buyer);
 
         transferBuyerToSeller(
             msg.sender,
@@ -450,7 +450,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
         uint256 _offerId
     ) external nonReentrant lockBuyOffer(_offerId) {
         checkOfferIsOpen(buyOffers[_offerId].offerState);
-        checkSender(buyOffers[_offerId].buyer);
+        checkAddressSender(buyOffers[_offerId].buyer);
 
         transferContractToSender(
             msg.sender,
@@ -473,7 +473,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
     ) external nonReentrant lockBuyOffer(_offerId) {
         checkIsPositive(_amount);
         checkOfferIsAccepted(buyOffers[_offerId].offerState);
-        checkSender(buyOffers[_offerId].buyer);
+        checkAddressSender(buyOffers[_offerId].buyer);
 
         uint8 collateralId = buyOffers[_offerId].collateralId;
 
@@ -498,7 +498,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
 
         address buyer = buyOffers[_offerId].buyer;
 
-        checkSender(buyer);
+        checkAddressSender(buyer);
 
         address seller = buyOffers[_offerId].seller;
         uint256 toRepay = buyOffers[_offerId].buyFor;
@@ -529,7 +529,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
         checkIsPositive(_amount);
         checkIsLessThan(_amount, buyOffers[_offerId].buyFor);
         checkOfferIsAccepted(buyOffers[_offerId].offerState);
-        checkSender(buyOffers[_offerId].buyer);
+        checkAddressSender(buyOffers[_offerId].buyer);
 
         uint256 toRepay = _amount;
         uint8 toRepayId = buyOffers[_offerId].buyForId;
@@ -620,7 +620,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
         uint256 _offerId
     ) external nonReentrant lockBuyOffer(_offerId) {
         checkOfferIsAccepted(buyOffers[_offerId].offerState);
-        checkNotSender(buyOffers[_offerId].buyer);
+        checkAddressNotSender(buyOffers[_offerId].buyer);
 
         uint256 amount = buyOffers[_offerId].buyFor;
         uint256 collateral = buyOffers[_offerId].collateral;

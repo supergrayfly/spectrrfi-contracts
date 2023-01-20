@@ -20,7 +20,6 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
     /// @return IERC20 The Interface of the token
     function getToken(uint8 _tokenId) public view returns (IERC20) {
         require(_tokenId <= tokenCount && _tokenId > 0, "Token id not valid");
-
         return tokens[_tokenId].Itoken;
     }
 
@@ -381,7 +380,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
 
     /// @notice Transfers the fee from the sender to the fee address
     /// @dev Only callable internally by this contract
-    /// @param _amount Amount on which 0.5% will be taken
+    /// @param _amount Amount on which 0.1% will be taken
     /// @param _amountId Id of the amount
     /// @param _sender Address of the sender
     function transferFee(
@@ -401,15 +400,15 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
 
     /// @notice Checks if id is in the range of tradable tokens
     /// @param _id Id of the token
-    function checkTokenId(uint _id) internal view {
+    function checkIdInRange(uint _id) internal view {
         require(_id > 0 && _id <= tokenCount, "Invalid Id");
     }
 
     /// @notice Checks if id of two tokens are the same, reverts if true
     /// @param _id Id of first token
     /// @param __id id of second token
-    function checkIsSameId(uint8 _id, uint8 __id) internal pure {
-        require(_id != __id, "Id's are the same");
+    function checkIfIsSameId(uint8 _id, uint8 __id) internal pure {
+        require(_id != __id, "Both Id are the same");
     }
 
     /// @notice Checks if offer is open (i.e. not accepted or closed), reverts if false
@@ -435,13 +434,13 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
 
     /// @notice Checks if address matches with sender of transaction, reverts if true
     /// @param _addr Address to compare with msg.sender
-    function checkNotSender(address _addr) internal view {
+    function checkAddressNotSender(address _addr) internal view {
         require(_addr != msg.sender, "Unvalid Sender");
     }
 
     /// @notice Checks if address matches with sender of transaction, reverts if false
     /// @param _addr Address to compare with msg.snder
-    function checkSender(address _addr) internal view {
+    function checkAddressSender(address _addr) internal view {
         require(_addr == msg.sender, "Unvalid Sender");
     }
 

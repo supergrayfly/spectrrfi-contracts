@@ -180,7 +180,7 @@ contract SpectrrData {
         Called when a function changing the state of a sale offer struct is entered,
         it prevents changes made to the struct by anyone aside from the current msg.sender.
         It differs from the nonReentrant modifier, 
-        as the latter restricts only the msg.sender from calling other functions in the contract.
+        as the latter only restricts the msg.sender from calling other functions in the contract.
     */
     modifier lockSaleOffer(uint256 _offerId) {
         require(
