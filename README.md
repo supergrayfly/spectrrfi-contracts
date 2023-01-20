@@ -54,7 +54,8 @@ Pull requests, comments, and emails are all appreciated.
 
 # Contact
 
-email: supergrayfly@proton.me
+- email: supergrayfly@proton.me
+- gpg public key: https://gitlab.com/supergrayfly.gpg
 
 # License
 
