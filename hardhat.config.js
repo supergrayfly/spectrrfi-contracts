@@ -21,7 +21,7 @@ module.exports = {
     fantom_mainnet: {
       url: 'https://rpc.ftm.tools',
       accounts: [privKey],
-      // gasPrice: gasPrice
+      // gasPrice:
     },
     bsc_testnet: {
       url: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
@@ -34,7 +34,7 @@ module.exports = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 300,
+        runs: 10000,
       },
     },
   },
@@ -51,13 +51,6 @@ module.exports = {
     clear: true,
     format: 'json',
   }
-	/*
-	docgen: {
-  	path: './docgen',
-  	clear: true,
-  	runOnCompile: true,
-	}
-	*/
 };
 
 task(
