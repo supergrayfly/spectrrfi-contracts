@@ -2,7 +2,7 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 /// @title SpectrrData
-/// @author Superfly
+/// @author Supergrayfly
 /// @notice Defines and initializes the data for the SpectrrCore Contract
 contract SpectrrData {
     /// @notice The minimum collateral to debt ratio allowing a liquidation

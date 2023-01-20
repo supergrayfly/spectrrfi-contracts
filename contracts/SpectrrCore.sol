@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "./SpectrrUtils.sol";
 
 /// @title SpectrrCore
-/// @author Superfly
+/// @author Supergrayfly
 /** @notice This contract is a lending and borrowing like platform;
     'like', because it is not interest based like other existing lending dApps.
     Users can post offers specifying a token they want to sell/buy,

@@ -6,7 +6,7 @@ import "./SpectrrData.sol";
 import "./SpectrrManager.sol";
 
 /// @title SpectrrUtils
-/// @author Superfly
+/// @author Supergrayfly
 /// @notice This contract handles 'secondary' functions, such as transferring tokens and calculating collateral.
 contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
     /// @notice Gets the current block timestamp

@@ -4,7 +4,7 @@ pragma solidity >=0.4.22 <0.9.0;
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 /// @title SpectrrPrices
-/// @author Superfly
+/// @author Supergrayfly
 /// @notice Fetches the prices of various currency pairs
 contract SpectrrPrices {
     /// @notice The maximum timeframe in seconds, at which the price request must be fulfilled.
