@@ -12,8 +12,7 @@ contract SpectrrPrices {
     ) public view returns (int256) {
         AggregatorV3Interface priceFeed = AggregatorV3Interface(_chainlinkAddr);
 
-        (, int256 price,,, ) = priceFeed
-            .latestRoundData();
+        (, int256 price, , , ) = priceFeed.latestRoundData();
 
         require(price > 0, "Price is negative");
 
