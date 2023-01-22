@@ -705,14 +705,14 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
         address _newAddr,
         uint8 _addrType
     ) external nonReentrant lockSaleOffer(_offerId) {
-        if (_addrType == 1) {
+        if (_addrType == 0) {
             require(
                 buyOffers[_offerId].seller == msg.sender,
                 "Sender is not seller"
             );
             require(_newAddr != address(0), "Address is null address");
             buyOffers[_offerId].seller = _newAddr;
-        } else if (_addrType == 2) {
+        } else if (_addrType == 1) {
             require(
                 buyOffers[_offerId].buyer == msg.sender,
                 "Sender is not buyer"
