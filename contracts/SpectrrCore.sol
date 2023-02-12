@@ -671,20 +671,31 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
     ) external nonReentrant lockSaleOffer(_offerId) {
         checkOfferIsAccepted(saleOffers[_offerId].offerState);
         checkOfferIsOpen(saleOffers[_offerId].offerState);
+				// ADD CHECK ADDR IS NOT OTHER BUYER OR SELLER
 
         if (_addrType == 0) {
             require(
                 saleOffers[_offerId].seller == msg.sender,
                 "Sender is not seller"
             );
+						require(
+								saleOffers[_offerId].buyer != _newAddr,
+								"Address is buyer"
+						);
             require(_newAddr != address(0), "Address is null address");
+
             saleOffers[_offerId].seller = _newAddr;
         } else if (_addrType == 1) {
             require(
                 saleOffers[_offerId].buyer == msg.sender,
                 "Sender is not buyer"
             );
+						require(
+								saleOffers[_offerId].seller != _newAddr,
+								"Address is seller"
+						);
             require(_newAddr != address(0), "Address is null address");
+
             saleOffers[_offerId].buyer = _newAddr;
         } else {
             revert("Invalid Address Type");
@@ -710,14 +721,24 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
                 buyOffers[_offerId].seller == msg.sender,
                 "Sender is not seller"
             );
+						require(
+								buyOffers[_offerId].buyer != _newAddr,
+								"Address is buyer"
+						);
             require(_newAddr != address(0), "Address is null address");
+
             buyOffers[_offerId].seller = _newAddr;
         } else if (_addrType == 1) {
             require(
                 buyOffers[_offerId].buyer == msg.sender,
                 "Sender is not buyer"
             );
+						require(
+								buyOffers[_offerId].seller != _newAddr,
+								"Address is seller"
+						);
             require(_newAddr != address(0), "Address is null address");
+
             buyOffers[_offerId].buyer = _newAddr;
         } else {
             revert("Invalid Address Type");
