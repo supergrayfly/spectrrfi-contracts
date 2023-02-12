@@ -9,9 +9,9 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 /// @notice This contracrt handles functions that can only be called by the dev address (e.g.: Adding new tradable tokens).
 contract SpectrrManager is Ownable {
     /// @notice address where transaction fees will be sent
-    address public feeAddr = 0x29AA18b166FF8B1C67c8A1f12CDB487080068128;
+    address public feeAddress = 0x29AA18b166FF8B1C67c8A1f12CDB487080068128;
 
-    /** @notice Fee corresponding to 0.1% (amount * (100 / 0.1) = amount * 1000),
+    /** @notice Fee corresponding to 0.1% (amount * (100 / 0.1) = 1000,
 				taken from every accept sale/buy offer transaction.
         In the case of a sale offer it is paid by the buyer.
         In the case of a buy offer it is paid by the seller.
@@ -28,59 +28,60 @@ contract SpectrrManager is Ownable {
     /// @dev Token struct, containing info on a ERC20 token
     struct Token {
         uint8 tokenId;
-        uint8 priceDecimals;
+        uint8 decimals;
         string tokenName;
+        address tokenAddress;
+        address chainlinkOracleAddress;
         IERC20 Itoken;
-        address tokenAddr;
-        address chainlinkAddr;
     }
 
     /// @notice Event emitted when a new token is added
     event NewToken(
         uint8 tokenId,
-        string name,
-        address tokenAddr,
-        address chainlinkAddr
+        string tokenName,
+        address tokenAddress,
+        address chainlinkOracleAddress
     );
 
     /// @notice Event emitted when the fee address is changed
-    event FeeAddrChanged(address newAddr, uint256 timestamp);
+    event FeeAddressChanged(address newAddress, uint256 timestamp);
 
     /// @notice Adds a token to the array of tokens tradable by this contract
     /// @dev Only callable by owner
     /// @param _tokenName Name of the token to add in the following format: "btc"
-    /// @param _tokenAddr Address of the token
-    /// @param _chainlinkAddr Address of the chainlink contract used to take the price from
-    /// @param _priceDecimals Number of decimals the chainlink price has
+    /// @param _tokenAddress Address of the token
+    /// @param _chainlinkOracleAddress Address of the chainlink contract used to take the price from
+    /// @param _decimals Number of decimals the chainlink price has
     function addToken(
         string memory _tokenName,
-        address _tokenAddr,
-        address _chainlinkAddr,
-        uint8 _priceDecimals
+        address _tokenAddress,
+        address _chainlinkOracleAddress,
+        uint8 _decimals
     ) external onlyOwner {
         uint8 id = ++tokenCount;
 
-        IERC20 Itoken = IERC20(_tokenAddr);
+        IERC20 Itoken = IERC20(_tokenAddress);
 
         Token memory token = Token(
             id,
-            _priceDecimals,
+            _decimals,
             _tokenName,
-            Itoken,
-            _tokenAddr,
-            _chainlinkAddr
+            _tokenAddress,
+            _chainlinkOracleAddress,
+            Itoken
         );
 
         tokens[id] = token;
 
-        emit NewToken(id, _tokenName, _tokenAddr, _chainlinkAddr);
+        emit NewToken(id, _tokenName, _tokenAddress, _chainlinkOracleAddress);
     }
 
     /// @notice Changes the fee address
     /// @dev Only callable by the current owner
-    function changeFeeAddr(address _newFeeAddr) external onlyOwner {
-        feeAddr = _newFeeAddr;
+    /// @param _newFeeAddress The new fee address
+    function changeFeeAddress(address _newFeeAddress) external onlyOwner {
+        feeAddress = _newFeeAddress;
 
-        emit FeeAddrChanged(_newFeeAddr, block.timestamp);
+        emit FeeAddressChanged(_newFeeAddress, block.timestamp);
     }
 }

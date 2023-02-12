@@ -98,13 +98,13 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "buyFor",
+        "name": "buyingFor",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint8",
-        "name": "buyForId",
+        "name": "buyingForId",
         "type": "uint8"
       },
       {
@@ -122,7 +122,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "repayInSec",
+        "name": "repayInSeconds",
         "type": "uint256"
       },
       {
@@ -228,7 +228,7 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "newAddr",
+        "name": "newAddress",
         "type": "address"
       },
       {
@@ -238,7 +238,7 @@
         "type": "uint256"
       }
     ],
-    "name": "FeeAddrChanged",
+    "name": "FeeAddressChanged",
     "type": "event"
   },
   {
@@ -253,19 +253,19 @@
       {
         "indexed": false,
         "internalType": "string",
-        "name": "name",
+        "name": "tokenName",
         "type": "string"
       },
       {
         "indexed": false,
         "internalType": "address",
-        "name": "tokenAddr",
+        "name": "tokenAddress",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "address",
-        "name": "chainlinkAddr",
+        "name": "chainlinkOracleAddress",
         "type": "address"
       }
     ],
@@ -402,13 +402,13 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "sellFor",
+        "name": "sellingFor",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint8",
-        "name": "sellForId",
+        "name": "sellingForId",
         "type": "uint8"
       },
       {
@@ -420,7 +420,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "repayInSec",
+        "name": "repayInSeconds",
         "type": "uint256"
       },
       {
@@ -581,17 +581,17 @@
       },
       {
         "internalType": "address",
-        "name": "_tokenAddr",
+        "name": "_tokenAddress",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_chainlinkAddr",
+        "name": "_chainlinkOracleAddress",
         "type": "address"
       },
       {
         "internalType": "uint8",
-        "name": "_priceDecimals",
+        "name": "_decimals",
         "type": "uint8"
       }
     ],
@@ -611,8 +611,8 @@
     "name": "buyOffers",
     "outputs": [
       {
-        "internalType": "enum SpectrrData.OfferState",
-        "name": "offerState",
+        "internalType": "enum SpectrrData.OfferStatus",
+        "name": "offerStatus",
         "type": "uint8"
       },
       {
@@ -632,7 +632,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "buyFor",
+        "name": "buyingFor",
         "type": "uint256"
       },
       {
@@ -642,7 +642,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "repayInSec",
+        "name": "repayInSeconds",
         "type": "uint256"
       },
       {
@@ -657,7 +657,7 @@
       },
       {
         "internalType": "uint8",
-        "name": "buyForId",
+        "name": "buyingForId",
         "type": "uint8"
       },
       {
@@ -696,22 +696,22 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_amount",
+        "name": "_amountTokenWei",
         "type": "uint256"
       },
       {
         "internalType": "uint8",
-        "name": "_amountId",
+        "name": "_amountTokenId",
         "type": "uint8"
       },
       {
         "internalType": "uint256",
-        "name": "_collateral",
+        "name": "_collateralTokenAmountWei",
         "type": "uint256"
       },
       {
         "internalType": "uint8",
-        "name": "_collateralId",
+        "name": "_collateralTokenId",
         "type": "uint8"
       },
       {
@@ -740,7 +740,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_repayInSec",
+        "name": "_repayInSeconds",
         "type": "uint256"
       }
     ],
@@ -759,18 +759,18 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_newFeeAddr",
+        "name": "_newFeeAddress",
         "type": "address"
       }
     ],
-    "name": "changeFeeAddr",
+    "name": "changeFeeAddress",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "feeAddr",
+    "name": "feeAddress",
     "outputs": [
       {
         "internalType": "address",
@@ -798,7 +798,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_chainlinkAddr",
+        "name": "_chainlinkOracleAddress",
         "type": "address"
       }
     ],
@@ -817,22 +817,22 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_amount",
+        "name": "_amountTokenWei",
         "type": "uint256"
       },
       {
         "internalType": "uint8",
-        "name": "_amountId",
+        "name": "_amountTokenId",
         "type": "uint8"
       },
       {
         "internalType": "uint8",
-        "name": "_collateralId",
+        "name": "_collateralTokenId",
         "type": "uint8"
       },
       {
         "internalType": "uint256",
-        "name": "_collateralToDebtRatio",
+        "name": "_collateralTokenAmountWeiToDebtRatio",
         "type": "uint256"
       }
     ],
@@ -850,18 +850,37 @@
   {
     "inputs": [
       {
+        "internalType": "uint8",
+        "name": "_tokenId",
+        "type": "uint8"
+      }
+    ],
+    "name": "getITokenFromId",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
-        "name": "_collateral",
+        "name": "_collateralTokenAmountWei",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_amountFor",
+        "name": "_amountForTokenWei",
         "type": "uint256"
       },
       {
         "internalType": "uint8",
-        "name": "_collateralId",
+        "name": "_collateralTokenId",
         "type": "uint8"
       },
       {
@@ -885,17 +904,17 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_collateral",
+        "name": "_collateralTokenAmountWei",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_amountFor",
+        "name": "_amountForTokenWei",
         "type": "uint256"
       },
       {
         "internalType": "uint8",
-        "name": "_amountForId",
+        "name": "_amountForTokenId",
         "type": "uint8"
       },
       {
@@ -919,64 +938,26 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_amount",
+        "name": "_amountTokenWei",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_collateral",
+        "name": "_collateralTokenAmountWei",
         "type": "uint256"
       },
       {
         "internalType": "uint8",
-        "name": "_amountId",
+        "name": "_amountTokenId",
         "type": "uint8"
       },
       {
         "internalType": "uint8",
-        "name": "_collateralId",
+        "name": "_collateralTokenId",
         "type": "uint8"
       }
     ],
     "name": "getRatio",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint8",
-        "name": "_tokenId",
-        "type": "uint8"
-      }
-    ],
-    "name": "getToken",
-    "outputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint8",
-        "name": "_tokenId",
-        "type": "uint8"
-      }
-    ],
-    "name": "idToPrice",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1018,8 +999,8 @@
     "name": "saleOffers",
     "outputs": [
       {
-        "internalType": "enum SpectrrData.OfferState",
-        "name": "offerState",
+        "internalType": "enum SpectrrData.OfferStatus",
+        "name": "offerStatus",
         "type": "uint8"
       },
       {
@@ -1039,7 +1020,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "sellFor",
+        "name": "sellingFor",
         "type": "uint256"
       },
       {
@@ -1049,7 +1030,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "repayInSec",
+        "name": "repayInSeconds",
         "type": "uint256"
       },
       {
@@ -1064,7 +1045,7 @@
       },
       {
         "internalType": "uint8",
-        "name": "sellForId",
+        "name": "sellingForId",
         "type": "uint8"
       },
       {
@@ -1116,6 +1097,25 @@
     "inputs": [
       {
         "internalType": "uint8",
+        "name": "_tokenId",
+        "type": "uint8"
+      }
+    ],
+    "name": "tokenIdToPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
         "name": "",
         "type": "uint8"
       }
@@ -1129,7 +1129,7 @@
       },
       {
         "internalType": "uint8",
-        "name": "priceDecimals",
+        "name": "decimals",
         "type": "uint8"
       },
       {
@@ -1138,18 +1138,18 @@
         "type": "string"
       },
       {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "chainlinkOracleAddress",
+        "type": "address"
+      },
+      {
         "internalType": "contract IERC20",
         "name": "Itoken",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "tokenAddr",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "chainlinkAddr",
         "type": "address"
       }
     ],

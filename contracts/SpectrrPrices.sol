@@ -8,14 +8,16 @@ import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 /// @notice Fetches the prices of various currency pairs from Chainlink price feed oracles
 contract SpectrrPrices {
     function getChainlinkPrice(
-        address _chainlinkAddr
+        address _chainlinkOracleAddress
     ) public view returns (int256) {
-        AggregatorV3Interface priceFeed = AggregatorV3Interface(_chainlinkAddr);
+        AggregatorV3Interface priceFeed = AggregatorV3Interface(
+            _chainlinkOracleAddress
+        );
 
-        (, int256 price, , , ) = priceFeed.latestRoundData();
+        (, int256 tokenPrice, , , ) = priceFeed.latestRoundData();
 
-        require(price > 0, "Price is negative");
+        require(tokenPrice > 0, "Price is negative");
 
-        return price;
+        return tokenPrice;
     }
 }

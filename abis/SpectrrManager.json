@@ -5,7 +5,7 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "newAddr",
+        "name": "newAddress",
         "type": "address"
       },
       {
@@ -15,7 +15,7 @@
         "type": "uint256"
       }
     ],
-    "name": "FeeAddrChanged",
+    "name": "FeeAddressChanged",
     "type": "event"
   },
   {
@@ -30,19 +30,19 @@
       {
         "indexed": false,
         "internalType": "string",
-        "name": "name",
+        "name": "tokenName",
         "type": "string"
       },
       {
         "indexed": false,
         "internalType": "address",
-        "name": "tokenAddr",
+        "name": "tokenAddress",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "address",
-        "name": "chainlinkAddr",
+        "name": "chainlinkOracleAddress",
         "type": "address"
       }
     ],
@@ -90,17 +90,17 @@
       },
       {
         "internalType": "address",
-        "name": "_tokenAddr",
+        "name": "_tokenAddress",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_chainlinkAddr",
+        "name": "_chainlinkOracleAddress",
         "type": "address"
       },
       {
         "internalType": "uint8",
-        "name": "_priceDecimals",
+        "name": "_decimals",
         "type": "uint8"
       }
     ],
@@ -113,18 +113,18 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_newFeeAddr",
+        "name": "_newFeeAddress",
         "type": "address"
       }
     ],
-    "name": "changeFeeAddr",
+    "name": "changeFeeAddress",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "feeAddr",
+    "name": "feeAddress",
     "outputs": [
       {
         "internalType": "address",
@@ -185,7 +185,7 @@
       },
       {
         "internalType": "uint8",
-        "name": "priceDecimals",
+        "name": "decimals",
         "type": "uint8"
       },
       {
@@ -194,18 +194,18 @@
         "type": "string"
       },
       {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "chainlinkOracleAddress",
+        "type": "address"
+      },
+      {
         "internalType": "contract IERC20",
         "name": "Itoken",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "tokenAddr",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "chainlinkAddr",
         "type": "address"
       }
     ],
