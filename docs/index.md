@@ -1225,3 +1225,13 @@ Checks if amount sent is bigger than debt, reverts if true
 | _amountTokenWei | uint256 | The amount to send |
 | _debt | uint256 | The debt owed |
 
+## SpectrrPaymentSplitter
+
+This contract receives and distributes the fees genrated by Spectrr Finance to different receivers.
+
+### constructor
+
+```solidity
+constructor() public
+```
+

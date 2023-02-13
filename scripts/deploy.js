@@ -6,7 +6,7 @@ async function main() {
 
   await spectrrCore.deployed();
 
-  console.log(`Deployed Contract to: "${spectrrCore.address}"`);
+  console.log(`Contract Address: "${spectrrCore.address}"`);
 }
 
 main().catch((error) => {
