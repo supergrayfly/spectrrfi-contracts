@@ -7,7 +7,7 @@
     "compile": "hardhat compile",
     "docgen": "hardhat docgen",
     "deploy": "hardhat run ./scripts/deploy.js",
-		"deploy-splitter": "hardhat run deploy_payment_splitter.js"
+		"deploy-splitter": "hardhat run ./scripts/deploy_payment_splitter.js"
   },
   "author": "Supergrayfly",
   "license": "BSD-3-Clause-Attribution",
