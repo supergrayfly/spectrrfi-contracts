@@ -9,12 +9,10 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 /// @notice This contracrt handles functions that can only be called by the dev address (e.g.: Adding new tradable tokens).
 contract SpectrrManager is Ownable {
     /// @notice address where transaction fees will be sent
-    address public feeAddress = 0x29AA18b166FF8B1C67c8A1f12CDB487080068128;
+    address public feeAddress = 0x35A6F13710087492F0F0146F8471117c9cB22E18;
 
     /** @notice Fee corresponding to 0.1% (amount * (100 / 0.1) = 1000,
-				taken from every accept sale/buy offer transaction.
-        In the case of a sale offer it is paid by the buyer.
-        In the case of a buy offer it is paid by the seller.
+				taken when an offer is created and accepted.
     */
     uint16 public constant FEE_PERCENT = 1000;
 

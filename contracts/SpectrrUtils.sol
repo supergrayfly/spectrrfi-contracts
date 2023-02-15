@@ -105,7 +105,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
 
         token.transferFrom(_sender, address(this), _collateralTokenAmountWei);
 
-        transferFee(_amountTokenWei, _amountTokenId, _sender);
+        transferFee(_collateralTokenAmountWei, _collateralTokenId, _sender);
 
         transferContractToSender(_sender, _amountTokenWei, _amountTokenId);
     }

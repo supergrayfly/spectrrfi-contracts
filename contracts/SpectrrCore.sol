@@ -36,6 +36,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
     constructor() EIP712("Spectrr Finance", "ver. 0.0.1") {}
 
     /// @notice Creates and posts a sale offer
+    /// @notice There is a 0.1% fee of the selling amount, paid by the seller to the fee address.
     /// @param _sellingTokenAmountWei Amount the sender is selling
     /// @param _sellingTokenId Id of the selling token, can not be same than id of sell for token.
     /// @param _exchangeRateWei Exchange rate between the selling amount sell for amount
@@ -62,6 +63,8 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
             _sellingTokenAmountWei,
             _sellingTokenId
         );
+
+        transferFee(_sellingTokenAmountWei, _sellingTokenId, msg.sender);
 
         uint256 offerId = ++saleOffersCount;
         uint256 sellingForTokenAmountWei = (_exchangeRateWei *
@@ -101,7 +104,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
     }
 
     /// @notice Accepts a sale offer by transferring the required collateral from the buyer to the contract
-    /// @notice There is a 0.1% fee of the selling amount, paid by the buyer to the fee address.
+    /// @notice There is a 0.1% fee of the collateral amount, paid by the buyer to the fee address.
     /// @param _offerId Id of the sale offer to accept
     /** @param _collateralTokenId Id of the token to be pledged as collateral,
         cannot be same than id of selling token.
@@ -334,6 +337,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
     }
 
     /// @notice Creates and posts a buy offer
+    /// @notice There is a 0.1% fee of the buying amount, paid by the buyer to the fee address.
     /// @param _buyingTokenAmountWei Amount to buy
     /// @param _buyingTokenId Id of the buying token
     /// @param _exchangeRateWei Exchange rate between buying amount and buy for amount
@@ -375,6 +379,8 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
             collateralTokenAmountWei,
             _collateralTokenId
         );
+
+        transferFee(collateralTokenAmountWei, _collateralTokenId, msg.sender);
 
         uint256 offerId = ++buyOffersCount;
 
@@ -669,6 +675,8 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
             require(_newAddress != address(0), "Address is null address");
 
             saleOffers[_offerId].seller = _newAddress;
+
+            emit SaleOfferSellerAddressChanged(_offerId, _newAddress);
         } else if (_addressType == 1) {
             require(
                 saleOffers[_offerId].buyer == msg.sender,
@@ -681,6 +689,8 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
             require(_newAddress != address(0), "Address is null address");
 
             saleOffers[_offerId].buyer = _newAddress;
+
+            emit SaleOfferBuyerAddressChanged(_offerId, _newAddress);
         } else {
             revert("Invalid Address Type");
         }
@@ -714,6 +724,8 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
             require(_newAddress != address(0), "Address is null address");
 
             buyOffers[_offerId].seller = _newAddress;
+
+            emit BuyOfferSellerAddressChanged(_offerId, _newAddress);
         } else if (_addressType == 1) {
             require(
                 buyOffers[_offerId].buyer == msg.sender,
@@ -726,6 +738,8 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
             require(_newAddress != address(0), "Address is null address");
 
             buyOffers[_offerId].buyer = _newAddress;
+
+            emit BuyOfferBuyerAddressChanged(_offerId, _newAddress);
         } else {
             revert("Invalid Address Type");
         }

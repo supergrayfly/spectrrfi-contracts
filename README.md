@@ -20,9 +20,7 @@ which other users can then accept (peer-to-peer, permissionless).
 - Contract is not upgradable (no rule changes).
 - There is no governace token (not necessary for contract functionning).
 - Prices are taken from Chainlink Oracles.
-- 0.1% fee is taken when offers are accepted 
-(paid by buyer in case of sale offer,
-paid by seller in case of buy offer).
+- 0.1% fee is taken when offers are created and accepted 
 
 ## Supported Networks
 

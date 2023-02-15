@@ -117,6 +117,12 @@ contract SpectrrData {
         uint256 timestamp
     );
 
+    /// @notice Event emitted when the seller address of a sale offer changes
+    event SaleOfferSellerAddressChanged(uint256 offerId, address newAddress);
+
+    /// @notice Event emitted when the buyer address of a sale offer changes
+    event SaleOfferBuyerAddressChanged(uint256 offerId, address newAddress);
+
     /// @notice Event emitted when a sale offer is repaid
     event SaleOfferRepaid(
         uint256 offerId,
@@ -163,6 +169,12 @@ contract SpectrrData {
         address liquidator,
         uint256 timestamp
     );
+
+    /// @notice Event emitted when the seller address of a buy offer changes
+    event BuyOfferSellerAddressChanged(uint256 offerId, address newAddress);
+
+    /// @notice Event emitted when the buyer address of a buy offer changes
+    event BuyOfferBuyerAddressChanged(uint256 offerId, address newAddress);
 
     /// @notice Event emitted when a buy offer is repaid
     event BuyOfferRepaid(

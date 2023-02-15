@@ -544,6 +544,22 @@ event SaleOfferLiquidated(uint256 offerId, address liquidator, uint256 timestamp
 
 Event emitted when a sale offer is liquidated
 
+### SaleOfferSellerAddressChanged
+
+```solidity
+event SaleOfferSellerAddressChanged(uint256 offerId, address newAddress)
+```
+
+Event emitted when the seller address of a sale offer changes
+
+### SaleOfferBuyerAddressChanged
+
+```solidity
+event SaleOfferBuyerAddressChanged(uint256 offerId, address newAddress)
+```
+
+Event emitted when the buyer address of a sale offer changes
+
 ### SaleOfferRepaid
 
 ```solidity
@@ -600,6 +616,22 @@ event BuyOfferLiquidated(uint256 offerId, address liquidator, uint256 timestamp)
 
 Event emitted when a buy offer is liquidated
 
+### BuyOfferSellerAddressChanged
+
+```solidity
+event BuyOfferSellerAddressChanged(uint256 offerId, address newAddress)
+```
+
+Event emitted when the seller address of a buy offer changes
+
+### BuyOfferBuyerAddressChanged
+
+```solidity
+event BuyOfferBuyerAddressChanged(uint256 offerId, address newAddress)
+```
+
+Event emitted when the buyer address of a buy offer changes
+
 ### BuyOfferRepaid
 
 ```solidity
@@ -654,9 +686,7 @@ uint16 FEE_PERCENT
 ```
 
 Fee corresponding to 0.1% (amount * (100 / 0.1) = 1000,
-				taken from every accept sale/buy offer transaction.
-        In the case of a sale offer it is paid by the buyer.
-        In the case of a buy offer it is paid by the seller.
+				taken when an offer is created and accepted.
 
 ### tokenCount
 
