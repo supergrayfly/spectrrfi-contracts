@@ -8,7 +8,7 @@ const privKey = process.env.PRIV_KEY
 module.exports = {
   defaultNetwork: 'fantom_testnet',
   networks: {
-     mumbai_testnet: {
+     mumbai: {
        url: 'https://rpc-mumbai.maticvigil.com/',
        accounts: [privKey],
        gasPrice: 1500000000,
