@@ -6,24 +6,24 @@ require('dotenv').config()
 const privKey = process.env.PRIV_KEY
 
 module.exports = {
-  defaultNetwork: 'fantom_testnet',
+  defaultNetwork: 'mumbai',
   networks: {
      mumbai: {
        url: 'https://rpc-mumbai.maticvigil.com/',
        accounts: [privKey],
        gasPrice: 1500000000,
      },
-    fantom_testnet: {
+    fantomTestnet: {
       url: 'https://rpc.testnet.fantom.network/',
       accounts: [privKey],
       gasPrice: 3500000000,
     },
-    fantom_mainnet: {
+    fantomOpera: {
       url: 'https://rpc.ftm.tools',
       accounts: [privKey],
       // gasPrice:
     },
-    bsc_testnet: {
+    bscTestnet: {
       url: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
       accounts: [privKey],
       gasPrice: 10000000000,
