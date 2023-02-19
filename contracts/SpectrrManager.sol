@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /// @title SpectrrManager
 /// @author Supergrayfly
-/// @notice This contracrt handles functions that can only be called by the dev address (e.g.: Adding new tradable tokens).
+/// @notice This contract handles functions that can only be called by the dev address (e.g.: Adding new tradable tokens).
 contract SpectrrManager is Ownable {
     /// @notice address where transaction fees will be sent
     address public feeAddress = 0x35A6F13710087492F0F0146F8471117c9cB22E18;
