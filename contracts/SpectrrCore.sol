@@ -274,7 +274,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
             canLiquidate(
                 offer.sellingFor,
                 offer.sellingForId,
-                offer.sellingFor,
+                offer.collateral,
                 offer.collateralId,
                 MIN_RATIO_LIQUIDATION
             ) || canLiquidateTimeOver(offer.timeAccepted, offer.repayInSeconds),
@@ -285,7 +285,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
             liquidateTokensBySeller(
                 offer.sellingFor,
                 offer.sellingForId,
-                offer.sellingFor,
+                offer.collateral,
                 offer.collateralId,
                 offer.buyer,
                 offer.seller,
@@ -295,7 +295,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
             liquidateTokens(
                 offer.sellingFor,
                 offer.sellingForId,
-                offer.sellingFor,
+                offer.collateral,
                 offer.collateralId,
                 offer.seller,
                 offer.buyer,
