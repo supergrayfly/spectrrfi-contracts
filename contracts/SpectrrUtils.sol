@@ -409,7 +409,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
 
     /// @notice Checks if token Id is a tradable tokens
     /// @param _id Id of the token
-    function checkIdInRange(uint8 _id) internal view {
+    function checkTokenIdInRange(uint8 _id) internal view {
         require(_id > 0 && _id <= tokenCount, "Invalid Id");
     }
 
@@ -434,7 +434,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
     /// @notice Checks if id of two tokens are the same, reverts if true
     /// @param _id Id of first token
     /// @param __id id of second token
-    function checkIfIsSameId(uint8 _id, uint8 __id) internal pure {
+    function checkTokenIdNotSame(uint8 _id, uint8 __id) internal pure {
         require(_id != __id, "Cannot be same token Id");
     }
 

@@ -54,9 +54,9 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
     ) external nonReentrant returns (uint256) {
         checkIsPositive(_sellingTokenAmountWei);
         checkIsPositive(_exchangeRateWei);
-        checkIdInRange(_sellingTokenId);
-        checkIdInRange(_sellingForTokenId);
-        checkIfIsSameId(_sellingForTokenId, _sellingTokenId);
+        checkTokenIdInRange(_sellingTokenId);
+        checkTokenIdInRange(_sellingForTokenId);
+        checkTokenIdNotSame(_sellingForTokenId, _sellingTokenId);
 
         transferSenderToContract(
             msg.sender,
@@ -117,7 +117,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
 
         checkOfferIsOpen(offer.offerStatus);
         checkAddressNotSender(offer.seller);
-        checkIfIsSameId(_collateralTokenId, offer.sellingId);
+        checkTokenIdNotSame(_collateralTokenId, offer.sellingId);
 
         uint256 collateralTokenAmount = getCollateral(
             offer.sellingFor,
@@ -360,10 +360,10 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
     ) external nonReentrant returns (uint256) {
         checkIsPositive(_buyingTokenAmountWei);
         checkIsPositive(_exchangeRateWei);
-        checkIdInRange(_buyingTokenId);
-        checkIdInRange(_buyingForTokenId);
-        checkIfIsSameId(_buyingTokenId, _buyingForTokenId);
-        checkIfIsSameId(_collateralTokenId, _buyingTokenId);
+        checkTokenIdInRange(_buyingTokenId);
+        checkTokenIdInRange(_buyingForTokenId);
+        checkTokenIdNotSame(_buyingTokenId, _buyingForTokenId);
+        checkTokenIdNotSame(_collateralTokenId, _buyingTokenId);
 
         uint256 buyingForTokenAmountWei = (_exchangeRateWei *
             _buyingTokenAmountWei) / 10 ** 18;
@@ -690,7 +690,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
                 saleOffers[_offerId].seller != _newAddress,
                 "Address is seller"
             );
-						require(
+            require(
                 saleOffers[_offerId].buyer != _newAddress,
                 "Address is buyer"
             );
