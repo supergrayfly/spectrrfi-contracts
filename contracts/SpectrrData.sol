@@ -5,14 +5,14 @@ pragma solidity >=0.4.22 <0.9.0;
 /// @author Supergrayfly
 /// @notice Defines and initializes the data for the SpectrrCore Contract
 contract SpectrrData {
-    /// @notice The minimum collateral to debt ratio allowing a liquidation
-    uint256 public constant MIN_RATIO_LIQUIDATION = 13 * 10 ** 17;
+    /// @notice The minimum collateral to debt ratio allowing a liquidation (1.25%)
+    uint256 public constant MIN_RATIO_LIQUIDATION = 125 * 10 ** 16;
 
-    /// @notice The collateral to debt ratio when the value of the collateral is equal to the value of the debt.
+    /// @notice The collateral to debt ratio when the value of the collateral is equal to the value of the debt (1%)
     uint256 public constant RATIO_LIQUIDATION_IS_LOSS = 1 * 10 ** 18;
 
-    /// @notice The initial collateral to debt ratio needed to create an offer.
-    uint256 public constant RATIO_COLLATERAL_TO_DEBT = 16 * 10 ** 17;
+    /// @notice The initial collateral to debt ratio needed to create an offer (1.5%)
+    uint256 public constant RATIO_COLLATERAL_TO_DEBT = 15 * 10 ** 17;
 
     /** @dev Number of existing sale offers, initialized as 0 in the beggining,
         and incremented by one at every sale offer creation.
@@ -45,19 +45,19 @@ contract SpectrrData {
 
     /// @dev SaleOffer struct, containing all the data composing a sale offer.
     struct SaleOffer {
-        OfferStatus offerStatus; //0
-        OfferLockState offerLockState; //1
-        uint256 offerId; //2
-        uint256 selling; //3
-        uint256 sellingFor; //4
-        uint256 collateral; //5
-        uint256 repayInSeconds; //6
-        uint256 timeAccepted; //7
-        uint8 sellingId; //8
-        uint8 sellingForId; //9
-        uint8 collateralId; //10
-        address seller; //11
-        address buyer; //12
+        OfferStatus offerStatus;
+        OfferLockState offerLockState;
+        uint256 offerId;
+        uint256 selling;
+        uint256 sellingFor;
+        uint256 collateral;
+        uint256 repayInSeconds;
+        uint256 timeAccepted;
+        uint8 sellingId;
+        uint8 sellingForId;
+        uint8 collateralId;
+        address seller;
+        address buyer;
     }
 
     /// @dev BuyOffer struct, containing all the data composing a buy offer.
