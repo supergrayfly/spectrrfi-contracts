@@ -7,12 +7,6 @@
         "internalType": "address",
         "name": "newAddress",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "FeeAddressChanged",
@@ -46,7 +40,7 @@
         "type": "address"
       }
     ],
-    "name": "NewToken",
+    "name": "NewTokenAdded",
     "type": "event"
   },
   {

@@ -16,7 +16,7 @@ contract SpectrrPrices {
 
         (, int256 tokenPrice, , , ) = priceFeed.latestRoundData();
 
-        require(tokenPrice > 0, "Price is negative");
+        require(tokenPrice > 0, "Negative price");
 
         return tokenPrice;
     }

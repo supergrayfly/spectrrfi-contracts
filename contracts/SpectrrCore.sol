@@ -14,12 +14,12 @@ import "./SpectrrUtils.sol";
     This contract does not allow selling/buying a token for the same token. 
     Also, the collateral token chosen in a buy offer can not be the same than the repayment token.
     For example, one could make the following buy offer:
-        Buy 1 BTC for 69,000$ (assuming a current BTC price of 68,500$), pledge 1.8 times the repayment amount in collateral (here, 1.8 BTC), 
+        Buy 1 BTC for 69,000$ (assuming a current BTC price of 68,500$), pledge 1.5 times the repayment amount in collateral (here, 1.5 BTC), 
         and specify a repayment period of 69 days. After that, let us say that that someone accepts the offer by sending 1 BTC to the buyer.
         Assuming that the price of BTC reaches 70,000$ when the debt is repaid,
         the buyer would then make a profit of 70,000$ - 69,000$ = 1000$, after selling the 1 BTC bought earlier.
         On the other hand, the seller will receive 69,000$, and would have made a profit of 69,000$ - 68,500$ = 500$.
-        It can be noted that in our case, the seller would have made more profit holding the BTC.
+        It can be noted that in our case, the seller would have made more profit just holding the BTC.
 */
 /** @custom:extra The contract was voluntarily made this way in order for it to align with the principles of Islamic finance.
     In the latter, some prohibitions include dealing with interest, 
@@ -54,9 +54,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
     ) external nonReentrant returns (uint256) {
         checkIsPositive(_sellingTokenAmountWei);
         checkIsPositive(_exchangeRateWei);
-        checkTokenIdInRange(_sellingTokenId);
-        checkTokenIdInRange(_sellingForTokenId);
-        checkTokenIdNotSame(_sellingForTokenId, _sellingTokenId);
+        checkTokensIdNotSame(_sellingForTokenId, _sellingTokenId);
 
         transferSenderToContract(
             msg.sender,
@@ -117,7 +115,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
 
         checkOfferIsOpen(offer.offerStatus);
         checkAddressNotSender(offer.seller);
-        checkTokenIdNotSame(_collateralTokenId, offer.sellingId);
+        checkTokensIdNotSame(_collateralTokenId, offer.sellingId);
 
         uint256 collateralTokenAmount = getCollateral(
             offer.sellingFor,
@@ -360,10 +358,8 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
     ) external nonReentrant returns (uint256) {
         checkIsPositive(_buyingTokenAmountWei);
         checkIsPositive(_exchangeRateWei);
-        checkTokenIdInRange(_buyingTokenId);
-        checkTokenIdInRange(_buyingForTokenId);
-        checkTokenIdNotSame(_buyingTokenId, _buyingForTokenId);
-        checkTokenIdNotSame(_collateralTokenId, _buyingTokenId);
+        checkTokensIdNotSame(_buyingTokenId, _buyingForTokenId);
+        checkTokensIdNotSame(_collateralTokenId, _buyingTokenId);
 
         uint256 buyingForTokenAmountWei = (_exchangeRateWei *
             _buyingTokenAmountWei) / 10 ** 18;

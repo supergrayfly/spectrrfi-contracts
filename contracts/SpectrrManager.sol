@@ -34,7 +34,7 @@ contract SpectrrManager is Ownable {
     }
 
     /// @notice Event emitted when a new token is added
-    event NewToken(
+    event NewTokenAdded(
         uint8 tokenId,
         string tokenName,
         address tokenAddress,
@@ -42,7 +42,7 @@ contract SpectrrManager is Ownable {
     );
 
     /// @notice Event emitted when the fee address is changed
-    event FeeAddressChanged(address newAddress, uint256 timestamp);
+    event FeeAddressChanged(address newAddress);
 
     /// @notice Adds a token to the array of tokens tradable by this contract
     /// @dev Only callable by owner
@@ -71,7 +71,12 @@ contract SpectrrManager is Ownable {
 
         tokens[id] = token;
 
-        emit NewToken(id, _tokenName, _tokenAddress, _chainlinkOracleAddress);
+        emit NewTokenAdded(
+            id,
+            _tokenName,
+            _tokenAddress,
+            _chainlinkOracleAddress
+        );
     }
 
     /// @notice Changes the fee address
@@ -79,7 +84,6 @@ contract SpectrrManager is Ownable {
     /// @param _newFeeAddress The new fee address
     function changeFeeAddress(address _newFeeAddress) external onlyOwner {
         feeAddress = _newFeeAddress;
-
-        emit FeeAddressChanged(_newFeeAddress, block.timestamp);
+        emit FeeAddressChanged(_newFeeAddress);
     }
 }

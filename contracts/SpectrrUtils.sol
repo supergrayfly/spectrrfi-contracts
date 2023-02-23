@@ -7,7 +7,7 @@ import "./SpectrrManager.sol";
 
 /// @title SpectrrUtils
 /// @author Supergrayfly
-/// @notice This contract handles 'secondary' functions, such as transferring tokens and calculating collateral.
+/// @notice This contract handles 'secondary' functions, such as transferring tokens and calculating collateral tokens.
 contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
     /// @notice Gets the current block timestamp
     /// @return uint256 The current block timestamp
@@ -19,7 +19,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
     /// @param _tokenId Id of the token we want the interface
     /// @return IERC20 The Interface of the token
     function getITokenFromId(uint8 _tokenId) public view returns (IERC20) {
-        require(_tokenId <= tokenCount && _tokenId > 0, "Token id not valid");
+        checkTokenIdInRange(_tokenId);
         return tokens[_tokenId].Itoken;
     }
 
@@ -27,13 +27,11 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
     /// @param _tokenId Id of the token we want the price
     /// @return uint256 The price of the token
     function tokenIdToPrice(uint8 _tokenId) public view returns (uint256) {
-        require(_tokenId <= tokenCount && _tokenId > 0, "Token id not valid");
-
-        uint256 price = uint256(
-            getChainlinkPrice(tokens[_tokenId].chainlinkOracleAddress)
-        );
-
-        return price * 10 ** (18 - tokens[_tokenId].decimals);
+        checkTokenIdInRange(_tokenId);
+        return
+            uint256(
+                getChainlinkPrice(tokens[_tokenId].chainlinkOracleAddress)
+            ) * 10 ** (18 - tokens[_tokenId].decimals);
     }
 
     /// @notice Calculates the liquidation price of the collateral token
@@ -44,6 +42,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
         uint8 _amountForTokenId,
         uint256 _liquidationLimit
     ) public view returns (uint256) {
+        checkTokenIdInRange(_amountForTokenId);
         return
             (_liquidationLimit *
                 _amountForTokenWei *
@@ -59,6 +58,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
         uint8 _collateralTokenId,
         uint256 _liquidationLimit
     ) public view returns (uint256) {
+        checkTokenIdInRange(_collateralTokenId);
         return
             (_collateralTokenAmountWei *
                 tokenIdToPrice(_collateralTokenId) *
@@ -72,8 +72,11 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
         uint256 _amountTokenWei,
         uint8 _amountTokenId
     ) internal {
-        IERC20 token = getITokenFromId(_amountTokenId);
-        token.transferFrom(_sender, address(this), _amountTokenWei);
+        getITokenFromId(_amountTokenId).transferFrom(
+            _sender,
+            address(this),
+            _amountTokenWei
+        );
     }
 
     /// @notice Transfers tokens from this contract to the sender of the tx
@@ -83,8 +86,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
         uint256 _amountTokenWei,
         uint8 _amountTokenId
     ) internal {
-        IERC20 token = getITokenFromId(_amountTokenId);
-        token.transfer(_sender, _amountTokenWei);
+        getITokenFromId(_amountTokenId).transfer(_sender, _amountTokenWei);
     }
 
     /// @notice Handles the transfer of the collateral, fee, and amount bought
@@ -101,17 +103,17 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
         uint256 _amountTokenWei,
         uint8 _amountTokenId
     ) internal {
-        IERC20 token = getITokenFromId(_collateralTokenId);
-
-        token.transferFrom(_sender, address(this), _collateralTokenAmountWei);
-
+        getITokenFromId(_collateralTokenId).transferFrom(
+            _sender,
+            address(this),
+            _collateralTokenAmountWei
+        );
         transferFee(_collateralTokenAmountWei, _collateralTokenId, _sender);
-
         transferContractToSender(_sender, _amountTokenWei, _amountTokenId);
     }
 
     /// @notice Transfers token from the buyer to the seller of an offer
-    /// @ Only callable internally by this contract
+    /// @dev Only callable internally by this contract
     /// @param _sender Address sending the tokens
     /// @param _receiver Address receiving the tokens
     /// @param _amountTokenWei Amount to send
@@ -122,8 +124,11 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
         uint256 _amountTokenWei,
         uint8 _amountTokenId
     ) internal {
-        IERC20 token = getITokenFromId(_amountTokenId);
-        token.transferFrom(_sender, _receiver, _amountTokenWei);
+        getITokenFromId(_amountTokenId).transferFrom(
+            _sender,
+            _receiver,
+            _amountTokenWei
+        );
     }
 
     /// @notice Calculates the collateral needed to create a buy offer or accept a sale offer
@@ -159,10 +164,11 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
         if (_amountTokenWei == 0 || _collateralTokenAmountWei == 0) {
             return 0;
         } else {
-            uint256 ratio = (_collateralTokenAmountWei *
-                tokenIdToPrice(_collateralTokenId) *
-                10 ** 18) / (_amountTokenWei * tokenIdToPrice(_amountTokenId));
-            return ratio;
+            return
+                (_collateralTokenAmountWei *
+                    tokenIdToPrice(_collateralTokenId) *
+                    10 ** 18) /
+                (_amountTokenWei * tokenIdToPrice(_amountTokenId));
         }
     }
 
@@ -399,15 +405,14 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
         uint8 _amountTokenId,
         address _sender
     ) internal {
-        IERC20 token = getITokenFromId(_amountTokenId);
-        token.transferFrom(
+        getITokenFromId(_amountTokenId).transferFrom(
             _sender,
             feeAddress,
             (_amountTokenWei / FEE_PERCENT)
         );
     }
 
-    /// @notice Checks if token Id is a tradable tokens
+    /// @notice Checks if token Id is a tradable token
     /// @param _id Id of the token
     function checkTokenIdInRange(uint8 _id) internal view {
         require(_id > 0 && _id <= tokenCount, "Invalid Id");
@@ -433,9 +438,9 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
 
     /// @notice Checks if id of two tokens are the same, reverts if true
     /// @param _id Id of first token
-    /// @param __id id of second token
-    function checkTokenIdNotSame(uint8 _id, uint8 __id) internal pure {
-        require(_id != __id, "Cannot be same token Id");
+    /// @param id_ id of second token
+    function checkTokensIdNotSame(uint8 _id, uint8 id_) internal pure {
+        require(_id != id_, "Cannot be same token Id");
     }
 
     /// @notice Checks if offer is open (i.e. not accepted or closed), reverts if false
