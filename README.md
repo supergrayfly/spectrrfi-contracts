@@ -18,7 +18,7 @@ Also, he indicates a repayment period of 7 days.
 - Alice - the buyer - is interested in Bob's offer. So, she accepts Bob's offer by posting a collateral of 1.5 times the amount she's buying, or 11,000 * 1.5 = 16,500 USDC (could be any other token but BTC), and receives Bob's 0.5 BTC.
 - Now, we can have the following three scenarios:
 	1. Before the repayment limit (7 days), Alice repays the 11,000 USDC debt and receives back her 16,500 USDC collateral.
-	2. Alice fails to repay her debt before 7 days. Bob can get the collateral tokens posted by Alice up to the value of the debt. The rest will be sent back to Alice, if any. If the value of the collateral is below the debt value, Bob will receive all of the collateral. Also, it should be mentionned that people aside from the seller can also liquidate a buyer. However, they have to first repay the debt of the buyer to the seller, and then they will receive the posted collateral.
+	2. Alice fails to repay her debt before 7 days. Bob can get the collateral tokens posted by Alice up to the value of the debt. The rest will be sent back to Alice. If the value of the collateral is below the debt value, Bob will receive all of the collateral. Also, it should be mentionned that people aside from the seller can also liquidate a buyer. However, they have to first repay the debt of the buyer to the seller, and then they will receive the posted collateral.
 	3. Before 7 days, Alice decides to forfeit the offer. By doing that, she will send to Bob collateral up to the value of her debt, and then receive back the rest if any.
 - In our scenario, if Alice repays her debt *or* is liquidated in time, Bob would make a profit of 22,000 * 0.5 - 21,000 * 0.5 = 500 $. 
 Otherwise, Bob will be losing the following amount:
