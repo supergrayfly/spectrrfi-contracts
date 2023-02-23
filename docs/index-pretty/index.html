@@ -598,11 +598,11 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <h2 id="spectrrdata"><a class="header-link" href="#spectrrdata"></a>SpectrrData</h2>
 <p>Defines and initializes the data for the SpectrrCore Contract</p>
 <h3 id="min_ratio_liquidation"><a class="header-link" href="#min_ratio_liquidation"></a>MIN_RATIO_LIQUIDATION</h3>
-<pre class="hljs"><code><span class="hljs-built_in">uint</span>256 MIN_RATIO_LIQUIDATION</code></pre><p>The minimum collateral to debt ratio allowing a liquidation</p>
+<pre class="hljs"><code><span class="hljs-built_in">uint</span>256 MIN_RATIO_LIQUIDATION</code></pre><p>The minimum collateral to debt ratio allowing a liquidation (1.25%)</p>
 <h3 id="ratio_liquidation_is_loss"><a class="header-link" href="#ratio_liquidation_is_loss"></a>RATIO_LIQUIDATION_IS_LOSS</h3>
-<pre class="hljs"><code><span class="hljs-built_in">uint</span>256 RATIO_LIQUIDATION_IS_LOSS</code></pre><p>The collateral to debt ratio when the value of the collateral is equal to the value of the debt.</p>
+<pre class="hljs"><code><span class="hljs-built_in">uint</span>256 RATIO_LIQUIDATION_IS_LOSS</code></pre><p>The collateral to debt ratio when the value of the collateral is equal to the value of the debt (1%)</p>
 <h3 id="ratio_collateral_to_debt"><a class="header-link" href="#ratio_collateral_to_debt"></a>RATIO_COLLATERAL_TO_DEBT</h3>
-<pre class="hljs"><code><span class="hljs-built_in">uint</span>256 RATIO_COLLATERAL_TO_DEBT</code></pre><p>The initial collateral to debt ratio needed to create an offer.</p>
+<pre class="hljs"><code><span class="hljs-built_in">uint</span>256 RATIO_COLLATERAL_TO_DEBT</code></pre><p>The initial collateral to debt ratio needed to create an offer (1.5%)</p>
 <h3 id="saleofferscount"><a class="header-link" href="#saleofferscount"></a>saleOffersCount</h3>
 <pre class="hljs"><code><span class="hljs-built_in">uint</span>256 saleOffersCount</code></pre><p><em>Number of existing sale offers, initialized as 0 in the beggining,
         and incremented by one at every sale offer creation.</em></p>
@@ -662,6 +662,10 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferCanceled(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a sale offer is canceled</p>
 <h3 id="saleofferliquidated"><a class="header-link" href="#saleofferliquidated"></a>SaleOfferLiquidated</h3>
 <pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferLiquidated(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">liquidator</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a sale offer is liquidated</p>
+<h3 id="saleofferselleraddresschanged"><a class="header-link" href="#saleofferselleraddresschanged"></a>SaleOfferSellerAddressChanged</h3>
+<pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferSellerAddressChanged(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">newAddress</span>)</span></code></pre><p>Event emitted when the seller address of a sale offer changes</p>
+<h3 id="saleofferbuyeraddresschanged"><a class="header-link" href="#saleofferbuyeraddresschanged"></a>SaleOfferBuyerAddressChanged</h3>
+<pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferBuyerAddressChanged(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">newAddress</span>)</span></code></pre><p>Event emitted when the buyer address of a sale offer changes</p>
 <h3 id="saleofferrepaid"><a class="header-link" href="#saleofferrepaid"></a>SaleOfferRepaid</h3>
 <pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferRepaid(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">amount</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">amountId</span>, <span class="hljs-params">bool</span> <span class="hljs-params">byPart</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a sale offer is repaid</p>
 <h3 id="saleofferforfeited"><a class="header-link" href="#saleofferforfeited"></a>SaleOfferForfeited</h3>
@@ -676,6 +680,10 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferCanceled(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a buy offer is canceled</p>
 <h3 id="buyofferliquidated"><a class="header-link" href="#buyofferliquidated"></a>BuyOfferLiquidated</h3>
 <pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferLiquidated(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">liquidator</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a buy offer is liquidated</p>
+<h3 id="buyofferselleraddresschanged"><a class="header-link" href="#buyofferselleraddresschanged"></a>BuyOfferSellerAddressChanged</h3>
+<pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferSellerAddressChanged(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">newAddress</span>)</span></code></pre><p>Event emitted when the seller address of a buy offer changes</p>
+<h3 id="buyofferbuyeraddresschanged"><a class="header-link" href="#buyofferbuyeraddresschanged"></a>BuyOfferBuyerAddressChanged</h3>
+<pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferBuyerAddressChanged(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">newAddress</span>)</span></code></pre><p>Event emitted when the buyer address of a buy offer changes</p>
 <h3 id="buyofferrepaid"><a class="header-link" href="#buyofferrepaid"></a>BuyOfferRepaid</h3>
 <pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferRepaid(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">amount</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">amountId</span>, <span class="hljs-params">bool</span> <span class="hljs-params">byPart</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a buy offer is repaid</p>
 <h3 id="buyofferforfeited"><a class="header-link" href="#buyofferforfeited"></a>BuyOfferForfeited</h3>
@@ -688,14 +696,12 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <h3 id="lockbuyoffer"><a class="header-link" href="#lockbuyoffer"></a>lockBuyOffer</h3>
 <pre class="hljs"><code>modifier lock<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span></code></pre><p><em>Same as modifier above, but for buy offers</em></p>
 <h2 id="spectrrmanager"><a class="header-link" href="#spectrrmanager"></a>SpectrrManager</h2>
-<p>This contracrt handles functions that can only be called by the dev address (e.g.: Adding new tradable tokens).</p>
+<p>This contract handles functions that can only be called by the dev address (e.g.: Adding new tradable tokens).</p>
 <h3 id="feeaddress"><a class="header-link" href="#feeaddress"></a>feeAddress</h3>
 <pre class="hljs"><code><span class="hljs-selector-tag">address</span> feeAddress</code></pre><p>address where transaction fees will be sent</p>
 <h3 id="fee_percent"><a class="header-link" href="#fee_percent"></a>FEE_PERCENT</h3>
 <pre class="hljs"><code><span class="hljs-built_in">uint</span>16 FEE_PERCENT</code></pre><p>Fee corresponding to 0.1% (amount * (100 / 0.1) = 1000,
-                taken from every accept sale/buy offer transaction.
-        In the case of a sale offer it is paid by the buyer.
-        In the case of a buy offer it is paid by the seller.</p>
+                taken when an offer is created and accepted.</p>
 <h3 id="tokencount"><a class="header-link" href="#tokencount"></a>tokenCount</h3>
 <pre class="hljs"><code><span class="hljs-built_in">uint</span>8 tokenCount</code></pre><p>The number of tokens tradable by this contract</p>
 <p><em>Used as a counter for the tokens mapping</em></p>
@@ -709,10 +715,10 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
   <span class="hljs-attribute">address</span> tokenAddress;
   <span class="hljs-attribute">address</span> chainlinkOracleAddress;
   <span class="hljs-attribute">contract</span> IERC20 Itoken;
-}</code></pre><h3 id="newtoken"><a class="header-link" href="#newtoken"></a>NewToken</h3>
-<pre class="hljs"><code>event <span class="hljs-constructor">NewToken(<span class="hljs-params">uint8</span> <span class="hljs-params">tokenId</span>, <span class="hljs-params">string</span> <span class="hljs-params">tokenName</span>, <span class="hljs-params">address</span> <span class="hljs-params">tokenAddress</span>, <span class="hljs-params">address</span> <span class="hljs-params">chainlinkOracleAddress</span>)</span></code></pre><p>Event emitted when a new token is added</p>
+}</code></pre><h3 id="newtokenadded"><a class="header-link" href="#newtokenadded"></a>NewTokenAdded</h3>
+<pre class="hljs"><code>event <span class="hljs-constructor">NewTokenAdded(<span class="hljs-params">uint8</span> <span class="hljs-params">tokenId</span>, <span class="hljs-params">string</span> <span class="hljs-params">tokenName</span>, <span class="hljs-params">address</span> <span class="hljs-params">tokenAddress</span>, <span class="hljs-params">address</span> <span class="hljs-params">chainlinkOracleAddress</span>)</span></code></pre><p>Event emitted when a new token is added</p>
 <h3 id="feeaddresschanged"><a class="header-link" href="#feeaddresschanged"></a>FeeAddressChanged</h3>
-<pre class="hljs"><code>event <span class="hljs-constructor">FeeAddressChanged(<span class="hljs-params">address</span> <span class="hljs-params">newAddress</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when the fee address is changed</p>
+<pre class="hljs"><code>event <span class="hljs-constructor">FeeAddressChanged(<span class="hljs-params">address</span> <span class="hljs-params">newAddress</span>)</span></code></pre><p>Event emitted when the fee address is changed</p>
 <h3 id="addtoken"><a class="header-link" href="#addtoken"></a>addToken</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> add<span class="hljs-constructor">Token(<span class="hljs-params">string</span> <span class="hljs-params">_tokenName</span>, <span class="hljs-params">address</span> <span class="hljs-params">_tokenAddress</span>, <span class="hljs-params">address</span> <span class="hljs-params">_chainlinkOracleAddress</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_decimals</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Adds a token to the array of tokens tradable by this contract</p>
 <p><em>Only callable by owner</em></p>
@@ -768,7 +774,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <p>Fetches the prices of various currency pairs from Chainlink price feed oracles</p>
 <h3 id="getchainlinkprice"><a class="header-link" href="#getchainlinkprice"></a>getChainlinkPrice</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> getChainlinkPrice(address _chainlinkOracleAddress) <span class="hljs-built_in">public</span> <span class="hljs-keyword">view</span> <span class="hljs-keyword">returns</span> (int256)</code></pre><h2 id="spectrrutils"><a class="header-link" href="#spectrrutils"></a>SpectrrUtils</h2>
-<p>This contract handles &#39;secondary&#39; functions, such as transferring tokens and calculating collateral.</p>
+<p>This contract handles &#39;secondary&#39; functions, such as transferring tokens and calculating collateral tokens.</p>
 <h3 id="getblocktimestamp"><a class="header-link" href="#getblocktimestamp"></a>getBlockTimestamp</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> getBlockTimestamp() <span class="hljs-keyword">external</span> <span class="hljs-keyword">view</span> <span class="hljs-keyword">returns</span> (uint256)</code></pre><p>Gets the current block timestamp</p>
 <h4 id="return-values-6"><a class="header-link" href="#return-values-6"></a>Return Values</h4>
@@ -929,8 +935,8 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tr>
 </tbody></table>
 <h3 id="transferbuyertoseller"><a class="header-link" href="#transferbuyertoseller"></a>transferBuyerToSeller</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> transfer<span class="hljs-constructor">BuyerToSeller(<span class="hljs-params">address</span> <span class="hljs-params">_sender</span>, <span class="hljs-params">address</span> <span class="hljs-params">_receiver</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountTokenWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>)</span> internal</code></pre><p>Transfers token from the buyer to the seller of an offer
-@ Only callable internally by this contract</p>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> transfer<span class="hljs-constructor">BuyerToSeller(<span class="hljs-params">address</span> <span class="hljs-params">_sender</span>, <span class="hljs-params">address</span> <span class="hljs-params">_receiver</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountTokenWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>)</span> internal</code></pre><p>Transfers token from the buyer to the seller of an offer</p>
+<p><em>Only callable internally by this contract</em></p>
 <h4 id="parameters-27"><a class="header-link" href="#parameters-27"></a>Parameters</h4>
 <table>
 <thead>
@@ -1360,8 +1366,8 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>Address of the sender</td>
 </tr>
 </tbody></table>
-<h3 id="checkidinrange"><a class="header-link" href="#checkidinrange"></a>checkIdInRange</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> check<span class="hljs-constructor">IdInRange(<span class="hljs-params">uint8</span> <span class="hljs-params">_id</span>)</span> internal view</code></pre><p>Checks if token Id is a tradable tokens</p>
+<h3 id="checktokenidinrange"><a class="header-link" href="#checktokenidinrange"></a>checkTokenIdInRange</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> check<span class="hljs-constructor">TokenIdInRange(<span class="hljs-params">uint8</span> <span class="hljs-params">_id</span>)</span> internal view</code></pre><p>Checks if token Id is a tradable token</p>
 <h4 id="parameters-37"><a class="header-link" href="#parameters-37"></a>Parameters</h4>
 <table>
 <thead>
@@ -1428,8 +1434,8 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>Amount to check</td>
 </tr>
 </tbody></table>
-<h3 id="checkifissameid"><a class="header-link" href="#checkifissameid"></a>checkIfIsSameId</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> check<span class="hljs-constructor">IfIsSameId(<span class="hljs-params">uint8</span> <span class="hljs-params">_id</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">__id</span>)</span> internal pure</code></pre><p>Checks if id of two tokens are the same, reverts if true</p>
+<h3 id="checktokensidnotsame"><a class="header-link" href="#checktokensidnotsame"></a>checkTokensIdNotSame</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> check<span class="hljs-constructor">TokensIdNotSame(<span class="hljs-params">uint8</span> <span class="hljs-params">_id</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">id_</span>)</span> internal pure</code></pre><p>Checks if id of two tokens are the same, reverts if true</p>
 <h4 id="parameters-41"><a class="header-link" href="#parameters-41"></a>Parameters</h4>
 <table>
 <thead>
@@ -1445,7 +1451,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>Id of first token</td>
 </tr>
 <tr>
-<td>__id</td>
+<td>id_</td>
 <td>uint8</td>
 <td>id of second token</td>
 </tr>
@@ -1540,6 +1546,9 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>The debt owed</td>
 </tr>
 </tbody></table>
-    </article>
+<h2 id="spectrrpaymentsplitter"><a class="header-link" href="#spectrrpaymentsplitter"></a>SpectrrPaymentSplitter</h2>
+<p>This contract receives and distributes the fees genrated by Spectrr Finance to different receivers.</p>
+<h3 id="constructor-1"><a class="header-link" href="#constructor-1"></a>constructor</h3>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">constructor</span><span class="hljs-params">()</span> <span class="hljs-title">public</span></span></code></pre>    </article>
   </body>
 </html>

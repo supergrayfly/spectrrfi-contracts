@@ -393,7 +393,7 @@ Defines and initializes the data for the SpectrrCore Contract
 uint256 MIN_RATIO_LIQUIDATION
 ```
 
-The minimum collateral to debt ratio allowing a liquidation
+The minimum collateral to debt ratio allowing a liquidation (1.25%)
 
 ### RATIO_LIQUIDATION_IS_LOSS
 
@@ -401,7 +401,7 @@ The minimum collateral to debt ratio allowing a liquidation
 uint256 RATIO_LIQUIDATION_IS_LOSS
 ```
 
-The collateral to debt ratio when the value of the collateral is equal to the value of the debt.
+The collateral to debt ratio when the value of the collateral is equal to the value of the debt (1%)
 
 ### RATIO_COLLATERAL_TO_DEBT
 
@@ -409,7 +409,7 @@ The collateral to debt ratio when the value of the collateral is equal to the va
 uint256 RATIO_COLLATERAL_TO_DEBT
 ```
 
-The initial collateral to debt ratio needed to create an offer.
+The initial collateral to debt ratio needed to create an offer (1.5%)
 
 ### saleOffersCount
 
@@ -669,7 +669,7 @@ _Same as modifier above, but for buy offers_
 
 ## SpectrrManager
 
-This contracrt handles functions that can only be called by the dev address (e.g.: Adding new tradable tokens).
+This contract handles functions that can only be called by the dev address (e.g.: Adding new tradable tokens).
 
 ### feeAddress
 
@@ -719,10 +719,10 @@ struct Token {
 }
 ```
 
-### NewToken
+### NewTokenAdded
 
 ```solidity
-event NewToken(uint8 tokenId, string tokenName, address tokenAddress, address chainlinkOracleAddress)
+event NewTokenAdded(uint8 tokenId, string tokenName, address tokenAddress, address chainlinkOracleAddress)
 ```
 
 Event emitted when a new token is added
@@ -730,7 +730,7 @@ Event emitted when a new token is added
 ### FeeAddressChanged
 
 ```solidity
-event FeeAddressChanged(address newAddress, uint256 timestamp)
+event FeeAddressChanged(address newAddress)
 ```
 
 Event emitted when the fee address is changed
@@ -782,7 +782,7 @@ function getChainlinkPrice(address _chainlinkOracleAddress) public view returns 
 
 ## SpectrrUtils
 
-This contract handles 'secondary' functions, such as transferring tokens and calculating collateral.
+This contract handles 'secondary' functions, such as transferring tokens and calculating collateral tokens.
 
 ### getBlockTimestamp
 
@@ -913,7 +913,8 @@ function transferBuyerToSeller(address _sender, address _receiver, uint256 _amou
 ```
 
 Transfers token from the buyer to the seller of an offer
-@ Only callable internally by this contract
+
+_Only callable internally by this contract_
 
 #### Parameters
 
@@ -1113,13 +1114,13 @@ _Only callable internally by this contract_
 | _amountTokenId | uint8 | Id of the amount |
 | _sender | address | Address of the sender |
 
-### checkIdInRange
+### checkTokenIdInRange
 
 ```solidity
-function checkIdInRange(uint8 _id) internal view
+function checkTokenIdInRange(uint8 _id) internal view
 ```
 
-Checks if token Id is a tradable tokens
+Checks if token Id is a tradable token
 
 #### Parameters
 
@@ -1169,10 +1170,10 @@ Checks if amount is positive, reverts if false
 | ---- | ---- | ----------- |
 | _amountTokenWei | uint256 | Amount to check |
 
-### checkIfIsSameId
+### checkTokensIdNotSame
 
 ```solidity
-function checkIfIsSameId(uint8 _id, uint8 __id) internal pure
+function checkTokensIdNotSame(uint8 _id, uint8 id_) internal pure
 ```
 
 Checks if id of two tokens are the same, reverts if true
@@ -1182,7 +1183,7 @@ Checks if id of two tokens are the same, reverts if true
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _id | uint8 | Id of first token |
-| __id | uint8 | id of second token |
+| id_ | uint8 | id of second token |
 
 ### checkOfferIsOpen
 
