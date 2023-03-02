@@ -754,6 +754,23 @@ _Only callable by owner_
 | _chainlinkOracleAddress | address | Address of the chainlink contract used to take the price from |
 | _decimals | uint8 | Number of decimals the chainlink price has |
 
+### changeChainlinkOracleAddress
+
+```solidity
+function changeChainlinkOracleAddress(uint8 _tokenId, address _newChainlinkOracleAddress) external
+```
+
+Changes the address of the chainlink oracle of a token
+
+_Only callable by the current owner_
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tokenId | uint8 | id of the token we want to change the oracle address |
+| _newChainlinkOracleAddress | address | address of the new chainlink oracle |
+
 ### changeFeeAddress
 
 ```solidity
@@ -1127,6 +1144,20 @@ Checks if token Id is a tradable token
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _id | uint8 | Id of the token |
+
+### checkAddressNotZero
+
+```solidity
+function checkAddressNotZero(address _address) internal pure
+```
+
+Checks if address is zero address
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _address | address | Address to check |
 
 ### checkAddressNotSender
 

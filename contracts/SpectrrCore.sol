@@ -672,7 +672,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
                 saleOffers[_offerId].seller != _newAddress,
                 "Address is seller"
             );
-            require(_newAddress != address(0), "Address is null address");
+            checkAddressNotZero(_newAddress);
 
             saleOffers[_offerId].seller = _newAddress;
 
@@ -690,7 +690,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
                 saleOffers[_offerId].buyer != _newAddress,
                 "Address is buyer"
             );
-            require(_newAddress != address(0), "Address is null address");
+            checkAddressNotZero(_newAddress);
 
             saleOffers[_offerId].buyer = _newAddress;
 
@@ -729,7 +729,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
                 buyOffers[_offerId].seller != _newAddress,
                 "Address is seller"
             );
-            require(_newAddress != address(0), "Address is null address");
+            checkAddressNotZero(_newAddress);
 
             buyOffers[_offerId].seller = _newAddress;
 
@@ -747,7 +747,7 @@ contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
                 buyOffers[_offerId].buyer != _newAddress,
                 "Address is buyer"
             );
-            require(_newAddress != address(0), "Address is null address");
+            checkAddressNotZero(_newAddress);
 
             buyOffers[_offerId].buyer = _newAddress;
 

@@ -418,6 +418,12 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
         require(_id > 0 && _id <= tokenCount, "Invalid Id");
     }
 
+    /// @notice Checks if address is zero address
+    /// @param _address Address to check
+    function checkAddressNotZero(address _address) internal pure {
+        require(_address != address(0), "Address is Zero");
+    }
+
     /// @notice Checks if address matches with sender of transaction, reverts if true
     /// @param _address Address to compare with msg.sender
     function checkAddressNotSender(address _address) internal view {

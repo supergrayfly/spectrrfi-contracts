@@ -828,6 +828,24 @@
   {
     "inputs": [
       {
+        "internalType": "uint8",
+        "name": "_tokenId",
+        "type": "uint8"
+      },
+      {
+        "internalType": "address",
+        "name": "_newChainlinkOracleAddress",
+        "type": "address"
+      }
+    ],
+    "name": "changeChainlinkOracleAddress",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "_newFeeAddress",
         "type": "address"
