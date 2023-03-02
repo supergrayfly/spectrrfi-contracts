@@ -79,6 +79,20 @@ contract SpectrrManager is Ownable {
         );
     }
 
+    /// @notice Changes the address of the chainlink oracle of a token
+    /// @dev Only callable by the current owner
+    /// @param _tokenId id of the token we want to change the oracle address
+    /// @param _newChainlinkOracleAddress address of the new chainlink oracle
+    function changeChainlinkOracleAddress(
+        uint8 _tokenId,
+        address _newChainlinkOracleAddress
+    ) external onlyOwner {
+        require(_tokenId > 0 && _tokenId <= tokenCount, "Invalid Id");
+        require(_newChainlinkOracleAddress != address(0), "Address is Zero");
+
+        tokens[_tokenId].chainlinkOracleAddress = _newChainlinkOracleAddress;
+    }
+
     /// @notice Changes the fee address
     /// @dev Only callable by the current owner
     /// @param _newFeeAddress The new fee address
