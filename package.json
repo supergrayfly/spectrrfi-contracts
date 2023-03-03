@@ -1,13 +1,13 @@
 {
   "name": "spectrr-finance",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Spectrr Finance Smart Contracts",
   "scripts": {
     "pretty": "prettier --write 'contracts/*'", 
     "compile": "hardhat compile",
     "docgen": "hardhat docgen",
-    "deploy": "hardhat run ./scripts/deploy.js",
-		"deploy-splitter": "hardhat run ./scripts/deploy_payment_splitter.js"
+    "deploy": "hardhat run ./scripts/deploy.js --network fantomOpera",
+		"deployTest": "hardhat run ./scripts/deploy.js --network mumbai"
   },
   "author": "Supergrayfly",
   "license": "BSD-3-Clause-Attribution",
