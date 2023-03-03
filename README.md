@@ -59,9 +59,10 @@ To get this repository on your machine:
 
 To deploy the contracts:
 ```
+// deploying to fantom blockchain:
 > npm run deploy
-// deploy to specific chain (check the file 'hardhat.config.js' for available chain options)
-> npm run deploy --network fantom_mainnet
+// deploying to mumbai blockchain:
+> npm run deployTest
 ```
 
 ## Disclaimer

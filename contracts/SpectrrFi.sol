@@ -31,12 +31,12 @@ import "./SpectrrUtils.sol";
     https://www.gfmag.com/topics/blogs/what-products-does-islamic-finance-offer  
 */
 contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
-		/// @param _feeAddress Adress where fees will be sent
+    /// @param _feeAddress Adress where fees will be sent
     /// @dev EIP712 Constructor
     /// @dev EIP712's params are the name and version of the contract
     constructor(address _feeAddress) EIP712("Spectrr Finance", "ver. 0.0.1") {
-			feeAddress = _feeAddress;
-		}
+        feeAddress = _feeAddress;
+    }
 
     /// @notice Creates and posts a sale offer
     /// @notice There is a 0.1% fee of the selling amount, paid by the seller to the fee address.
