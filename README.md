@@ -10,7 +10,7 @@ Interest-Free Lending and Borrowing like Decentralised Application.
 ## Overview
 
 The Spectrr Finance Smart Contracts enable people to sell and buy crypto assets, and then repay them at a later time.
-The protocol is based on Cost Plus Financing or *Murabaha* (in arabic), which is widely used in Islamic banks to finance its customers([1](https://www.investopedia.com/articles/07/islamic_investing.asp), [2](https://www.gfmag.com/topics/blogs/what-products-does-islamic-finance-offer) 
+The protocol is based on Cost Plus Financing or *Murabaha* (in arabic), which is widely used in Islamic banks to finance its customers([1](https://www.investopedia.com/articles/07/islamic_investing.asp), [2](https://www.gfmag.com/topics/blogs/what-products-does-islamic-finance-offer)) 
 To have a glimpse of how Spectrr Finance works, consider the following sale offer (Let us assume a Bitcoin price of 21,000 $):
 
 - Bob - the seller - wants to sell 0.5 Bitcoin at a rate of 22,000 USDC/BTC, or 0.5 BTC for 11,000 USDC. 
