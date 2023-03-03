@@ -6,7 +6,7 @@ require('dotenv').config()
 const privKey = process.env.PRIV_KEY
 
 module.exports = {
-  defaultNetwork: 'mumbai',
+  defaultNetwork: 'fantomTestnet',
   networks: {
      mumbai: {
        url: 'https://rpc-mumbai.maticvigil.com/',
@@ -14,7 +14,7 @@ module.exports = {
        gasPrice: 1500000000,
      },
     fantomTestnet: {
-      url: 'https://rpc.testnet.fantom.network/',
+      url: 'https://endpoints.omniatech.io/v1/fantom/testnet/public',
       accounts: [privKey],
       gasPrice: 3500000000,
     },

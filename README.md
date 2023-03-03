@@ -45,8 +45,7 @@ which other users can then accept (peer-to-peer, permissionless).
 ## Supported Networks
 
 - Mainnet: Fantom Opera (available at spectrr.eth)
-- Testnet: Polygon Mumbai (also available at spectrr.eth)
-(Because The Graph hosted service does not directly support Fantom testnet [indexing](https://thegraph.com/docs/en/deploying/deploying-a-subgraph-to-hosted/])
+- Testnet: Fantom Testnet (also available at spectrr.eth)
 
 ## Installation
 
