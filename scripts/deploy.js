@@ -1,12 +1,12 @@
 const hre = require("hardhat");
 
 async function main() {
-  const SpectrrCore = await hre.ethers.getContractFactory("SpectrrCore");
-  const spectrrCore = await SpectrrCore.deploy();
+  const SpectrrFi = await hre.ethers.getContractFactory("SpectrrFi");
+  const spectrrFi = await SpectrrFi.deploy();
 
-  await spectrrCore.deployed();
+  await spectrrFi.deployed();
 
-  console.log(`Contract Address: "${spectrrCore.address}"`);
+  console.log(`Contract Address: "${spectrrFi.address}"`);
 }
 
 main().catch((error) => {
