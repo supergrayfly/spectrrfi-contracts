@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "./SpectrrUtils.sol";
 
-/// @title SpectrrCore
+/// @title SpectrrFi
 /// @author Supergrayfly
 /** @notice This contract is a lending and borrowing like platform;
     'like', because it is not interest based like other existing lending dApps.
@@ -30,10 +30,13 @@ import "./SpectrrUtils.sol";
     https://www.investopedia.com/articles/07/islamic_investing.asp
     https://www.gfmag.com/topics/blogs/what-products-does-islamic-finance-offer  
 */
-contract SpectrrCore is SpectrrUtils, EIP712, ReentrancyGuard {
+contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
+		/// @param _feeAddress Adress where fees will be sent
     /// @dev EIP712 Constructor
     /// @dev EIP712's params are the name and version of the contract
-    constructor() EIP712("Spectrr Finance", "ver. 0.0.1") {}
+    constructor(address _feeAddress) EIP712("Spectrr Finance", "ver. 0.0.1") {
+			feeAddress = _feeAddress;
+		}
 
     /// @notice Creates and posts a sale offer
     /// @notice There is a 0.1% fee of the selling amount, paid by the seller to the fee address.

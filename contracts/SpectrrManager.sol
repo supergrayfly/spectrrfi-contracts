@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 /// @notice This contract handles functions that can only be called by the dev address (e.g.: Adding new tradable tokens).
 contract SpectrrManager is Ownable {
     /// @notice address where transaction fees will be sent
-    address public feeAddress = 0x35A6F13710087492F0F0146F8471117c9cB22E18;
+    address public feeAddress;
 
     /** @notice Fee corresponding to 0.1% (amount * (100 / 0.1) = 1000,
 				taken when an offer is created and accepted.
@@ -56,9 +56,9 @@ contract SpectrrManager is Ownable {
         address _chainlinkOracleAddress,
         uint8 _decimals
     ) external onlyOwner {
-        uint8 id = ++tokenCount;
-
         IERC20 Itoken = IERC20(_tokenAddress);
+
+        uint8 id = ++tokenCount;
 
         Token memory token = Token(
             id,
