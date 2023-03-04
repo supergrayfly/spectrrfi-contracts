@@ -44,8 +44,8 @@ which other users can then accept (peer-to-peer, permissionless).
 
 ## Supported Networks
 
-- Mainnet: Fantom Opera (available at spectrr.eth)
-- Testnet: Fantom Testnet (also available at spectrr.eth)
+- Mainnet: Fantom Opera (available at spectrrfi.eth)
+- Testnet: Fantom Testnet (also available at spectrrfi.eth)
 
 ## Installation
 
