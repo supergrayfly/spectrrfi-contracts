@@ -81,12 +81,6 @@
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint8",
-        "name": "amountId",
-        "type": "uint8"
       }
     ],
     "name": "BuyOfferCollateralAdded",
@@ -386,12 +380,6 @@
         "indexed": false,
         "internalType": "uint256",
         "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amountId",
         "type": "uint256"
       }
     ],
@@ -850,30 +838,6 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_offerId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "_offerType",
-        "type": "uint8"
-      }
-    ],
-    "name": "canLiquidate",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
         "name": "_amountTokenWei",
         "type": "uint256"
       },
@@ -1281,54 +1245,6 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_offerId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "_offerType",
-        "type": "uint8"
-      }
-    ],
-    "name": "getLiquidationPriceAmountFor",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_offerId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "_offerType",
-        "type": "uint8"
-      }
-    ],
-    "name": "getLiquidationPriceCollateral",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
         "name": "_collateralTokenAmountWei",
         "type": "uint256"
       },
@@ -1396,50 +1312,6 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_offerId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "_offerType",
-        "type": "uint8"
-      }
-    ],
-    "name": "getRatioInfo",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "",
-        "type": "uint8"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint8",
         "name": "_tokenId",
         "type": "uint8"
@@ -1451,30 +1323,6 @@
         "internalType": "uint8",
         "name": "",
         "type": "uint8"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_offerId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "_offerType",
-        "type": "uint8"
-      }
-    ],
-    "name": "isLiquidationLoss",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
       }
     ],
     "stateMutability": "view",

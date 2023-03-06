@@ -497,12 +497,11 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         transferSenderToContract(msg.sender, _amountToAdd, offer.collateralId);
 
-        offer.collateral += amountToWei(_amountToAdd);
+        offer.collateral += amountToWei(_amountToAdd, offer.collateralId);
 
         emit BuyOfferCollateralAdded(
             _offerId,
-            _amountToAdd,
-            offer.collateralId
+            _amountToAdd
         );
     }
 

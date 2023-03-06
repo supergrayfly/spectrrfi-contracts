@@ -70,12 +70,6 @@
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint8",
-        "name": "amountId",
-        "type": "uint8"
       }
     ],
     "name": "BuyOfferCollateralAdded",
@@ -312,12 +306,6 @@
         "indexed": false,
         "internalType": "uint256",
         "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amountId",
         "type": "uint256"
       }
     ],
