@@ -21,9 +21,9 @@ import "./SpectrrUtils.sol";
         On the other hand, the seller will receive 69,000$, and would have made a profit of 69,000$ - 68,500$ = 500$.
         It can be noted that in our case, the seller would have made more profit just holding the BTC.
 */
-/** @custom:extra The contract was voluntarily made this way in order for it to align with the principles of Islamic finance.
+/** @custom:extra This contract was voluntarily made this way in order for it to align with the principles of Islamic finance.
     In the latter, some prohibitions include dealing with interest, 
-    activities related to prohibited things (interest, gambling, stealing), 
+    activities related to prohibited things (e.g.: gambling & stealing), 
     and selling an asset for the same exact asset plus an extra amount (interest).
 
     Some Useful links:
@@ -34,48 +34,54 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
     /// @param _feeAddress Adress where fees will be sent
     /// @dev EIP712 Constructor
     /// @dev EIP712's params are the name and version of the contract
-    constructor(address _feeAddress) EIP712("Spectrr Finance", "ver. 0.0.1") {
+    constructor(address _feeAddress) EIP712("Spectrr Finance", "ver. 0.0.2") {
         feeAddress = _feeAddress;
     }
 
     /// @notice Creates and posts a sale offer
     /// @notice There is a 0.1% fee of the selling amount, paid by the seller to the fee address.
-    /// @param _sellingTokenAmountWei Amount the sender is selling
+    /// @param _sellingTokenAmount Amount the sender is selling
     /// @param _sellingTokenId Id of the selling token, can not be same than id of sell for token.
-    /// @param _exchangeRateWei Exchange rate between the selling amount sell for amount
+    /// @param _exchangeRate Exchange rate between the selling amount sell for amount
     /// @param _sellingForTokenId Id of the token exchanged for, can not be same than id of the selling token.
-    /** @param _repayInSeconds Repayment period in unix seconds,
-        a value of 0 will allow an unlimited repayment time .
-    */
+    /// @param _repayInSeconds Repayment period in unix seconds, a value of 0 will allow an unlimited repayment time .
     /// @return uint256 Id of the offer created
     function createSaleOffer(
-        uint256 _sellingTokenAmountWei,
+        uint256 _sellingTokenAmount,
         uint8 _sellingTokenId,
-        uint256 _exchangeRateWei,
+        uint256 _exchangeRate,
         uint8 _sellingForTokenId,
         uint256 _repayInSeconds
     ) external nonReentrant returns (uint256) {
-        checkIsPositive(_sellingTokenAmountWei);
-        checkIsPositive(_exchangeRateWei);
+        checkIsPositive(_sellingTokenAmount);
+        checkIsPositive(_exchangeRate);
         checkTokensIdNotSame(_sellingForTokenId, _sellingTokenId);
 
         transferSenderToContract(
             msg.sender,
-            _sellingTokenAmountWei,
+            _sellingTokenAmount,
             _sellingTokenId
         );
 
-        transferFee(_sellingTokenAmountWei, _sellingTokenId, msg.sender);
+        transferFee(_sellingTokenAmount, _sellingTokenId, msg.sender);
 
         uint256 offerId = ++saleOffersCount;
-        uint256 sellingForTokenAmountWei = (_exchangeRateWei *
-            _sellingTokenAmountWei) / 10 ** 18;
+        uint256 sellingTokenAmountWei = amountToWei(
+            _sellingTokenAmount,
+            getTokenDecimalsFromId(_sellingTokenId)
+        );
+        uint256 exchangeRateWei = amountToWei(
+            _exchangeRate,
+            getTokenDecimalsFromId(_sellingForTokenId)
+        );
+        uint256 sellingForTokenAmountWei = (exchangeRateWei *
+            sellingTokenAmountWei) / WEI;
 
         SaleOffer memory offer = SaleOffer(
             OfferStatus.open,
             OfferLockState.unlocked,
             offerId,
-            _sellingTokenAmountWei,
+            sellingTokenAmountWei,
             sellingForTokenAmountWei,
             0,
             _repayInSeconds,
@@ -91,11 +97,11 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         emit SaleOfferCreated(
             offerId,
-            _sellingTokenAmountWei,
+            sellingTokenAmountWei,
             _sellingTokenId,
             sellingForTokenAmountWei,
             _sellingForTokenId,
-            _exchangeRateWei,
+            exchangeRateWei,
             _repayInSeconds,
             msg.sender,
             block.timestamp
@@ -143,7 +149,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         emit SaleOfferAccepted(
             _offerId,
-            collateralTokenAmount,
+            amountToWei(collateralTokenAmount, _collateralTokenId),
             _collateralTokenId,
             msg.sender,
             block.timestamp
@@ -164,7 +170,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         offer.offerStatus = OfferStatus.closed;
 
-        emit SaleOfferCanceled(_offerId, block.timestamp);
+        emit SaleOfferCanceled(_offerId);
     }
 
     /// @notice Adds collateral to a sale offer
@@ -183,14 +189,9 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         transferSenderToContract(msg.sender, _amountToAdd, offer.collateralId);
 
-        offer.collateral += _amountToAdd;
+        offer.collateral += amountToWei(_amountToAdd, offer.collateralId);
 
-        emit SaleOfferCollateralAdded(
-            _offerId,
-            _amountToAdd,
-            offer.collateralId,
-            block.timestamp
-        );
+        emit SaleOfferCollateralAdded(_offerId, _amountToAdd);
     }
 
     /// @notice Fully repays the debt of a sale offer
@@ -218,8 +219,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
             _offerId,
             offer.sellingFor,
             offer.sellingForId,
-            false,
-            block.timestamp
+            false
         );
     }
 
@@ -231,9 +231,13 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         uint256 _amountToRepay
     ) external nonReentrant lockSaleOffer(_offerId) {
         SaleOffer storage offer = saleOffers[_offerId];
+        uint256 amountToRepayWei = amountToWei(
+            _amountToRepay,
+            offer.sellingForId
+        );
 
-        checkIsPositive(_amountToRepay);
-        checkIsLessThan(_amountToRepay, offer.sellingFor);
+        checkIsPositive(amountToRepayWei);
+        checkIsLessThan(amountToRepayWei, offer.sellingFor);
         checkOfferIsAccepted(offer.offerStatus);
         checkAddressSender(offer.buyer);
 
@@ -244,14 +248,13 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
             offer.sellingForId
         );
 
-        offer.sellingFor -= _amountToRepay;
+        offer.sellingFor -= amountToRepayWei;
 
         emit SaleOfferRepaid(
             _offerId,
-            _amountToRepay,
+            amountToRepayWei,
             offer.sellingForId,
-            true,
-            block.timestamp
+            true
         );
     }
 
@@ -307,7 +310,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         offer.offerStatus = OfferStatus.closed;
 
-        emit SaleOfferLiquidated(_offerId, msg.sender, block.timestamp);
+        emit SaleOfferLiquidated(_offerId, msg.sender);
     }
 
     /// @notice Forfeits a sale offer
@@ -334,14 +337,14 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         offer.offerStatus = OfferStatus.closed;
 
-        emit SaleOfferForfeited(_offerId, block.timestamp);
+        emit SaleOfferForfeited(_offerId);
     }
 
     /// @notice Creates and posts a buy offer
     /// @notice There is a 0.1% fee of the buying amount, paid by the buyer to the fee address.
-    /// @param _buyingTokenAmountWei Amount to buy
+    /// @param _buyingTokenAmount Amount to buy
     /// @param _buyingTokenId Id of the buying token
-    /// @param _exchangeRateWei Exchange rate between buying amount and buy for amount
+    /// @param _exchangeRate Exchange rate between buying amount and buy for amount
     /** @param _buyingForTokenId Id of the repayment token,
         can not be same than id of token buying.
     */
@@ -352,20 +355,25 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         a value of 0 will allow an unlimited repayment time .
     */
     function createBuyOffer(
-        uint256 _buyingTokenAmountWei,
+        uint256 _buyingTokenAmount,
         uint8 _buyingTokenId,
-        uint256 _exchangeRateWei,
+        uint256 _exchangeRate,
         uint8 _buyingForTokenId,
         uint8 _collateralTokenId,
         uint256 _repayInSeconds
     ) external nonReentrant returns (uint256) {
-        checkIsPositive(_buyingTokenAmountWei);
-        checkIsPositive(_exchangeRateWei);
+        checkIsPositive(_buyingTokenAmount);
+        checkIsPositive(_exchangeRate);
         checkTokensIdNotSame(_buyingTokenId, _buyingForTokenId);
         checkTokensIdNotSame(_collateralTokenId, _buyingTokenId);
 
-        uint256 buyingForTokenAmountWei = (_exchangeRateWei *
-            _buyingTokenAmountWei) / 10 ** 18;
+        uint256 exchangeRateWei = amountToWei(_exchangeRate, _buyingForTokenId);
+        uint256 buyingTokenAmountWei = amountToWei(
+            _buyingTokenAmount,
+            _buyingForTokenId
+        );
+        uint256 buyingForTokenAmountWei = (exchangeRateWei *
+            buyingTokenAmountWei) / WEI;
         uint256 collateralTokenAmountWei = getCollateral(
             buyingForTokenAmountWei,
             _buyingForTokenId,
@@ -375,11 +383,15 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         transferSenderToContract(
             msg.sender,
-            collateralTokenAmountWei,
+            amountFromWei(collateralTokenAmountWei, _collateralTokenId),
             _collateralTokenId
         );
 
-        transferFee(collateralTokenAmountWei, _collateralTokenId, msg.sender);
+        transferFee(
+            amountFromWei(collateralTokenAmountWei, _collateralTokenId),
+            _collateralTokenId,
+            msg.sender
+        );
 
         uint256 offerId = ++buyOffersCount;
 
@@ -387,7 +399,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
             OfferStatus.open,
             OfferLockState.unlocked,
             offerId,
-            _buyingTokenAmountWei,
+            buyingTokenAmountWei,
             buyingForTokenAmountWei,
             collateralTokenAmountWei,
             _repayInSeconds,
@@ -403,11 +415,11 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         emit BuyOfferCreated(
             offerId,
-            _buyingTokenAmountWei,
+            buyingTokenAmountWei,
             _buyingTokenId,
-            buyOffers[offerId].buyingFor,
+            buyingForTokenAmountWei,
             _buyingForTokenId,
-            _exchangeRateWei,
+            exchangeRateWei,
             _collateralTokenId,
             _repayInSeconds,
             msg.sender,
@@ -424,6 +436,10 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         uint256 _offerId
     ) external nonReentrant lockBuyOffer(_offerId) {
         BuyOffer storage offer = buyOffers[_offerId];
+        uint256 buyingAmountFromWei = amountFromWei(
+            offer.buying,
+            offer.buyingId
+        );
 
         checkOfferIsOpen(offer.offerStatus);
         checkAddressNotSender(offer.buyer);
@@ -431,11 +447,11 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         transferBuyerToSeller(
             msg.sender,
             offer.buyer,
-            offer.buying,
+            buyingAmountFromWei,
             offer.buyingId
         );
 
-        transferFee(offer.buying, offer.buyingId, msg.sender);
+        transferFee(buyingAmountFromWei, offer.buyingId, msg.sender);
 
         offer.timeAccepted = block.timestamp;
         offer.offerStatus = OfferStatus.accepted;
@@ -462,7 +478,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         offer.offerStatus = OfferStatus.closed;
 
-        emit BuyOfferCanceled(_offerId, block.timestamp);
+        emit BuyOfferCanceled(_offerId);
     }
 
     /// @notice Adds collateral to a buy offer
@@ -481,13 +497,12 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         transferSenderToContract(msg.sender, _amountToAdd, offer.collateralId);
 
-        offer.collateral += _amountToAdd;
+        offer.collateral += amountToWei(_amountToAdd);
 
         emit BuyOfferCollateralAdded(
             _offerId,
             _amountToAdd,
-            offer.collateralId,
-            block.timestamp
+            offer.collateralId
         );
     }
 
@@ -516,8 +531,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
             _offerId,
             offer.buyingFor,
             offer.buyingForId,
-            false,
-            block.timestamp
+            false
         );
     }
 
@@ -529,9 +543,10 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         uint256 _amountToRepay
     ) external nonReentrant lockBuyOffer(_offerId) {
         BuyOffer storage offer = buyOffers[_offerId];
+        uint256 amountToRepayWei = amountToWei(_amountToRepay, offer.buyingId);
 
         checkIsPositive(_amountToRepay);
-        checkIsLessThan(_amountToRepay, offer.buyingFor);
+        checkIsLessThan(amountToRepayWei, offer.buyingFor);
         checkOfferIsAccepted(offer.offerStatus);
         checkAddressSender(offer.buyer);
 
@@ -542,14 +557,13 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
             offer.buyingForId
         );
 
-        offer.buyingFor -= _amountToRepay;
+        offer.buyingFor -= amountToRepayWei;
 
         emit BuyOfferRepaid(
             _offerId,
-            _amountToRepay,
+            amountToRepayWei,
             offer.buyingForId,
-            true,
-            block.timestamp
+            true
         );
     }
 
@@ -605,7 +619,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         offer.offerStatus = OfferStatus.closed;
 
-        emit BuyOfferLiquidated(_offerId, msg.sender, block.timestamp);
+        emit BuyOfferLiquidated(_offerId, msg.sender);
     }
 
     /// @notice Forfeits a buy offer
@@ -644,7 +658,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         offer.offerStatus = OfferStatus.closed;
 
-        emit BuyOfferForfeited(_offerId, block.timestamp);
+        emit BuyOfferForfeited(_offerId);
     }
 
     /// @notice Changes the seller or buyer's address of an offer
@@ -757,215 +771,6 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
             emit BuyOfferBuyerAddressChanged(_offerId, _newAddress);
         } else {
             revert("Invalid Address Type");
-        }
-    }
-
-    /// @notice Gets the collateral to debt ratio, debt amount, debt amount id, collateral id, and buyer's address of an offer.
-    /// @param _offerId Id of the offer we want to get info on
-    /// @param _offerType Type of offer: 0 for sale offer and 1 for buy offer.
-    /// @return uint256 Collateral to debt ratio
-    /// @return uint256 Debt amount
-    /// @return uint8 Id of the debt token
-    /// @return uint8 Id of the collateral
-    /// @return address Address of the buyer
-    function getRatioInfo(
-        uint256 _offerId,
-        uint8 _offerType
-    ) external view returns (uint256, uint256, uint8, uint8, address) {
-        if (_offerType == 0) {
-            SaleOffer memory offer = saleOffers[_offerId];
-
-            return (
-                getRatio(
-                    offer.sellingFor,
-                    offer.collateral,
-                    offer.sellingForId,
-                    offer.collateralId
-                ),
-                offer.sellingFor,
-                offer.sellingForId,
-                offer.collateralId,
-                offer.buyer
-            );
-        } else if (_offerType == 1) {
-            BuyOffer memory offer = buyOffers[_offerId];
-
-            return (
-                getRatio(
-                    offer.buyingFor,
-                    offer.collateral,
-                    offer.buyingForId,
-                    offer.collateralId
-                ),
-                offer.buyingFor,
-                offer.buyingForId,
-                offer.collateralId,
-                offer.buyer
-            );
-        } else {
-            revert("Invalid offer type");
-        }
-    }
-
-    /// @notice Checks if an offer can be liquidated
-    /// @param _offerId Id of the offer we want to check
-    /// @param _offerType Type of offer: 0 for sale offer and 1 for buy offer.
-    /// @return bool If the offer can be liquidated or not
-    function canLiquidate(
-        uint256 _offerId,
-        uint8 _offerType
-    ) external view returns (bool) {
-        if (_offerType == 0) {
-            SaleOffer memory offer = saleOffers[_offerId];
-
-            if (
-                canLiquidate(
-                    offer.sellingFor,
-                    offer.sellingForId,
-                    offer.collateral,
-                    offer.collateralId,
-                    MIN_RATIO_LIQUIDATION
-                ) ||
-                canLiquidateTimeOver(offer.timeAccepted, offer.repayInSeconds)
-            ) {
-                return true;
-            } else {
-                return false;
-            }
-        } else if (_offerType == 1) {
-            BuyOffer memory offer = buyOffers[_offerId];
-
-            if (
-                canLiquidate(
-                    offer.buyingFor,
-                    offer.buyingForId,
-                    offer.collateral,
-                    offer.collateralId,
-                    MIN_RATIO_LIQUIDATION
-                ) ||
-                canLiquidateTimeOver(offer.timeAccepted, offer.repayInSeconds)
-            ) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            revert("Invalid offer type");
-        }
-    }
-
-    /// @notice Determines if a liquidation will incur a loss
-    /// @param _offerId Id of the offer we want to check
-    /// @param _offerType Type of offer: 0 for sale offer and 1 for buy offer.
-    /// @return bool If the liquidation will incur a loss or not
-    function isLiquidationLoss(
-        uint256 _offerId,
-        uint8 _offerType
-    ) external view returns (bool) {
-        if (
-            _offerType == 0 &&
-            saleOffers[_offerId].offerStatus == OfferStatus.accepted
-        ) {
-            SaleOffer memory offer = saleOffers[_offerId];
-
-            if (
-                getRatio(
-                    offer.sellingFor,
-                    offer.collateral,
-                    offer.sellingForId,
-                    offer.collateralId
-                ) >= RATIO_LIQUIDATION_IS_LOSS
-            ) {
-                return false;
-            } else {
-                return true;
-            }
-        } else if (
-            _offerType == 1 &&
-            buyOffers[_offerId].offerStatus == OfferStatus.accepted
-        ) {
-            BuyOffer memory offer = buyOffers[_offerId];
-
-            if (
-                getRatio(
-                    offer.buyingFor,
-                    offer.collateral,
-                    offer.buyingForId,
-                    offer.collateralId
-                ) >= RATIO_LIQUIDATION_IS_LOSS
-            ) {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            revert("Invalid offer type");
-        }
-    }
-
-    /// @notice Gets the price of the collateral token at which the offer will be liquidable
-    /// @param _offerId Id of the offer we want the liquidation price
-    /// @param _offerType Type of offer: 0 for sale offer and 1 for buy offer.
-    /// @return uint256 The liquidation price of the collateral token
-    function getLiquidationPriceCollateral(
-        uint256 _offerId,
-        uint8 _offerType
-    ) external view returns (uint256) {
-        if (_offerType == 0) {
-            SaleOffer memory offer = saleOffers[_offerId];
-
-            return
-                getLiquidationPriceCollateral(
-                    offer.collateral,
-                    offer.sellingFor,
-                    offer.sellingForId,
-                    MIN_RATIO_LIQUIDATION
-                );
-        } else if (_offerType == 1) {
-            BuyOffer memory offer = buyOffers[_offerId];
-
-            return
-                getLiquidationPriceCollateral(
-                    offer.collateral,
-                    offer.buyingFor,
-                    offer.buyingForId,
-                    MIN_RATIO_LIQUIDATION
-                );
-        } else {
-            revert("Invalid offer type");
-        }
-    }
-
-    /// @notice Gets the price of the debt token at which the offer will be liquidable
-    /// @param _offerId Id of the offer we want the liquidation price
-    /// @param _offerType Type of offer: 0 for sale offer and 1 for buy offer.
-    /// @return uint256 The liquidation price of the debt token
-    function getLiquidationPriceAmountFor(
-        uint256 _offerId,
-        uint8 _offerType
-    ) external view returns (uint256) {
-        if (_offerType == 0) {
-            SaleOffer memory offer = saleOffers[_offerId];
-
-            return
-                getLiquidationPriceAmountFor(
-                    offer.collateral,
-                    offer.sellingFor,
-                    offer.collateralId,
-                    MIN_RATIO_LIQUIDATION
-                );
-        } else if (_offerType == 1) {
-            BuyOffer memory offer = buyOffers[_offerId];
-
-            return
-                getLiquidationPriceAmountFor(
-                    offer.collateral,
-                    offer.buyingFor,
-                    offer.collateralId,
-                    MIN_RATIO_LIQUIDATION
-                );
-        } else {
-            revert("Invalid offer type");
         }
     }
 }

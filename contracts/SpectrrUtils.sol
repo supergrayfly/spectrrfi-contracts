@@ -4,6 +4,7 @@ pragma solidity >=0.4.22 <0.9.0;
 import "./SpectrrPrices.sol";
 import "./SpectrrData.sol";
 import "./SpectrrManager.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /// @title SpectrrUtils
 /// @author Supergrayfly
@@ -16,11 +17,43 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
     }
 
     /// @notice Gets the interface of a token based on its id
-    /// @param _tokenId Id of the token we want the interface
-    /// @return IERC20 The Interface of the token
+    /// @param _tokenId Id of the ERC20 token we want the interface
+    /// @return IERC20 The ERC20 Interface of the token
     function getITokenFromId(uint8 _tokenId) public view returns (IERC20) {
         checkTokenIdInRange(_tokenId);
-        return tokens[_tokenId].Itoken;
+        return IERC20(tokens[_tokenId].addr);
+    }
+
+    /// @notice Gets the number of decimals of an ERC20 token
+    /// @param _tokenId Id of the ERC20 token
+    /// @return uint8 The number of decimals
+    function getTokenDecimalsFromId(
+        uint8 _tokenId
+    ) public view returns (uint8) {
+        checkTokenIdInRange(_tokenId);
+        return tokens[_tokenId].decimals;
+    }
+
+    /// @notice Converts an amount to wei, based on the decimals the amount has
+    /// @param _amount The amount to convert
+    /// @param _amountTokenId Id of the amount we want to convert
+    /// @return uint256 The converted amount in wei
+    function amountToWei(
+        uint256 _amount,
+        uint8 _amountTokenId
+    ) public view returns (uint256) {
+        return _amount * 10 ** (18 - getTokenDecimalsFromId(_amountTokenId));
+    }
+
+    /// @notice Converts an amount from wei, based on the decimals the amount has
+    /// @param _amount The amount to convert
+    /// @param _amountTokenId Id of the amount we want to convert
+    /// @return uint256 The converted amount
+    function amountFromWei(
+        uint256 _amount,
+        uint8 _amountTokenId
+    ) public view returns (uint256) {
+        return _amount / 10 ** (18 - getTokenDecimalsFromId(_amountTokenId));
     }
 
     /// @notice Gets the price of a token from Chainlink
@@ -47,7 +80,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
             (_liquidationLimit *
                 _amountForTokenWei *
                 tokenIdToPrice(_amountForTokenId)) /
-            (_collateralTokenAmountWei * 10 ** 18);
+            (_collateralTokenAmountWei * WEI);
     }
 
     /// @notice Calculates the liquidation price of the debt token
@@ -62,20 +95,20 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
         return
             (_collateralTokenAmountWei *
                 tokenIdToPrice(_collateralTokenId) *
-                10 ** 18) / (_liquidationLimit * _amountForTokenWei);
+                WEI) / (_liquidationLimit * _amountForTokenWei);
     }
 
     /// @notice Transfers tokens from the sender to this contract
     /// @dev Only callable internally by this contract
     function transferSenderToContract(
         address _sender,
-        uint256 _amountTokenWei,
+        uint256 _amountToken,
         uint8 _amountTokenId
     ) internal {
         getITokenFromId(_amountTokenId).transferFrom(
             _sender,
             address(this),
-            _amountTokenWei
+            _amountToken
         );
     }
 
@@ -83,51 +116,63 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
     /// @dev Only callable internally by this contract
     function transferContractToSender(
         address _sender,
-        uint256 _amountTokenWei,
+        uint256 _amountToken,
         uint8 _amountTokenId
     ) internal {
-        getITokenFromId(_amountTokenId).transfer(_sender, _amountTokenWei);
+        getITokenFromId(_amountTokenId).transfer(
+            _sender,
+            amountFromWei(_amountToken, _amountTokenId)
+        );
     }
 
     /// @notice Handles the transfer of the collateral, fee, and amount bought
     /// @dev Only callable internally by this contract
     /// @param _sender Address sending the tokens
-    /// @param _collateralTokenAmountWei Collateral amount to transfer from the sender
+    /// @param _collateralTokenAmount Collateral amount to transfer from the sender
     /// @param _collateralTokenId Id of the collateral token
-    /// @param _amountTokenWei Amount bought by the sender
+    /// @param _amountToken Amount bought by the sender
     /// @param _amountTokenId Id of the bought token
     function transferAcceptSale(
         address _sender,
-        uint256 _collateralTokenAmountWei,
+        uint256 _collateralTokenAmount,
         uint8 _collateralTokenId,
-        uint256 _amountTokenWei,
+        uint256 _amountToken,
         uint8 _amountTokenId
     ) internal {
+        uint256 collateralTokenAmountFromWei = amountFromWei(
+            _collateralTokenAmount,
+            _collateralTokenId
+        );
+
         getITokenFromId(_collateralTokenId).transferFrom(
             _sender,
             address(this),
-            _collateralTokenAmountWei
+            collateralTokenAmountFromWei
         );
-        transferFee(_collateralTokenAmountWei, _collateralTokenId, _sender);
-        transferContractToSender(_sender, _amountTokenWei, _amountTokenId);
+        transferFee(collateralTokenAmountFromWei, _collateralTokenId, _sender);
+        transferContractToSender(
+            _sender,
+            amountFromWei(_amountToken, _amountTokenId),
+            _amountTokenId
+        );
     }
 
     /// @notice Transfers token from the buyer to the seller of an offer
     /// @dev Only callable internally by this contract
     /// @param _sender Address sending the tokens
     /// @param _receiver Address receiving the tokens
-    /// @param _amountTokenWei Amount to send
+    /// @param _amountToken Amount to send
     /// @param _amountTokenId Id of the amount to send
     function transferBuyerToSeller(
         address _sender,
         address _receiver,
-        uint256 _amountTokenWei,
+        uint256 _amountToken,
         uint8 _amountTokenId
     ) internal {
         getITokenFromId(_amountTokenId).transferFrom(
             _sender,
             _receiver,
-            _amountTokenWei
+            _amountToken
         );
     }
 
@@ -146,7 +191,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
         return
             (((_amountTokenWei * tokenIdToPrice(_amountTokenId)) /
                 tokenIdToPrice(_collateralTokenId)) *
-                _collateralTokenAmountWeiToDebtRatio) / 10 ** 18;
+                _collateralTokenAmountWeiToDebtRatio) / WEI;
     }
 
     /// @notice Calculates the ratio of the collateral over the debt
@@ -167,8 +212,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
             return
                 (_collateralTokenAmountWei *
                     tokenIdToPrice(_collateralTokenId) *
-                    10 ** 18) /
-                (_amountTokenWei * tokenIdToPrice(_amountTokenId));
+                    WEI) / (_amountTokenWei * tokenIdToPrice(_amountTokenId));
         }
     }
 
@@ -245,7 +289,6 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
         address _sender,
         uint256 _liquidationLossRatio
     ) internal {
-        IERC20 amountToken = getITokenFromId(_amountTokenId);
         IERC20 collateralToken = getITokenFromId(_collateralTokenId);
 
         if (
@@ -261,17 +304,34 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
                     ((_amountTokenWei * tokenIdToPrice(_amountTokenId)) /
                         tokenIdToPrice(_collateralTokenId)));
 
-            amountToken.transferFrom(_sender, _seller, _amountTokenWei);
-            collateralToken.transfer(_sender, toTransfer);
+            getITokenFromId(_amountTokenId).transferFrom(
+                _sender,
+                _seller,
+                amountFromWei(_amountTokenWei, _amountTokenId)
+            );
+            collateralToken.transfer(
+                _sender,
+                amountFromWei(toTransfer, _collateralTokenId)
+            );
             collateralToken.transfer(
                 _buyer,
-                (_collateralTokenAmountWei -
-                    ((_amountTokenWei * tokenIdToPrice(_amountTokenId)) /
-                        tokenIdToPrice(_collateralTokenId)))
+                amountFromWei(
+                    (_collateralTokenAmountWei -
+                        ((_amountTokenWei * tokenIdToPrice(_amountTokenId)) /
+                            tokenIdToPrice(_collateralTokenId))),
+                    _amountTokenId
+                )
             );
         } else {
-            amountToken.transferFrom(_sender, _seller, _amountTokenWei);
-            collateralToken.transfer(_sender, _collateralTokenAmountWei);
+            getITokenFromId(_amountTokenId).transferFrom(
+                _sender,
+                _seller,
+                amountFromWei(_amountTokenWei, _amountTokenId)
+            );
+            collateralToken.transfer(
+                _sender,
+                amountFromWei(_collateralTokenAmountWei, _collateralTokenId)
+            );
         }
     }
 
@@ -311,15 +371,24 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
                     (_amountTokenWei * tokenIdToPrice(_amountTokenId)) /
                     tokenIdToPrice(_collateralTokenId));
 
-            collateralToken.transfer(_seller, toTransfer);
+            collateralToken.transfer(
+                _seller,
+                amountFromWei(toTransfer, _collateralTokenId)
+            );
             collateralToken.transfer(
                 _buyer,
-                (_collateralTokenAmountWei -
-                    ((_amountTokenWei * tokenIdToPrice(_amountTokenId)) /
-                        tokenIdToPrice(_collateralTokenId)))
+                amountFromWei(
+                    _collateralTokenAmountWei -
+                        ((_amountTokenWei * tokenIdToPrice(_amountTokenId)) /
+                            tokenIdToPrice(_collateralTokenId)),
+                    _collateralTokenId
+                )
             );
         } else if (ratio <= _liquidationLossRatio) {
-            collateralToken.transfer(_seller, _collateralTokenAmountWei);
+            collateralToken.transfer(
+                _seller,
+                amountFromWei(_collateralTokenAmountWei, _collateralTokenId)
+            );
         } else {
             revert("Can not be liquidated...yet");
         }
@@ -358,15 +427,24 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
                     (_amountTokenWei * tokenIdToPrice(_amountTokenId)) /
                     tokenIdToPrice(_collateralTokenId));
 
-            collateralToken.transfer(_seller, toTransfer);
+            collateralToken.transfer(
+                _seller,
+                amountFromWei(toTransfer, _collateralTokenId)
+            );
             collateralToken.transfer(
                 _buyer,
-                (_collateralTokenAmountWei -
-                    ((_amountTokenWei * tokenIdToPrice(_amountTokenId)) /
-                        tokenIdToPrice(_collateralTokenId)))
+                amountFromWei(
+                    _collateralTokenAmountWei -
+                        ((_amountTokenWei * tokenIdToPrice(_amountTokenId)) /
+                            tokenIdToPrice(_collateralTokenId)),
+                    _collateralTokenId
+                )
             );
         } else if (ratio == _liquidationLossRatio) {
-            collateralToken.transfer(msg.sender, _collateralTokenAmountWei);
+            collateralToken.transfer(
+                msg.sender,
+                amountFromWei(_collateralTokenAmountWei, _collateralTokenId)
+            );
         } else {
             revert("Liquidation loss to seller");
         }
@@ -388,27 +466,31 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
         address _seller,
         address _buyer
     ) internal {
-        IERC20 repayToken = getITokenFromId(_amountToRepayId);
-        IERC20 collateralToken = getITokenFromId(_collateralTokenId);
-
-        repayToken.transferFrom(_buyer, _seller, _amountToRepay);
-        collateralToken.transfer(_buyer, _collateralTokenAmountWei);
+        getITokenFromId(_amountToRepayId).transferFrom(
+            _buyer,
+            _seller,
+            amountFromWei(_amountToRepay, _amountToRepayId)
+        );
+        getITokenFromId(_collateralTokenId).transfer(
+            _buyer,
+            amountFromWei(_collateralTokenAmountWei, _collateralTokenId)
+        );
     }
 
     /// @notice Transfers the fee from the sender to the fee address
     /// @dev Only callable internally by this contract
-    /// @param _amountTokenWei Amount on which 0.1% will be taken
+    /// @param _amountToken Amount of which 0.1% will be taken
     /// @param _amountTokenId Id of the amount
     /// @param _sender Address of the sender
     function transferFee(
-        uint256 _amountTokenWei,
+        uint256 _amountToken,
         uint8 _amountTokenId,
         address _sender
     ) internal {
         getITokenFromId(_amountTokenId).transferFrom(
             _sender,
             feeAddress,
-            (_amountTokenWei / FEE_PERCENT)
+            (_amountToken / FEE_PERCENT)
         );
     }
 

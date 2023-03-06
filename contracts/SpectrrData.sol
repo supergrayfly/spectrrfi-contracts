@@ -5,21 +5,23 @@ pragma solidity >=0.4.22 <0.9.0;
 /// @author Supergrayfly
 /// @notice Defines and initializes the data for the SpectrrCore Contract
 contract SpectrrData {
-    /// @notice The minimum collateral to debt ratio allowing a liquidation (1.25%)
+    /// @notice The minimum collateral to debt ratio allowing a liquidation (1.25)
     uint256 public constant MIN_RATIO_LIQUIDATION = 125 * 10 ** 16;
 
-    /// @notice The collateral to debt ratio when the value of the collateral is equal to the value of the debt (1%)
+    /// @notice The collateral to debt ratio when the value of the collateral is equal to the value of the debt (1)
     uint256 public constant RATIO_LIQUIDATION_IS_LOSS = 1 * 10 ** 18;
 
-    /// @notice The initial collateral to debt ratio needed to create an offer (1.5%)
+    /// @notice The initial collateral to debt ratio needed to create an offer (1.5)
     uint256 public constant RATIO_COLLATERAL_TO_DEBT = 15 * 10 ** 17;
 
-    /** @dev Number of existing sale offers, initialized as 0 in the beggining,
+    uint256 public constant WEI = 10 ** 18;
+
+    /** @dev Number of existing sale offers, initialized as 0 in the beginning,
         and incremented by one at every sale offer creation.
     */
     uint256 public saleOffersCount = 0;
 
-    /** @dev Number of existing buy offers, initialized as 0 in the beggining,
+    /** @dev Number of existing buy offers, initialized as 0 in the beginning,
         and incremented by one at every buy offer creation.
     */
     uint256 public buyOffersCount = 0;
@@ -100,22 +102,13 @@ contract SpectrrData {
     );
 
     /// @notice Event emitted when collateral is added to a sale offer
-    event SaleOfferCollateralAdded(
-        uint256 offerId,
-        uint256 amount,
-        uint256 amountId,
-        uint256 timestamp
-    );
+    event SaleOfferCollateralAdded(uint256 offerId, uint256 amount);
 
     /// @notice Event emitted when a sale offer is canceled
-    event SaleOfferCanceled(uint256 offerId, uint256 timestamp);
+    event SaleOfferCanceled(uint256 offerId);
 
     /// @notice Event emitted when a sale offer is liquidated
-    event SaleOfferLiquidated(
-        uint256 offerId,
-        address liquidator,
-        uint256 timestamp
-    );
+    event SaleOfferLiquidated(uint256 offerId, address liquidator);
 
     /// @notice Event emitted when the seller address of a sale offer changes
     event SaleOfferSellerAddressChanged(uint256 offerId, address newAddress);
@@ -128,12 +121,11 @@ contract SpectrrData {
         uint256 offerId,
         uint256 amount,
         uint8 amountId,
-        bool byPart,
-        uint256 timestamp
+        bool byPart
     );
 
     /// @notice Event emitted when a sale offer is forfeited
-    event SaleOfferForfeited(uint256 offerId, uint256 timestamp);
+    event SaleOfferForfeited(uint256 offerId);
 
     /// @notice Event emitted when a buy offer is created
     event BuyOfferCreated(
@@ -153,22 +145,13 @@ contract SpectrrData {
     event BuyOfferAccepted(uint256 offerId, address seller, uint256 timestamp);
 
     /// @notice Event emitted when collateral is added to a buy offer
-    event BuyOfferCollateralAdded(
-        uint256 offerId,
-        uint256 amount,
-        uint8 amountId,
-        uint256 timestamp
-    );
+    event BuyOfferCollateralAdded(uint256 offerId, uint256 amount);
 
     /// @notice Event emitted when a buy offer is canceled
-    event BuyOfferCanceled(uint256 offerId, uint256 timestamp);
+    event BuyOfferCanceled(uint256 offerId);
 
     /// @notice Event emitted when a buy offer is liquidated
-    event BuyOfferLiquidated(
-        uint256 offerId,
-        address liquidator,
-        uint256 timestamp
-    );
+    event BuyOfferLiquidated(uint256 offerId, address liquidator);
 
     /// @notice Event emitted when the seller address of a buy offer changes
     event BuyOfferSellerAddressChanged(uint256 offerId, address newAddress);
@@ -181,12 +164,11 @@ contract SpectrrData {
         uint256 offerId,
         uint256 amount,
         uint8 amountId,
-        bool byPart,
-        uint256 timestamp
+        bool byPart
     );
 
     /// @notice Event emitted when a buy offer is forfeited
-    event BuyOfferForfeited(uint256 offerId, uint256 timestamp);
+    event BuyOfferForfeited(uint256 offerId);
 
     /** @dev Modifier used to protect from reentrancy.
         Called when a function changing the state of a sale offer struct is entered, it prevents changes by anyone aside from the current msg.sender.

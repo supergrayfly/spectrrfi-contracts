@@ -2,7 +2,6 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /// @title SpectrrManager
 /// @author Supergrayfly
@@ -11,7 +10,7 @@ contract SpectrrManager is Ownable {
     /// @notice address where transaction fees will be sent
     address public feeAddress;
 
-    /** @notice Fee corresponding to 0.1% (amount * (100 / 0.1) = 1000,
+    /** @notice Fee corresponding to 0.1% (100 / 0.1 = 1000),
 				taken when an offer is created and accepted.
     */
     uint16 public constant FEE_PERCENT = 1000;
@@ -25,12 +24,12 @@ contract SpectrrManager is Ownable {
 
     /// @dev Token struct, containing info on a ERC20 token
     struct Token {
-        uint8 tokenId;
+        string name;
+        uint8 id;
         uint8 decimals;
-        string tokenName;
-        address tokenAddress;
+        uint8 chainlinkPriceDecimals;
         address chainlinkOracleAddress;
-        IERC20 Itoken;
+        address addr;
     }
 
     /// @notice Event emitted when a new token is added
@@ -46,27 +45,27 @@ contract SpectrrManager is Ownable {
 
     /// @notice Adds a token to the array of tokens tradable by this contract
     /// @dev Only callable by owner
-    /// @param _tokenName Name of the token to add in the following format: "btc"
+    /// @param _tokenName Name of the token to add in the format: "wbtc"
     /// @param _tokenAddress Address of the token
     /// @param _chainlinkOracleAddress Address of the chainlink contract used to take the price from
-    /// @param _decimals Number of decimals the chainlink price has
+    /// @param _chainlinkOracleDecimals Number of decimals the chainlink price has
+    /// @param _decimals Number of decimals the token contract has
     function addToken(
         string memory _tokenName,
         address _tokenAddress,
         address _chainlinkOracleAddress,
+        uint8 _chainlinkOracleDecimals,
         uint8 _decimals
     ) external onlyOwner {
-        IERC20 Itoken = IERC20(_tokenAddress);
-
         uint8 id = ++tokenCount;
 
         Token memory token = Token(
+            _tokenName,
             id,
             _decimals,
-            _tokenName,
-            _tokenAddress,
+            _chainlinkOracleDecimals,
             _chainlinkOracleAddress,
-            Itoken
+            _tokenAddress
         );
 
         tokens[id] = token;

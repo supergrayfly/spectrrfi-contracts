@@ -51,12 +51,6 @@
         "internalType": "uint256",
         "name": "offerId",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "BuyOfferCanceled",
@@ -82,12 +76,6 @@
         "internalType": "uint8",
         "name": "amountId",
         "type": "uint8"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "BuyOfferCollateralAdded",
@@ -168,12 +156,6 @@
         "internalType": "uint256",
         "name": "offerId",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "BuyOfferForfeited",
@@ -193,12 +175,6 @@
         "internalType": "address",
         "name": "liquidator",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "BuyOfferLiquidated",
@@ -230,12 +206,6 @@
         "internalType": "bool",
         "name": "byPart",
         "type": "bool"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "BuyOfferRepaid",
@@ -324,12 +294,6 @@
         "internalType": "uint256",
         "name": "offerId",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "SaleOfferCanceled",
@@ -354,12 +318,6 @@
         "indexed": false,
         "internalType": "uint256",
         "name": "amountId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
         "type": "uint256"
       }
     ],
@@ -435,12 +393,6 @@
         "internalType": "uint256",
         "name": "offerId",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "SaleOfferForfeited",
@@ -460,12 +412,6 @@
         "internalType": "address",
         "name": "liquidator",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "SaleOfferLiquidated",
@@ -497,12 +443,6 @@
         "internalType": "bool",
         "name": "byPart",
         "type": "bool"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "SaleOfferRepaid",
@@ -556,6 +496,19 @@
   {
     "inputs": [],
     "name": "RATIO_LIQUIDATION_IS_LOSS",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "WEI",
     "outputs": [
       {
         "internalType": "uint256",

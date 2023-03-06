@@ -51,12 +51,6 @@
         "internalType": "uint256",
         "name": "offerId",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "BuyOfferCanceled",
@@ -82,12 +76,6 @@
         "internalType": "uint8",
         "name": "amountId",
         "type": "uint8"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "BuyOfferCollateralAdded",
@@ -168,12 +156,6 @@
         "internalType": "uint256",
         "name": "offerId",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "BuyOfferForfeited",
@@ -193,12 +175,6 @@
         "internalType": "address",
         "name": "liquidator",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "BuyOfferLiquidated",
@@ -230,12 +206,6 @@
         "internalType": "bool",
         "name": "byPart",
         "type": "bool"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "BuyOfferRepaid",
@@ -387,12 +357,6 @@
         "internalType": "uint256",
         "name": "offerId",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "SaleOfferCanceled",
@@ -417,12 +381,6 @@
         "indexed": false,
         "internalType": "uint256",
         "name": "amountId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
         "type": "uint256"
       }
     ],
@@ -498,12 +456,6 @@
         "internalType": "uint256",
         "name": "offerId",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "SaleOfferForfeited",
@@ -523,12 +475,6 @@
         "internalType": "address",
         "name": "liquidator",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "SaleOfferLiquidated",
@@ -560,12 +506,6 @@
         "internalType": "bool",
         "name": "byPart",
         "type": "bool"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "SaleOfferRepaid",
@@ -643,6 +583,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "WEI",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "string",
@@ -661,6 +614,11 @@
       },
       {
         "internalType": "uint8",
+        "name": "_chainlinkOracleDecimals",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
         "name": "_decimals",
         "type": "uint8"
       }
@@ -668,6 +626,54 @@
     "name": "addToken",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_amountTokenId",
+        "type": "uint8"
+      }
+    ],
+    "name": "amountFromWei",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_amountTokenId",
+        "type": "uint8"
+      }
+    ],
+    "name": "amountToWei",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1057,6 +1063,25 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "_tokenId",
+        "type": "uint8"
+      }
+    ],
+    "name": "getTokenDecimalsFromId",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "owner",
     "outputs": [
@@ -1211,8 +1236,13 @@
     "name": "tokens",
     "outputs": [
       {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
         "internalType": "uint8",
-        "name": "tokenId",
+        "name": "id",
         "type": "uint8"
       },
       {
@@ -1221,14 +1251,9 @@
         "type": "uint8"
       },
       {
-        "internalType": "string",
-        "name": "tokenName",
-        "type": "string"
-      },
-      {
-        "internalType": "address",
-        "name": "tokenAddress",
-        "type": "address"
+        "internalType": "uint8",
+        "name": "chainlinkPriceDecimals",
+        "type": "uint8"
       },
       {
         "internalType": "address",
@@ -1236,8 +1261,8 @@
         "type": "address"
       },
       {
-        "internalType": "contract IERC20",
-        "name": "Itoken",
+        "internalType": "address",
+        "name": "addr",
         "type": "address"
       }
     ],

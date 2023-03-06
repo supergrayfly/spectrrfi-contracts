@@ -94,6 +94,11 @@
       },
       {
         "internalType": "uint8",
+        "name": "_chainlinkOracleDecimals",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
         "name": "_decimals",
         "type": "uint8"
       }
@@ -191,8 +196,13 @@
     "name": "tokens",
     "outputs": [
       {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
         "internalType": "uint8",
-        "name": "tokenId",
+        "name": "id",
         "type": "uint8"
       },
       {
@@ -201,14 +211,9 @@
         "type": "uint8"
       },
       {
-        "internalType": "string",
-        "name": "tokenName",
-        "type": "string"
-      },
-      {
-        "internalType": "address",
-        "name": "tokenAddress",
-        "type": "address"
+        "internalType": "uint8",
+        "name": "chainlinkPriceDecimals",
+        "type": "uint8"
       },
       {
         "internalType": "address",
@@ -216,8 +221,8 @@
         "type": "address"
       },
       {
-        "internalType": "contract IERC20",
-        "name": "Itoken",
+        "internalType": "address",
+        "name": "addr",
         "type": "address"
       }
     ],
