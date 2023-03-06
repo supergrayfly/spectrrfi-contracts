@@ -10,7 +10,7 @@ Defines and initializes the data for the SpectrrCore Contract
 uint256 MIN_RATIO_LIQUIDATION
 ```
 
-The minimum collateral to debt ratio allowing a liquidation (1.25%)
+The minimum collateral to debt ratio allowing a liquidation (1.25)
 
 ### RATIO_LIQUIDATION_IS_LOSS
 
@@ -18,7 +18,7 @@ The minimum collateral to debt ratio allowing a liquidation (1.25%)
 uint256 RATIO_LIQUIDATION_IS_LOSS
 ```
 
-The collateral to debt ratio when the value of the collateral is equal to the value of the debt (1%)
+The collateral to debt ratio when the value of the collateral is equal to the value of the debt (1)
 
 ### RATIO_COLLATERAL_TO_DEBT
 
@@ -26,7 +26,13 @@ The collateral to debt ratio when the value of the collateral is equal to the va
 uint256 RATIO_COLLATERAL_TO_DEBT
 ```
 
-The initial collateral to debt ratio needed to create an offer (1.5%)
+The initial collateral to debt ratio needed to create an offer (1.5)
+
+### WEI
+
+```solidity
+uint256 WEI
+```
 
 ### saleOffersCount
 
@@ -34,7 +40,7 @@ The initial collateral to debt ratio needed to create an offer (1.5%)
 uint256 saleOffersCount
 ```
 
-_Number of existing sale offers, initialized as 0 in the beggining,
+_Number of existing sale offers, initialized as 0 in the beginning,
         and incremented by one at every sale offer creation._
 
 ### buyOffersCount
@@ -43,7 +49,7 @@ _Number of existing sale offers, initialized as 0 in the beggining,
 uint256 buyOffersCount
 ```
 
-_Number of existing buy offers, initialized as 0 in the beggining,
+_Number of existing buy offers, initialized as 0 in the beginning,
         and incremented by one at every buy offer creation._
 
 ### saleOffers
@@ -140,7 +146,7 @@ Event emitted when a sale offer is accepted
 ### SaleOfferCollateralAdded
 
 ```solidity
-event SaleOfferCollateralAdded(uint256 offerId, uint256 amount, uint256 amountId, uint256 timestamp)
+event SaleOfferCollateralAdded(uint256 offerId, uint256 amount)
 ```
 
 Event emitted when collateral is added to a sale offer
@@ -148,7 +154,7 @@ Event emitted when collateral is added to a sale offer
 ### SaleOfferCanceled
 
 ```solidity
-event SaleOfferCanceled(uint256 offerId, uint256 timestamp)
+event SaleOfferCanceled(uint256 offerId)
 ```
 
 Event emitted when a sale offer is canceled
@@ -156,7 +162,7 @@ Event emitted when a sale offer is canceled
 ### SaleOfferLiquidated
 
 ```solidity
-event SaleOfferLiquidated(uint256 offerId, address liquidator, uint256 timestamp)
+event SaleOfferLiquidated(uint256 offerId, address liquidator)
 ```
 
 Event emitted when a sale offer is liquidated
@@ -180,7 +186,7 @@ Event emitted when the buyer address of a sale offer changes
 ### SaleOfferRepaid
 
 ```solidity
-event SaleOfferRepaid(uint256 offerId, uint256 amount, uint8 amountId, bool byPart, uint256 timestamp)
+event SaleOfferRepaid(uint256 offerId, uint256 amount, uint8 amountId, bool byPart)
 ```
 
 Event emitted when a sale offer is repaid
@@ -188,7 +194,7 @@ Event emitted when a sale offer is repaid
 ### SaleOfferForfeited
 
 ```solidity
-event SaleOfferForfeited(uint256 offerId, uint256 timestamp)
+event SaleOfferForfeited(uint256 offerId)
 ```
 
 Event emitted when a sale offer is forfeited
@@ -212,7 +218,7 @@ Event emitted when a buy offer is accepted
 ### BuyOfferCollateralAdded
 
 ```solidity
-event BuyOfferCollateralAdded(uint256 offerId, uint256 amount, uint8 amountId, uint256 timestamp)
+event BuyOfferCollateralAdded(uint256 offerId, uint256 amount)
 ```
 
 Event emitted when collateral is added to a buy offer
@@ -220,7 +226,7 @@ Event emitted when collateral is added to a buy offer
 ### BuyOfferCanceled
 
 ```solidity
-event BuyOfferCanceled(uint256 offerId, uint256 timestamp)
+event BuyOfferCanceled(uint256 offerId)
 ```
 
 Event emitted when a buy offer is canceled
@@ -228,7 +234,7 @@ Event emitted when a buy offer is canceled
 ### BuyOfferLiquidated
 
 ```solidity
-event BuyOfferLiquidated(uint256 offerId, address liquidator, uint256 timestamp)
+event BuyOfferLiquidated(uint256 offerId, address liquidator)
 ```
 
 Event emitted when a buy offer is liquidated
@@ -252,7 +258,7 @@ Event emitted when the buyer address of a buy offer changes
 ### BuyOfferRepaid
 
 ```solidity
-event BuyOfferRepaid(uint256 offerId, uint256 amount, uint8 amountId, bool byPart, uint256 timestamp)
+event BuyOfferRepaid(uint256 offerId, uint256 amount, uint8 amountId, bool byPart)
 ```
 
 Event emitted when a buy offer is repaid
@@ -260,7 +266,7 @@ Event emitted when a buy offer is repaid
 ### BuyOfferForfeited
 
 ```solidity
-event BuyOfferForfeited(uint256 offerId, uint256 timestamp)
+event BuyOfferForfeited(uint256 offerId)
 ```
 
 Event emitted when a buy offer is forfeited
@@ -304,8 +310,21 @@ EIP712's params are the name and version of the contract_
 ### createSaleOffer
 
 ```solidity
-function createSaleOffer(uint256 _sellingTokenAmountWei, uint8 _sellingTokenId, uint256 _exchangeRateWei, uint8 _sellingForTokenId, uint256 _repayInSeconds) external returns (uint256)
+function createSaleOffer(uint256 _sellingTokenAmount, uint8 _sellingTokenId, uint256 _exchangeRate, uint8 _sellingForTokenId, uint256 _repayInSeconds) external returns (uint256)
 ```
+
+Creates and posts a sale offer
+There is a 0.1% fee of the selling amount, paid by the seller to the fee address.
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _sellingTokenAmount | uint256 | Amount the sender is selling |
+| _sellingTokenId | uint8 | Id of the selling token, can not be same than id of sell for token. |
+| _exchangeRate | uint256 | Exchange rate between the selling amount sell for amount |
+| _sellingForTokenId | uint8 | Id of the token exchanged for, can not be same than id of the selling token. |
+| _repayInSeconds | uint256 | Repayment period in unix seconds, a value of 0 will allow an unlimited repayment time . |
 
 #### Return Values
 
@@ -418,16 +437,16 @@ Transaction is reverted if it incurs a loss to the seller_
 ### createBuyOffer
 
 ```solidity
-function createBuyOffer(uint256 _buyingTokenAmountWei, uint8 _buyingTokenId, uint256 _exchangeRateWei, uint8 _buyingForTokenId, uint8 _collateralTokenId, uint256 _repayInSeconds) external returns (uint256)
+function createBuyOffer(uint256 _buyingTokenAmount, uint8 _buyingTokenId, uint256 _exchangeRate, uint8 _buyingForTokenId, uint8 _collateralTokenId, uint256 _repayInSeconds) external returns (uint256)
 ```
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _buyingTokenAmountWei | uint256 |  |
+| _buyingTokenAmount | uint256 |  |
 | _buyingTokenId | uint8 |  |
-| _exchangeRateWei | uint256 |  |
+| _exchangeRate | uint256 |  |
 | _buyingForTokenId | uint8 |  |
 | _collateralTokenId | uint8 |  |
 | _repayInSeconds | uint256 | Repayment timeframe in unix seconds,         a value of 0 will allow an unlimited repayment time . |
@@ -564,115 +583,6 @@ function changeAddressBuy(uint256 _offerId, address _newAddress, uint8 _addressT
 | _newAddress | address | New address to replace the old one with |
 | _addressType | uint8 | Type of address: 0 for seller address, and 1 for buyer address. |
 
-### getRatioInfo
-
-```solidity
-function getRatioInfo(uint256 _offerId, uint8 _offerType) external view returns (uint256, uint256, uint8, uint8, address)
-```
-
-Gets the collateral to debt ratio, debt amount, debt amount id, collateral id, and buyer's address of an offer.
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _offerId | uint256 | Id of the offer we want to get info on |
-| _offerType | uint8 | Type of offer: 0 for sale offer and 1 for buy offer. |
-
-#### Return Values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | uint256 Collateral to debt ratio |
-| [1] | uint256 | uint256 Debt amount |
-| [2] | uint8 | uint8 Id of the debt token |
-| [3] | uint8 | uint8 Id of the collateral |
-| [4] | address | address Address of the buyer |
-
-### canLiquidate
-
-```solidity
-function canLiquidate(uint256 _offerId, uint8 _offerType) external view returns (bool)
-```
-
-Checks if an offer can be liquidated
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _offerId | uint256 | Id of the offer we want to check |
-| _offerType | uint8 | Type of offer: 0 for sale offer and 1 for buy offer. |
-
-#### Return Values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool If the offer can be liquidated or not |
-
-### isLiquidationLoss
-
-```solidity
-function isLiquidationLoss(uint256 _offerId, uint8 _offerType) external view returns (bool)
-```
-
-Determines if a liquidation will incur a loss
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _offerId | uint256 | Id of the offer we want to check |
-| _offerType | uint8 | Type of offer: 0 for sale offer and 1 for buy offer. |
-
-#### Return Values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool If the liquidation will incur a loss or not |
-
-### getLiquidationPriceCollateral
-
-```solidity
-function getLiquidationPriceCollateral(uint256 _offerId, uint8 _offerType) external view returns (uint256)
-```
-
-Gets the price of the collateral token at which the offer will be liquidable
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _offerId | uint256 | Id of the offer we want the liquidation price |
-| _offerType | uint8 | Type of offer: 0 for sale offer and 1 for buy offer. |
-
-#### Return Values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | uint256 The liquidation price of the collateral token |
-
-### getLiquidationPriceAmountFor
-
-```solidity
-function getLiquidationPriceAmountFor(uint256 _offerId, uint8 _offerType) external view returns (uint256)
-```
-
-Gets the price of the debt token at which the offer will be liquidable
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _offerId | uint256 | Id of the offer we want the liquidation price |
-| _offerType | uint8 | Type of offer: 0 for sale offer and 1 for buy offer. |
-
-#### Return Values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | uint256 The liquidation price of the debt token |
-
 ## SpectrrManager
 
 This contract handles functions that can only be called by the dev address (e.g.: Adding new tradable tokens).
@@ -691,7 +601,7 @@ address where transaction fees will be sent
 uint16 FEE_PERCENT
 ```
 
-Fee corresponding to 0.1% (amount * (100 / 0.1) = 1000,
+Fee corresponding to 0.1% (100 / 0.1 = 1000),
 				taken when an offer is created and accepted.
 
 ### tokenCount
@@ -716,12 +626,12 @@ _Map of the number of tokens and Token struct_
 
 ```solidity
 struct Token {
-  uint8 tokenId;
+  string name;
+  uint8 id;
   uint8 decimals;
-  string tokenName;
-  address tokenAddress;
+  uint8 chainlinkPriceDecimals;
   address chainlinkOracleAddress;
-  contract IERC20 Itoken;
+  address addr;
 }
 ```
 
@@ -744,7 +654,7 @@ Event emitted when the fee address is changed
 ### addToken
 
 ```solidity
-function addToken(string _tokenName, address _tokenAddress, address _chainlinkOracleAddress, uint8 _decimals) external
+function addToken(string _tokenName, address _tokenAddress, address _chainlinkOracleAddress, uint8 _chainlinkOracleDecimals, uint8 _decimals) external
 ```
 
 Adds a token to the array of tokens tradable by this contract
@@ -755,10 +665,11 @@ _Only callable by owner_
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _tokenName | string | Name of the token to add in the following format: "btc" |
+| _tokenName | string | Name of the token to add in the format: "wbtc" |
 | _tokenAddress | address | Address of the token |
 | _chainlinkOracleAddress | address | Address of the chainlink contract used to take the price from |
-| _decimals | uint8 | Number of decimals the chainlink price has |
+| _chainlinkOracleDecimals | uint8 | Number of decimals the chainlink price has |
+| _decimals | uint8 | Number of decimals the token contract has |
 
 ### changeChainlinkOracleAddress
 
@@ -792,16 +703,6 @@ _Only callable by the current owner_
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _newFeeAddress | address | The new fee address |
-
-## SpectrrPaymentSplitter
-
-This contract receives and distributes the fees generated by Spectrr Finance to different receivers.
-
-### constructor
-
-```solidity
-constructor() public
-```
 
 ## SpectrrPrices
 
@@ -843,13 +744,75 @@ Gets the interface of a token based on its id
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _tokenId | uint8 | Id of the token we want the interface |
+| _tokenId | uint8 | Id of the ERC20 token we want the interface |
 
 #### Return Values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | contract IERC20 | IERC20 The Interface of the token |
+| [0] | contract IERC20 | IERC20 The ERC20 Interface of the token |
+
+### getTokenDecimalsFromId
+
+```solidity
+function getTokenDecimalsFromId(uint8 _tokenId) public view returns (uint8)
+```
+
+Gets the number of decimals of an ERC20 token
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _tokenId | uint8 | Id of the ERC20 token |
+
+#### Return Values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint8 | uint8 The number of decimals |
+
+### amountToWei
+
+```solidity
+function amountToWei(uint256 _amount, uint8 _amountTokenId) public view returns (uint256)
+```
+
+Converts an amount to wei, based on the decimals the amount has
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _amount | uint256 | The amount to convert |
+| _amountTokenId | uint8 | Id of the amount we want to convert |
+
+#### Return Values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | uint256 The converted amount in wei |
+
+### amountFromWei
+
+```solidity
+function amountFromWei(uint256 _amount, uint8 _amountTokenId) public view returns (uint256)
+```
+
+Converts an amount from wei, based on the decimals the amount has
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _amount | uint256 | The amount to convert |
+| _amountTokenId | uint8 | Id of the amount we want to convert |
+
+#### Return Values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | uint256 | uint256 The converted amount |
 
 ### tokenIdToPrice
 
@@ -902,7 +865,7 @@ Calculates the liquidation price of the debt token
 ### transferSenderToContract
 
 ```solidity
-function transferSenderToContract(address _sender, uint256 _amountTokenWei, uint8 _amountTokenId) internal
+function transferSenderToContract(address _sender, uint256 _amountToken, uint8 _amountTokenId) internal
 ```
 
 Transfers tokens from the sender to this contract
@@ -912,7 +875,7 @@ _Only callable internally by this contract_
 ### transferContractToSender
 
 ```solidity
-function transferContractToSender(address _sender, uint256 _amountTokenWei, uint8 _amountTokenId) internal
+function transferContractToSender(address _sender, uint256 _amountToken, uint8 _amountTokenId) internal
 ```
 
 Transfers tokens from this contract to the sender of the tx
@@ -922,7 +885,7 @@ _Only callable internally by this contract_
 ### transferAcceptSale
 
 ```solidity
-function transferAcceptSale(address _sender, uint256 _collateralTokenAmountWei, uint8 _collateralTokenId, uint256 _amountTokenWei, uint8 _amountTokenId) internal
+function transferAcceptSale(address _sender, uint256 _collateralTokenAmount, uint8 _collateralTokenId, uint256 _amountToken, uint8 _amountTokenId) internal
 ```
 
 Handles the transfer of the collateral, fee, and amount bought
@@ -934,15 +897,15 @@ _Only callable internally by this contract_
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _sender | address | Address sending the tokens |
-| _collateralTokenAmountWei | uint256 | Collateral amount to transfer from the sender |
+| _collateralTokenAmount | uint256 | Collateral amount to transfer from the sender |
 | _collateralTokenId | uint8 | Id of the collateral token |
-| _amountTokenWei | uint256 | Amount bought by the sender |
+| _amountToken | uint256 | Amount bought by the sender |
 | _amountTokenId | uint8 | Id of the bought token |
 
 ### transferBuyerToSeller
 
 ```solidity
-function transferBuyerToSeller(address _sender, address _receiver, uint256 _amountTokenWei, uint8 _amountTokenId) internal
+function transferBuyerToSeller(address _sender, address _receiver, uint256 _amountToken, uint8 _amountTokenId) internal
 ```
 
 Transfers token from the buyer to the seller of an offer
@@ -955,7 +918,7 @@ _Only callable internally by this contract_
 | ---- | ---- | ----------- |
 | _sender | address | Address sending the tokens |
 | _receiver | address | Address receiving the tokens |
-| _amountTokenWei | uint256 | Amount to send |
+| _amountToken | uint256 | Amount to send |
 | _amountTokenId | uint8 | Id of the amount to send |
 
 ### getCollateral
@@ -1132,7 +1095,7 @@ _Only callable internally by this contract_
 ### transferFee
 
 ```solidity
-function transferFee(uint256 _amountTokenWei, uint8 _amountTokenId, address _sender) internal
+function transferFee(uint256 _amountToken, uint8 _amountTokenId, address _sender) internal
 ```
 
 Transfers the fee from the sender to the fee address
@@ -1143,7 +1106,7 @@ _Only callable internally by this contract_
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _amountTokenWei | uint256 | Amount on which 0.1% will be taken |
+| _amountToken | uint256 | Amount of which 0.1% will be taken |
 | _amountTokenId | uint8 | Id of the amount |
 | _sender | address | Address of the sender |
 
@@ -1302,4 +1265,14 @@ Checks if amount sent is bigger than debt, reverts if true
 | ---- | ---- | ----------- |
 | _amountTokenWei | uint256 | The amount to send |
 | _debt | uint256 | The debt owed |
+
+## SpectrrPaymentSplitter
+
+This contract receives and distributes the fees generated by Spectrr Finance to different receivers.
+
+### constructor
+
+```solidity
+constructor() public
+```
 
