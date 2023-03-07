@@ -64,7 +64,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
         return
             uint256(
                 getChainlinkPrice(tokens[_tokenId].chainlinkOracleAddress)
-            ) * 10 ** (18 - tokens[_tokenId].decimals);
+            ) * 10 ** (18 - tokens[_tokenId].chainlinkPriceDecimals);
     }
 
     /// @notice Calculates the liquidation price of the collateral token

@@ -34,7 +34,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
     /// @param _feeAddress Adress where fees will be sent
     /// @dev EIP712 Constructor
     /// @dev EIP712's params are the name and version of the contract
-    constructor(address _feeAddress) EIP712("Spectrr Finance", "ver. 0.0.2") {
+    constructor(address _feeAddress) EIP712("Spectrr Finance", "ver. 0.0.5") {
         feeAddress = _feeAddress;
     }
 
@@ -68,11 +68,11 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         uint256 offerId = ++saleOffersCount;
         uint256 sellingTokenAmountWei = amountToWei(
             _sellingTokenAmount,
-            getTokenDecimalsFromId(_sellingTokenId)
+            _sellingTokenId
         );
         uint256 exchangeRateWei = amountToWei(
             _exchangeRate,
-            getTokenDecimalsFromId(_sellingForTokenId)
+            _sellingForTokenId
         );
         uint256 sellingForTokenAmountWei = (exchangeRateWei *
             sellingTokenAmountWei) / WEI;
@@ -370,7 +370,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         uint256 exchangeRateWei = amountToWei(_exchangeRate, _buyingForTokenId);
         uint256 buyingTokenAmountWei = amountToWei(
             _buyingTokenAmount,
-            _buyingForTokenId
+            _buyingTokenId
         );
         uint256 buyingForTokenAmountWei = (exchangeRateWei *
             buyingTokenAmountWei) / WEI;
@@ -499,10 +499,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         offer.collateral += amountToWei(_amountToAdd, offer.collateralId);
 
-        emit BuyOfferCollateralAdded(
-            _offerId,
-            _amountToAdd
-        );
+        emit BuyOfferCollateralAdded(_offerId, _amountToAdd);
     }
 
     /// @notice Fully repays the debt of the buy offer
