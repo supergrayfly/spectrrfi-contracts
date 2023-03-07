@@ -34,7 +34,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
     /// @param _feeAddress Adress where fees will be sent
     /// @dev EIP712 Constructor
     /// @dev EIP712's params are the name and version of the contract
-    constructor(address _feeAddress) EIP712("Spectrr Finance", "ver. 0.0.5") {
+    constructor(address _feeAddress) EIP712("Spectrr Finance", "ver. 0.0.6") {
         feeAddress = _feeAddress;
     }
 
@@ -628,7 +628,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         BuyOffer storage offer = buyOffers[_offerId];
 
         checkOfferIsAccepted(offer.offerStatus);
-        checkAddressNotSender(offer.buyer);
+        checkAddressSender(offer.buyer);
 
         if (
             !canLiquidate(

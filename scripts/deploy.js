@@ -19,7 +19,6 @@ async function main() {
 
   await spectrrFi.deployed();
 
-  // console.log(`SpectrrFi Contract Address: "${spectrrFi.address}"`);
   console.log(`SpectrrFi Contract Address: "${spectrrFi.address}"`);
 }
 

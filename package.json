@@ -1,6 +1,6 @@
 {
   "name": "spectrr-finance",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Spectrr Finance Smart Contracts",
   "scripts": {
     "pretty": "prettier --write 'contracts/*'",
