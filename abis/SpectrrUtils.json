@@ -131,12 +131,6 @@
         "internalType": "address",
         "name": "buyer",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "BuyOfferCreated",
@@ -229,19 +223,6 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "newAddress",
-        "type": "address"
-      }
-    ],
-    "name": "FeeAddressChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
         "internalType": "uint8",
         "name": "tokenId",
         "type": "uint8"
@@ -256,6 +237,12 @@
         "indexed": false,
         "internalType": "address",
         "name": "tokenAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "dividendTokenContractAddress",
         "type": "address"
       },
       {
@@ -425,12 +412,6 @@
         "internalType": "address",
         "name": "seller",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "SaleOfferCreated",
@@ -520,38 +501,38 @@
   },
   {
     "inputs": [],
+    "name": "DEFAULT_RATIO_COLLATERAL_TO_DEBT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "DEFAULT_RATIO_LIQUIDATION",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "FEE_PERCENT",
     "outputs": [
       {
         "internalType": "uint16",
         "name": "",
         "type": "uint16"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "MIN_RATIO_LIQUIDATION",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "RATIO_COLLATERAL_TO_DEBT",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -598,6 +579,11 @@
       {
         "internalType": "address",
         "name": "_chainlinkOracleAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_dividendContractAddress",
         "type": "address"
       },
       {
@@ -715,6 +701,16 @@
         "type": "uint256"
       },
       {
+        "internalType": "uint256",
+        "name": "collateralToDebtRatio",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "liquidationRatio",
+        "type": "uint256"
+      },
+      {
         "internalType": "uint8",
         "name": "buyingId",
         "type": "uint8"
@@ -728,16 +724,6 @@
         "internalType": "uint8",
         "name": "collateralId",
         "type": "uint8"
-      },
-      {
-        "internalType": "address",
-        "name": "buyer",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "seller",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -835,32 +821,6 @@
     "name": "changeChainlinkOracleAddress",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_newFeeAddress",
-        "type": "address"
-      }
-    ],
-    "name": "changeFeeAddress",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "feeAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1140,6 +1100,16 @@
         "type": "uint256"
       },
       {
+        "internalType": "uint256",
+        "name": "collateralToDebtRatio",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "liquidationRatio",
+        "type": "uint256"
+      },
+      {
         "internalType": "uint8",
         "name": "sellingId",
         "type": "uint8"
@@ -1153,16 +1123,6 @@
         "internalType": "uint8",
         "name": "collateralId",
         "type": "uint8"
-      },
-      {
-        "internalType": "address",
-        "name": "seller",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "buyer",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -1242,6 +1202,11 @@
         "internalType": "uint8",
         "name": "chainlinkPriceDecimals",
         "type": "uint8"
+      },
+      {
+        "internalType": "address",
+        "name": "dividendContractAddress",
+        "type": "address"
       },
       {
         "internalType": "address",

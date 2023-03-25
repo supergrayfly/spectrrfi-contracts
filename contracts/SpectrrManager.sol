@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: BSD-3-Clause-Attribution
-pragma solidity >=0.4.22 <0.9.0;
+pragma solidity >=0.8.7 <0.9.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
@@ -7,9 +7,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 /// @author Supergrayfly
 /// @notice This contract handles functions that can only be called by the dev address (e.g.: Adding new tradable tokens).
 contract SpectrrManager is Ownable {
-    /// @notice address where transaction fees will be sent
-    address public feeAddress;
-
     /** @notice Fee corresponding to 0.1% (100 / 0.1 = 1000),
 				taken when an offer is created and accepted.
     */
@@ -28,6 +25,7 @@ contract SpectrrManager is Ownable {
         uint8 id;
         uint8 decimals;
         uint8 chainlinkPriceDecimals;
+        address dividendContractAddress;
         address chainlinkOracleAddress;
         address addr;
     }
@@ -37,11 +35,9 @@ contract SpectrrManager is Ownable {
         uint8 tokenId,
         string tokenName,
         address tokenAddress,
+        address dividendTokenContractAddress,
         address chainlinkOracleAddress
     );
-
-    /// @notice Event emitted when the fee address is changed
-    event FeeAddressChanged(address newAddress);
 
     /// @notice Adds a token to the array of tokens tradable by this contract
     /// @dev Only callable by owner
@@ -54,6 +50,7 @@ contract SpectrrManager is Ownable {
         string memory _tokenName,
         address _tokenAddress,
         address _chainlinkOracleAddress,
+        address _dividendContractAddress,
         uint8 _chainlinkOracleDecimals,
         uint8 _decimals
     ) external onlyOwner {
@@ -64,6 +61,7 @@ contract SpectrrManager is Ownable {
             id,
             _decimals,
             _chainlinkOracleDecimals,
+            _dividendContractAddress,
             _chainlinkOracleAddress,
             _tokenAddress
         );
@@ -74,6 +72,7 @@ contract SpectrrManager is Ownable {
             id,
             _tokenName,
             _tokenAddress,
+            _dividendContractAddress,
             _chainlinkOracleAddress
         );
     }
@@ -90,13 +89,5 @@ contract SpectrrManager is Ownable {
         require(_newChainlinkOracleAddress != address(0), "Address is Zero");
 
         tokens[_tokenId].chainlinkOracleAddress = _newChainlinkOracleAddress;
-    }
-
-    /// @notice Changes the fee address
-    /// @dev Only callable by the current owner
-    /// @param _newFeeAddress The new fee address
-    function changeFeeAddress(address _newFeeAddress) external onlyOwner {
-        feeAddress = _newFeeAddress;
-        emit FeeAddressChanged(_newFeeAddress);
     }
 }

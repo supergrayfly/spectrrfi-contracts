@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: BSD-3-Clause-Attribution
-pragma solidity >=0.4.22 <0.9.0;
+pragma solidity >=0.8.7 <0.9.0;
 
 import "./SpectrrPrices.sol";
 import "./SpectrrData.sol";
 import "./SpectrrManager.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "./SpectrrFiDividends/interfaces/ISpectrrFiDividendToken.sol";
 
 /// @title SpectrrUtils
 /// @author Supergrayfly
@@ -134,6 +135,7 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
     /// @param _amountTokenId Id of the bought token
     function transferAcceptSale(
         address _sender,
+        address _dividendTokenContractAddress,
         uint256 _collateralTokenAmount,
         uint8 _collateralTokenId,
         uint256 _amountToken,
@@ -149,7 +151,12 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
             address(this),
             collateralTokenAmountFromWei
         );
-        transferFee(collateralTokenAmountFromWei, _collateralTokenId, _sender);
+        transferFee(
+            collateralTokenAmountFromWei,
+            _collateralTokenId,
+            _dividendTokenContractAddress,
+            _sender
+        );
         transferContractToSender(
             _sender,
             amountFromWei(_amountToken, _amountTokenId),
@@ -485,13 +492,18 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
     function transferFee(
         uint256 _amountToken,
         uint8 _amountTokenId,
+        address _dividendTokenContractAddress,
         address _sender
     ) internal {
+        uint256 feeAmount = _amountToken / FEE_PERCENT;
+
         getITokenFromId(_amountTokenId).transferFrom(
             _sender,
-            feeAddress,
-            (_amountToken / FEE_PERCENT)
+            _dividendTokenContractAddress,
+            feeAmount
         );
+        ISpectrrDividendToken(_dividendTokenContractAddress)
+            .distributeDividends(feeAmount);
     }
 
     /// @notice Checks if token Id is a tradable token
@@ -556,6 +568,10 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
     /// @param _offerStatus Current state of the offer
     function checkOfferIsNotClosed(OfferStatus _offerStatus) internal pure {
         require(_offerStatus != OfferStatus.closed, "Offer is closed");
+    }
+
+    function checkMinRatio(uint256 ratio) internal pure {
+        require(ratio >= 1 * WEI, "Ratio less than 1.0");
     }
 
     /// @notice Checks if amount sent is bigger than debt, reverts if true

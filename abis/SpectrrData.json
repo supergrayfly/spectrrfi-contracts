@@ -131,12 +131,6 @@
         "internalType": "address",
         "name": "buyer",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "BuyOfferCreated",
@@ -362,12 +356,6 @@
         "internalType": "address",
         "name": "seller",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
     "name": "SaleOfferCreated",
@@ -457,7 +445,7 @@
   },
   {
     "inputs": [],
-    "name": "MIN_RATIO_LIQUIDATION",
+    "name": "DEFAULT_RATIO_COLLATERAL_TO_DEBT",
     "outputs": [
       {
         "internalType": "uint256",
@@ -470,7 +458,7 @@
   },
   {
     "inputs": [],
-    "name": "RATIO_COLLATERAL_TO_DEBT",
+    "name": "DEFAULT_RATIO_LIQUIDATION",
     "outputs": [
       {
         "internalType": "uint256",
@@ -558,6 +546,16 @@
         "type": "uint256"
       },
       {
+        "internalType": "uint256",
+        "name": "collateralToDebtRatio",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "liquidationRatio",
+        "type": "uint256"
+      },
+      {
         "internalType": "uint8",
         "name": "buyingId",
         "type": "uint8"
@@ -571,16 +569,6 @@
         "internalType": "uint8",
         "name": "collateralId",
         "type": "uint8"
-      },
-      {
-        "internalType": "address",
-        "name": "buyer",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "seller",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -650,6 +638,16 @@
         "type": "uint256"
       },
       {
+        "internalType": "uint256",
+        "name": "collateralToDebtRatio",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "liquidationRatio",
+        "type": "uint256"
+      },
+      {
         "internalType": "uint8",
         "name": "sellingId",
         "type": "uint8"
@@ -663,16 +661,6 @@
         "internalType": "uint8",
         "name": "collateralId",
         "type": "uint8"
-      },
-      {
-        "internalType": "address",
-        "name": "seller",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "buyer",
-        "type": "address"
       }
     ],
     "stateMutability": "view",

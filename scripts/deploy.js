@@ -1,19 +1,8 @@
 const hre = require("hardhat");
 
 async function main() {
-// deploy payment splitter contract
-  const SpectrrPaymentSplitter = await hre.ethers.getContractFactory("SpectrrPaymentSplitter");
-  const spectrrPaymentSplitter = await SpectrrPaymentSplitter.deploy();
-
-  await spectrrPaymentSplitter.deployed();
-
-	let splitterAddress = spectrrPaymentSplitter.address
-
-  console.log(`Payment Splitter Contract Address: "${splitterAddress}"`);
-
-// deploy spctrrfi contract
   const SpectrrFi = await hre.ethers.getContractFactory("SpectrrFi");
-  const spectrrFi = await SpectrrFi.deploy(splitterAddress);
+  const spectrrFi = await SpectrrFi.deploy();
 
   await spectrrFi.deployed();
 

@@ -6,7 +6,7 @@ require('dotenv').config()
 const privKey = process.env.PRIV_KEY
 
 module.exports = {
-  defaultNetwork: 'fantomTestnet',
+  defaultNetwork: 'mumbai',
   networks: {
      mumbai: {
        url: 'https://rpc-mumbai.maticvigil.com/',
@@ -30,11 +30,11 @@ module.exports = {
     }
   },
   solidity: {
-    version: '0.8.7',
+    version: '0.8.12',
     settings: {
       optimizer: {
         enabled: true,
-        runs: 10000,
+        runs:	10000,
       },
     },
   },
