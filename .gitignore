@@ -4,3 +4,4 @@ cache
 flat.sol 
 node_modules
 .env
+coverage

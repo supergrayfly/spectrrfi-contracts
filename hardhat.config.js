@@ -6,7 +6,7 @@ require('dotenv').config()
 const privKey = process.env.PRIV_KEY
 
 module.exports = {
-  defaultNetwork: 'mumbai',
+  defaultNetwork: 'hardhat',
   networks: {
      mumbai: {
        url: 'https://rpc-mumbai.maticvigil.com/',
@@ -38,6 +38,9 @@ module.exports = {
       },
     },
   },
+	docgen: {
+		exclude: ['Dummy-Contracts','SpectrrFiDividends']
+	},
   paths: {
     sources: './contracts',
     tests: './test',

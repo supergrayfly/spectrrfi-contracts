@@ -10,19 +10,36 @@
   </head>
   <body>
     <article class="markdown-body"><h1 id="solidity-api"><a class="header-link" href="#solidity-api"></a>Solidity API</h1>
-<h2 id="spectrrdata"><a class="header-link" href="#spectrrdata"></a>SpectrrData</h2>
+<h2 id="ispectrrfi"><a class="header-link" href="#ispectrrfi"></a>ISpectrrFi</h2>
+<h3 id="createsaleoffer"><a class="header-link" href="#createsaleoffer"></a>createSaleOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> create<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">sellingTokenAmount</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">sellingTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">exchangeRate</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">sellingForTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">repayInSeconds</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">collateralToDebtRatio</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">liquidationRatio</span>)</span> <span class="hljs-keyword">external</span> returns (uint256)</code></pre><h3 id="acceptsaleoffer"><a class="header-link" href="#acceptsaleoffer"></a>acceptSaleOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> accept<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">collateralTokenId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h3 id="cancelsaleoffer"><a class="header-link" href="#cancelsaleoffer"></a>cancelSaleOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> cancel<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h3 id="addcollateralsaleoffer"><a class="header-link" href="#addcollateralsaleoffer"></a>addCollateralSaleOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> add<span class="hljs-constructor">CollateralSaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">amountToAdd</span>)</span> <span class="hljs-keyword">external</span></code></pre><h3 id="repaysaleoffer"><a class="header-link" href="#repaysaleoffer"></a>repaySaleOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> repay<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h3 id="repaysaleofferpart"><a class="header-link" href="#repaysaleofferpart"></a>repaySaleOfferPart</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> repay<span class="hljs-constructor">SaleOfferPart(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">amountToRepay</span>)</span> <span class="hljs-keyword">external</span></code></pre><h3 id="liquidatesaleoffer"><a class="header-link" href="#liquidatesaleoffer"></a>liquidateSaleOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> liquidate<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h3 id="forfeitsaleoffer"><a class="header-link" href="#forfeitsaleoffer"></a>forfeitSaleOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> forfeit<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h3 id="changeaddresssale"><a class="header-link" href="#changeaddresssale"></a>changeAddressSale</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> change<span class="hljs-constructor">AddressSale(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">newAddress</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">addressType</span>)</span> <span class="hljs-keyword">external</span></code></pre><h3 id="createbuyoffer"><a class="header-link" href="#createbuyoffer"></a>createBuyOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> create<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">buyingTokenAmount</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">buyingTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">exchangeRate</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">buyingForTokenId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">collateralTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">repayInSeconds</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">collateralToDebtRatio</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">liquidationRatio</span>)</span> <span class="hljs-keyword">external</span></code></pre><h3 id="acceptbuyoffer"><a class="header-link" href="#acceptbuyoffer"></a>acceptBuyOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> accept<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h3 id="cancelbuyoffer"><a class="header-link" href="#cancelbuyoffer"></a>cancelBuyOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> cancel<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h3 id="addcollateralbuyoffer"><a class="header-link" href="#addcollateralbuyoffer"></a>addCollateralBuyOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> add<span class="hljs-constructor">CollateralBuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">amountToAdd</span>)</span> <span class="hljs-keyword">external</span></code></pre><h3 id="repaybuyoffer"><a class="header-link" href="#repaybuyoffer"></a>repayBuyOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> repay<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h3 id="repaybuyofferpart"><a class="header-link" href="#repaybuyofferpart"></a>repayBuyOfferPart</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> repay<span class="hljs-constructor">BuyOfferPart(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">amountToRepay</span>)</span> <span class="hljs-keyword">external</span></code></pre><h3 id="liquidatebuyoffer"><a class="header-link" href="#liquidatebuyoffer"></a>liquidateBuyOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> liquidate<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h3 id="forfeitbuyoffer"><a class="header-link" href="#forfeitbuyoffer"></a>forfeitBuyOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> forfeit<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h3 id="changeaddressbuy"><a class="header-link" href="#changeaddressbuy"></a>changeAddressBuy</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> change<span class="hljs-constructor">AddressBuy(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">newAddress</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">addressType</span>)</span> <span class="hljs-keyword">external</span></code></pre><h2 id="spectrrdata"><a class="header-link" href="#spectrrdata"></a>SpectrrData</h2>
 <p>Defines and initializes the data for the SpectrrCore Contract</p>
-<h3 id="min_ratio_liquidation"><a class="header-link" href="#min_ratio_liquidation"></a>MIN_RATIO_LIQUIDATION</h3>
-<pre class="hljs"><code><span class="hljs-built_in">uint</span>256 MIN_RATIO_LIQUIDATION</code></pre><p>The minimum collateral to debt ratio allowing a liquidation (1.25%)</p>
 <h3 id="ratio_liquidation_is_loss"><a class="header-link" href="#ratio_liquidation_is_loss"></a>RATIO_LIQUIDATION_IS_LOSS</h3>
-<pre class="hljs"><code><span class="hljs-built_in">uint</span>256 RATIO_LIQUIDATION_IS_LOSS</code></pre><p>The collateral to debt ratio when the value of the collateral is equal to the value of the debt (1%)</p>
-<h3 id="ratio_collateral_to_debt"><a class="header-link" href="#ratio_collateral_to_debt"></a>RATIO_COLLATERAL_TO_DEBT</h3>
-<pre class="hljs"><code><span class="hljs-built_in">uint</span>256 RATIO_COLLATERAL_TO_DEBT</code></pre><p>The initial collateral to debt ratio needed to create an offer (1.5%)</p>
+<pre class="hljs"><code><span class="hljs-built_in">uint</span>256 RATIO_LIQUIDATION_IS_LOSS</code></pre><p>The collateral to debt ratio when the value of the collateral is equal to the value of the debt (1.00)</p>
+<h3 id="wei"><a class="header-link" href="#wei"></a>WEI</h3>
+<pre class="hljs"><code><span class="hljs-built_in">uint</span>256 WEI</code></pre><p>Constant used to multiply numbers by 10^18</p>
 <h3 id="saleofferscount"><a class="header-link" href="#saleofferscount"></a>saleOffersCount</h3>
-<pre class="hljs"><code><span class="hljs-built_in">uint</span>256 saleOffersCount</code></pre><p><em>Number of existing sale offers, initialized as 0 in the beggining,
+<pre class="hljs"><code><span class="hljs-built_in">uint</span>256 saleOffersCount</code></pre><p><em>Number of existing sale offers, initialized as 0 in the beginning,
         and incremented by one at every sale offer creation.</em></p>
 <h3 id="buyofferscount"><a class="header-link" href="#buyofferscount"></a>buyOffersCount</h3>
-<pre class="hljs"><code><span class="hljs-built_in">uint</span>256 buyOffersCount</code></pre><p><em>Number of existing buy offers, initialized as 0 in the beggining,
+<pre class="hljs"><code><span class="hljs-built_in">uint</span>256 buyOffersCount</code></pre><p><em>Number of existing buy offers, initialized as 0 in the beginning,
         and incremented by one at every buy offer creation.</em></p>
 <h3 id="saleoffers"><a class="header-link" href="#saleoffers"></a>saleOffers</h3>
 <pre class="hljs"><code><span class="hljs-function"><span class="hljs-title">mapping</span><span class="hljs-params">(uint256 =&gt; struct SpectrrData.SaleOffer)</span></span> saleOffers</code></pre><p><em>Map of offer id (saleOffersCount) and sale offer struct</em></p>
@@ -41,12 +58,13 @@
 <pre class="hljs"><code><span class="hljs-attribute">struct</span> SaleOffer {
   <span class="hljs-attribute">enum</span> SpectrrData.OfferStatus offerStatus;
   <span class="hljs-attribute">enum</span> SpectrrData.OfferLockState offerLockState;
-  <span class="hljs-attribute">uint256</span> offerId;
   <span class="hljs-attribute">uint256</span> selling;
   <span class="hljs-attribute">uint256</span> sellingFor;
   <span class="hljs-attribute">uint256</span> collateral;
   <span class="hljs-attribute">uint256</span> repayInSeconds;
   <span class="hljs-attribute">uint256</span> timeAccepted;
+  <span class="hljs-attribute">uint256</span> collateralToDebtRatio;
+  <span class="hljs-attribute">uint256</span> liquidationRatio;
   <span class="hljs-attribute">uint8</span> sellingId;
   <span class="hljs-attribute">uint8</span> sellingForId;
   <span class="hljs-attribute">uint8</span> collateralId;
@@ -56,53 +74,54 @@
 <pre class="hljs"><code><span class="hljs-attribute">struct</span> BuyOffer {
   <span class="hljs-attribute">enum</span> SpectrrData.OfferStatus offerStatus;
   <span class="hljs-attribute">enum</span> SpectrrData.OfferLockState offerLockState;
-  <span class="hljs-attribute">uint256</span> offerId;
   <span class="hljs-attribute">uint256</span> buying;
   <span class="hljs-attribute">uint256</span> buyingFor;
   <span class="hljs-attribute">uint256</span> collateral;
   <span class="hljs-attribute">uint256</span> repayInSeconds;
   <span class="hljs-attribute">uint256</span> timeAccepted;
+  <span class="hljs-attribute">uint256</span> collateralToDebtRatio;
+  <span class="hljs-attribute">uint256</span> liquidationRatio;
   <span class="hljs-attribute">uint8</span> buyingId;
   <span class="hljs-attribute">uint8</span> buyingForId;
   <span class="hljs-attribute">uint8</span> collateralId;
-  <span class="hljs-attribute">address</span> buyer;
   <span class="hljs-attribute">address</span> seller;
+  <span class="hljs-attribute">address</span> buyer;
 }</code></pre><h3 id="saleoffercreated"><a class="header-link" href="#saleoffercreated"></a>SaleOfferCreated</h3>
-<pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferCreated(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">selling</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">sellingId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">sellingFor</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">sellingForId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">exRate</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">repayInSeconds</span>, <span class="hljs-params">address</span> <span class="hljs-params">seller</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a sale offer is created</p>
+<pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferCreated(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">selling</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">sellingId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">sellingFor</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">sellingForId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">exRate</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">repayInSeconds</span>, <span class="hljs-params">address</span> <span class="hljs-params">seller</span>)</span></code></pre><p>Event emitted when a sale offer is created</p>
 <h3 id="saleofferaccepted"><a class="header-link" href="#saleofferaccepted"></a>SaleOfferAccepted</h3>
 <pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferAccepted(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">collateral</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">collateralId</span>, <span class="hljs-params">address</span> <span class="hljs-params">buyer</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a sale offer is accepted</p>
 <h3 id="saleoffercollateraladded"><a class="header-link" href="#saleoffercollateraladded"></a>SaleOfferCollateralAdded</h3>
-<pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferCollateralAdded(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">amount</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">amountId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when collateral is added to a sale offer</p>
+<pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferCollateralAdded(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">amount</span>)</span></code></pre><p>Event emitted when collateral is added to a sale offer</p>
 <h3 id="saleoffercanceled"><a class="header-link" href="#saleoffercanceled"></a>SaleOfferCanceled</h3>
-<pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferCanceled(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a sale offer is canceled</p>
+<pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferCanceled(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>)</span></code></pre><p>Event emitted when a sale offer is canceled</p>
 <h3 id="saleofferliquidated"><a class="header-link" href="#saleofferliquidated"></a>SaleOfferLiquidated</h3>
-<pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferLiquidated(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">liquidator</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a sale offer is liquidated</p>
+<pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferLiquidated(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">liquidator</span>)</span></code></pre><p>Event emitted when a sale offer is liquidated</p>
 <h3 id="saleofferselleraddresschanged"><a class="header-link" href="#saleofferselleraddresschanged"></a>SaleOfferSellerAddressChanged</h3>
 <pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferSellerAddressChanged(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">newAddress</span>)</span></code></pre><p>Event emitted when the seller address of a sale offer changes</p>
 <h3 id="saleofferbuyeraddresschanged"><a class="header-link" href="#saleofferbuyeraddresschanged"></a>SaleOfferBuyerAddressChanged</h3>
 <pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferBuyerAddressChanged(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">newAddress</span>)</span></code></pre><p>Event emitted when the buyer address of a sale offer changes</p>
 <h3 id="saleofferrepaid"><a class="header-link" href="#saleofferrepaid"></a>SaleOfferRepaid</h3>
-<pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferRepaid(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">amount</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">amountId</span>, <span class="hljs-params">bool</span> <span class="hljs-params">byPart</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a sale offer is repaid</p>
+<pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferRepaid(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">amount</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">amountId</span>, <span class="hljs-params">bool</span> <span class="hljs-params">byPart</span>)</span></code></pre><p>Event emitted when a sale offer is repaid</p>
 <h3 id="saleofferforfeited"><a class="header-link" href="#saleofferforfeited"></a>SaleOfferForfeited</h3>
-<pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferForfeited(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a sale offer is forfeited</p>
+<pre class="hljs"><code>event <span class="hljs-constructor">SaleOfferForfeited(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>)</span></code></pre><p>Event emitted when a sale offer is forfeited</p>
 <h3 id="buyoffercreated"><a class="header-link" href="#buyoffercreated"></a>BuyOfferCreated</h3>
-<pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferCreated(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">buying</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">buyingId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">buyingFor</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">buyingForId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">exRate</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">collateralId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">repayInSeconds</span>, <span class="hljs-params">address</span> <span class="hljs-params">buyer</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a buy offer is created</p>
+<pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferCreated(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">buying</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">buyingId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">buyingFor</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">buyingForId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">exRate</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">collateralId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">repayInSeconds</span>, <span class="hljs-params">address</span> <span class="hljs-params">buyer</span>)</span></code></pre><p>Event emitted when a buy offer is created</p>
 <h3 id="buyofferaccepted"><a class="header-link" href="#buyofferaccepted"></a>BuyOfferAccepted</h3>
 <pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferAccepted(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">seller</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a buy offer is accepted</p>
 <h3 id="buyoffercollateraladded"><a class="header-link" href="#buyoffercollateraladded"></a>BuyOfferCollateralAdded</h3>
-<pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferCollateralAdded(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">amount</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">amountId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when collateral is added to a buy offer</p>
+<pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferCollateralAdded(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">amount</span>)</span></code></pre><p>Event emitted when collateral is added to a buy offer</p>
 <h3 id="buyoffercanceled"><a class="header-link" href="#buyoffercanceled"></a>BuyOfferCanceled</h3>
-<pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferCanceled(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a buy offer is canceled</p>
+<pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferCanceled(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>)</span></code></pre><p>Event emitted when a buy offer is canceled</p>
 <h3 id="buyofferliquidated"><a class="header-link" href="#buyofferliquidated"></a>BuyOfferLiquidated</h3>
-<pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferLiquidated(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">liquidator</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a buy offer is liquidated</p>
+<pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferLiquidated(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">liquidator</span>)</span></code></pre><p>Event emitted when a buy offer is liquidated</p>
 <h3 id="buyofferselleraddresschanged"><a class="header-link" href="#buyofferselleraddresschanged"></a>BuyOfferSellerAddressChanged</h3>
 <pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferSellerAddressChanged(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">newAddress</span>)</span></code></pre><p>Event emitted when the seller address of a buy offer changes</p>
 <h3 id="buyofferbuyeraddresschanged"><a class="header-link" href="#buyofferbuyeraddresschanged"></a>BuyOfferBuyerAddressChanged</h3>
 <pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferBuyerAddressChanged(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">newAddress</span>)</span></code></pre><p>Event emitted when the buyer address of a buy offer changes</p>
 <h3 id="buyofferrepaid"><a class="header-link" href="#buyofferrepaid"></a>BuyOfferRepaid</h3>
-<pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferRepaid(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">amount</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">amountId</span>, <span class="hljs-params">bool</span> <span class="hljs-params">byPart</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a buy offer is repaid</p>
+<pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferRepaid(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">amount</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">amountId</span>, <span class="hljs-params">bool</span> <span class="hljs-params">byPart</span>)</span></code></pre><p>Event emitted when a buy offer is repaid</p>
 <h3 id="buyofferforfeited"><a class="header-link" href="#buyofferforfeited"></a>BuyOfferForfeited</h3>
-<pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferForfeited(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">timestamp</span>)</span></code></pre><p>Event emitted when a buy offer is forfeited</p>
+<pre class="hljs"><code>event <span class="hljs-constructor">BuyOfferForfeited(<span class="hljs-params">uint256</span> <span class="hljs-params">offerId</span>)</span></code></pre><p>Event emitted when a buy offer is forfeited</p>
 <h3 id="locksaleoffer"><a class="header-link" href="#locksaleoffer"></a>lockSaleOffer</h3>
 <pre class="hljs"><code>modifier lock<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span></code></pre><p><em>Modifier used to protect from reentrancy.
         Called when a function changing the state of a sale offer struct is entered, it prevents changes by anyone aside from the current msg.sender.
@@ -110,12 +129,59 @@
         as the latter only restricts the msg.sender from calling other functions in the contract.</em></p>
 <h3 id="lockbuyoffer"><a class="header-link" href="#lockbuyoffer"></a>lockBuyOffer</h3>
 <pre class="hljs"><code>modifier lock<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span></code></pre><p><em>Same as modifier above, but for buy offers</em></p>
-<h2 id="spectrrcore"><a class="header-link" href="#spectrrcore"></a>SpectrrCore</h2>
+<h2 id="spectrrfi"><a class="header-link" href="#spectrrfi"></a>SpectrrFi</h2>
 <h3 id="constructor"><a class="header-link" href="#constructor"></a>constructor</h3>
 <pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">constructor</span><span class="hljs-params">()</span> <span class="hljs-title">public</span></span></code></pre><p><em>EIP712 Constructor
 EIP712&#39;s params are the name and version of the contract</em></p>
-<h3 id="createsaleoffer"><a class="header-link" href="#createsaleoffer"></a>createSaleOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> create<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_sellingTokenAmountWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_sellingTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_exchangeRateWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_sellingForTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_repayInSeconds</span>)</span> <span class="hljs-keyword">external</span> returns (uint256)</code></pre><h4 id="return-values"><a class="header-link" href="#return-values"></a>Return Values</h4>
+<h3 id="createsaleoffer-1"><a class="header-link" href="#createsaleoffer-1"></a>createSaleOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> create<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_sellingTokenAmount</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_sellingTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_exchangeRate</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_sellingForTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_repayInSeconds</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_collateralToDebtRatio</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_liquidationRatio</span>)</span> <span class="hljs-keyword">external</span> returns (uint256)</code></pre><p>Creates and posts a sale offer
+There is a 0.1% fee of the selling amount, paid by the seller to the fee address.</p>
+<h4 id="parameters"><a class="header-link" href="#parameters"></a>Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>_sellingTokenAmount</td>
+<td>uint256</td>
+<td>Amount the sender is selling</td>
+</tr>
+<tr>
+<td>_sellingTokenId</td>
+<td>uint8</td>
+<td>Id of the selling token, can not be same than id of sell for token.</td>
+</tr>
+<tr>
+<td>_exchangeRate</td>
+<td>uint256</td>
+<td>Exchange rate between the selling amount sell for amount</td>
+</tr>
+<tr>
+<td>_sellingForTokenId</td>
+<td>uint8</td>
+<td>Id of the token exchanged for, can not be same than id of the selling token.</td>
+</tr>
+<tr>
+<td>_repayInSeconds</td>
+<td>uint256</td>
+<td>Repayment period in unix seconds, a value of 0 will allow an unlimited repayment time .</td>
+</tr>
+<tr>
+<td>_collateralToDebtRatio</td>
+<td>uint256</td>
+<td></td>
+</tr>
+<tr>
+<td>_liquidationRatio</td>
+<td>uint256</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="return-values"><a class="header-link" href="#return-values"></a>Return Values</h4>
 <table>
 <thead>
 <tr>
@@ -130,8 +196,8 @@ EIP712&#39;s params are the name and version of the contract</em></p>
 <td>uint256 Id of the offer created</td>
 </tr>
 </tbody></table>
-<h3 id="acceptsaleoffer"><a class="header-link" href="#acceptsaleoffer"></a>acceptSaleOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> accept<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_collateralTokenId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h4 id="parameters"><a class="header-link" href="#parameters"></a>Parameters</h4>
+<h3 id="acceptsaleoffer-1"><a class="header-link" href="#acceptsaleoffer-1"></a>acceptSaleOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> accept<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_collateralTokenId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h4 id="parameters-1"><a class="header-link" href="#parameters-1"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -151,9 +217,9 @@ EIP712&#39;s params are the name and version of the contract</em></p>
 <td>Id of the token to be pledged as collateral,         cannot be same than id of selling token.</td>
 </tr>
 </tbody></table>
-<h3 id="cancelsaleoffer"><a class="header-link" href="#cancelsaleoffer"></a>cancelSaleOffer</h3>
+<h3 id="cancelsaleoffer-1"><a class="header-link" href="#cancelsaleoffer-1"></a>cancelSaleOffer</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> cancel<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Cancels a sale offer, given that it is not accepted yet</p>
-<h4 id="parameters-1"><a class="header-link" href="#parameters-1"></a>Parameters</h4>
+<h4 id="parameters-2"><a class="header-link" href="#parameters-2"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -168,10 +234,10 @@ EIP712&#39;s params are the name and version of the contract</em></p>
 <td>Id of the sale offer to cancel</td>
 </tr>
 </tbody></table>
-<h3 id="addcollateralsaleoffer"><a class="header-link" href="#addcollateralsaleoffer"></a>addCollateralSaleOffer</h3>
+<h3 id="addcollateralsaleoffer-1"><a class="header-link" href="#addcollateralsaleoffer-1"></a>addCollateralSaleOffer</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> add<span class="hljs-constructor">CollateralSaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountToAdd</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Adds collateral to a sale offer</p>
 <p><em>Can only be called by the buyer of the sale offer</em></p>
-<h4 id="parameters-2"><a class="header-link" href="#parameters-2"></a>Parameters</h4>
+<h4 id="parameters-3"><a class="header-link" href="#parameters-3"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -191,9 +257,9 @@ EIP712&#39;s params are the name and version of the contract</em></p>
 <td>Amount of collateral to add</td>
 </tr>
 </tbody></table>
-<h3 id="repaysaleoffer"><a class="header-link" href="#repaysaleoffer"></a>repaySaleOffer</h3>
+<h3 id="repaysaleoffer-1"><a class="header-link" href="#repaysaleoffer-1"></a>repaySaleOffer</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> repay<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Fully repays the debt of a sale offer</p>
-<h4 id="parameters-3"><a class="header-link" href="#parameters-3"></a>Parameters</h4>
+<h4 id="parameters-4"><a class="header-link" href="#parameters-4"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -208,9 +274,9 @@ EIP712&#39;s params are the name and version of the contract</em></p>
 <td>Id of the sale offer to repay</td>
 </tr>
 </tbody></table>
-<h3 id="repaysaleofferpart"><a class="header-link" href="#repaysaleofferpart"></a>repaySaleOfferPart</h3>
+<h3 id="repaysaleofferpart-1"><a class="header-link" href="#repaysaleofferpart-1"></a>repaySaleOfferPart</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> repay<span class="hljs-constructor">SaleOfferPart(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountToRepay</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Partially repays the debt of a sale offer</p>
-<h4 id="parameters-4"><a class="header-link" href="#parameters-4"></a>Parameters</h4>
+<h4 id="parameters-5"><a class="header-link" href="#parameters-5"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -230,8 +296,8 @@ EIP712&#39;s params are the name and version of the contract</em></p>
 <td>Amount to partially repay</td>
 </tr>
 </tbody></table>
-<h3 id="liquidatesaleoffer"><a class="header-link" href="#liquidatesaleoffer"></a>liquidateSaleOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> liquidate<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h4 id="parameters-5"><a class="header-link" href="#parameters-5"></a>Parameters</h4>
+<h3 id="liquidatesaleoffer-1"><a class="header-link" href="#liquidatesaleoffer-1"></a>liquidateSaleOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> liquidate<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h4 id="parameters-6"><a class="header-link" href="#parameters-6"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -246,11 +312,11 @@ EIP712&#39;s params are the name and version of the contract</em></p>
 <td>Id of the sale offer to liquidate</td>
 </tr>
 </tbody></table>
-<h3 id="forfeitsaleoffer"><a class="header-link" href="#forfeitsaleoffer"></a>forfeitSaleOffer</h3>
+<h3 id="forfeitsaleoffer-1"><a class="header-link" href="#forfeitsaleoffer-1"></a>forfeitSaleOffer</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> forfeit<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Forfeits a sale offer</p>
 <p><em>Only callable by the buyer
 Transaction is reverted if it incurs a loss to the seller</em></p>
-<h4 id="parameters-6"><a class="header-link" href="#parameters-6"></a>Parameters</h4>
+<h4 id="parameters-7"><a class="header-link" href="#parameters-7"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -265,8 +331,8 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>Id of the sale offer to forfeit</td>
 </tr>
 </tbody></table>
-<h3 id="createbuyoffer"><a class="header-link" href="#createbuyoffer"></a>createBuyOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> create<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_buyingTokenAmountWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_buyingTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_exchangeRateWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_buyingForTokenId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_collateralTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_repayInSeconds</span>)</span> <span class="hljs-keyword">external</span> returns (uint256)</code></pre><h4 id="parameters-7"><a class="header-link" href="#parameters-7"></a>Parameters</h4>
+<h3 id="createbuyoffer-1"><a class="header-link" href="#createbuyoffer-1"></a>createBuyOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> create<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_buyingTokenAmount</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_buyingTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_exchangeRate</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_buyingForTokenId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_collateralTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_repayInSeconds</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_collateralToDebtRatio</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_liquidationRatio</span>)</span> <span class="hljs-keyword">external</span> returns (uint256)</code></pre><h4 id="parameters-8"><a class="header-link" href="#parameters-8"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -276,7 +342,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tr>
 </thead>
 <tbody><tr>
-<td>_buyingTokenAmountWei</td>
+<td>_buyingTokenAmount</td>
 <td>uint256</td>
 <td></td>
 </tr>
@@ -286,7 +352,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td></td>
 </tr>
 <tr>
-<td>_exchangeRateWei</td>
+<td>_exchangeRate</td>
 <td>uint256</td>
 <td></td>
 </tr>
@@ -305,11 +371,21 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>uint256</td>
 <td>Repayment timeframe in unix seconds,         a value of 0 will allow an unlimited repayment time .</td>
 </tr>
+<tr>
+<td>_collateralToDebtRatio</td>
+<td>uint256</td>
+<td></td>
+</tr>
+<tr>
+<td>_liquidationRatio</td>
+<td>uint256</td>
+<td></td>
+</tr>
 </tbody></table>
-<h3 id="acceptbuyoffer"><a class="header-link" href="#acceptbuyoffer"></a>acceptBuyOffer</h3>
+<h3 id="acceptbuyoffer-1"><a class="header-link" href="#acceptbuyoffer-1"></a>acceptBuyOffer</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> accept<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Accepts a buy offer by transferring the amount buying from the seller to the buyer
 There is a 0.1% fee of the buying amount, paid by the seller.</p>
-<h4 id="parameters-8"><a class="header-link" href="#parameters-8"></a>Parameters</h4>
+<h4 id="parameters-9"><a class="header-link" href="#parameters-9"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -324,9 +400,9 @@ There is a 0.1% fee of the buying amount, paid by the seller.</p>
 <td>Id of the buy offer to accept</td>
 </tr>
 </tbody></table>
-<h3 id="cancelbuyoffer"><a class="header-link" href="#cancelbuyoffer"></a>cancelBuyOffer</h3>
+<h3 id="cancelbuyoffer-1"><a class="header-link" href="#cancelbuyoffer-1"></a>cancelBuyOffer</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> cancel<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Cancels a buy offer, given that it not accepted yet</p>
-<h4 id="parameters-9"><a class="header-link" href="#parameters-9"></a>Parameters</h4>
+<h4 id="parameters-10"><a class="header-link" href="#parameters-10"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -341,10 +417,10 @@ There is a 0.1% fee of the buying amount, paid by the seller.</p>
 <td>Id of the buy offer to cancel</td>
 </tr>
 </tbody></table>
-<h3 id="addcollateralbuyoffer"><a class="header-link" href="#addcollateralbuyoffer"></a>addCollateralBuyOffer</h3>
+<h3 id="addcollateralbuyoffer-1"><a class="header-link" href="#addcollateralbuyoffer-1"></a>addCollateralBuyOffer</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> add<span class="hljs-constructor">CollateralBuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountToAdd</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Adds collateral to a buy offer</p>
 <p><em>Can only be called by the buyer of the buy offer</em></p>
-<h4 id="parameters-10"><a class="header-link" href="#parameters-10"></a>Parameters</h4>
+<h4 id="parameters-11"><a class="header-link" href="#parameters-11"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -364,9 +440,9 @@ There is a 0.1% fee of the buying amount, paid by the seller.</p>
 <td>The amount of collateral to add</td>
 </tr>
 </tbody></table>
-<h3 id="repaybuyoffer"><a class="header-link" href="#repaybuyoffer"></a>repayBuyOffer</h3>
+<h3 id="repaybuyoffer-1"><a class="header-link" href="#repaybuyoffer-1"></a>repayBuyOffer</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> repay<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Fully repays the debt of the buy offer</p>
-<h4 id="parameters-11"><a class="header-link" href="#parameters-11"></a>Parameters</h4>
+<h4 id="parameters-12"><a class="header-link" href="#parameters-12"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -381,9 +457,9 @@ There is a 0.1% fee of the buying amount, paid by the seller.</p>
 <td>Id of the buy offer to repay</td>
 </tr>
 </tbody></table>
-<h3 id="repaybuyofferpart"><a class="header-link" href="#repaybuyofferpart"></a>repayBuyOfferPart</h3>
+<h3 id="repaybuyofferpart-1"><a class="header-link" href="#repaybuyofferpart-1"></a>repayBuyOfferPart</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> repay<span class="hljs-constructor">BuyOfferPart(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountToRepay</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Partially repays the debt of a buy offer</p>
-<h4 id="parameters-12"><a class="header-link" href="#parameters-12"></a>Parameters</h4>
+<h4 id="parameters-13"><a class="header-link" href="#parameters-13"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -403,8 +479,8 @@ There is a 0.1% fee of the buying amount, paid by the seller.</p>
 <td>Amount to partially repay</td>
 </tr>
 </tbody></table>
-<h3 id="liquidatebuyoffer"><a class="header-link" href="#liquidatebuyoffer"></a>liquidateBuyOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> liquidate<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h4 id="parameters-13"><a class="header-link" href="#parameters-13"></a>Parameters</h4>
+<h3 id="liquidatebuyoffer-1"><a class="header-link" href="#liquidatebuyoffer-1"></a>liquidateBuyOffer</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> liquidate<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h4 id="parameters-14"><a class="header-link" href="#parameters-14"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -419,11 +495,11 @@ There is a 0.1% fee of the buying amount, paid by the seller.</p>
 <td>Id of the buy offer to liquidate</td>
 </tr>
 </tbody></table>
-<h3 id="forfeitbuyoffer"><a class="header-link" href="#forfeitbuyoffer"></a>forfeitBuyOffer</h3>
+<h3 id="forfeitbuyoffer-1"><a class="header-link" href="#forfeitbuyoffer-1"></a>forfeitBuyOffer</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> forfeit<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Forfeits a buy offer</p>
 <p><em>Only callable by the buyer
 Transaction is reverted if it incurs a loss to the seller</em></p>
-<h4 id="parameters-14"><a class="header-link" href="#parameters-14"></a>Parameters</h4>
+<h4 id="parameters-15"><a class="header-link" href="#parameters-15"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -438,8 +514,8 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>Id of the buy offer to forfeit</td>
 </tr>
 </tbody></table>
-<h3 id="changeaddresssale"><a class="header-link" href="#changeaddresssale"></a>changeAddressSale</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> change<span class="hljs-constructor">AddressSale(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">_newAddress</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_addressType</span>)</span> <span class="hljs-keyword">external</span></code></pre><h4 id="parameters-15"><a class="header-link" href="#parameters-15"></a>Parameters</h4>
+<h3 id="changeaddresssale-1"><a class="header-link" href="#changeaddresssale-1"></a>changeAddressSale</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> change<span class="hljs-constructor">AddressSale(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">_newAddress</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_addressType</span>)</span> <span class="hljs-keyword">external</span></code></pre><h4 id="parameters-16"><a class="header-link" href="#parameters-16"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -464,8 +540,8 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>Type of address: 0 for seller address, and 1 for buyer address.</td>
 </tr>
 </tbody></table>
-<h3 id="changeaddressbuy"><a class="header-link" href="#changeaddressbuy"></a>changeAddressBuy</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> change<span class="hljs-constructor">AddressBuy(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">_newAddress</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_addressType</span>)</span> <span class="hljs-keyword">external</span></code></pre><h4 id="parameters-16"><a class="header-link" href="#parameters-16"></a>Parameters</h4>
+<h3 id="changeaddressbuy-1"><a class="header-link" href="#changeaddressbuy-1"></a>changeAddressBuy</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> change<span class="hljs-constructor">AddressBuy(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">_newAddress</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_addressType</span>)</span> <span class="hljs-keyword">external</span></code></pre><h4 id="parameters-17"><a class="header-link" href="#parameters-17"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -490,217 +566,14 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>Type of address: 0 for seller address, and 1 for buyer address.</td>
 </tr>
 </tbody></table>
-<h3 id="getratioinfo"><a class="header-link" href="#getratioinfo"></a>getRatioInfo</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> get<span class="hljs-constructor">RatioInfo(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_offerType</span>)</span> <span class="hljs-keyword">external</span> view returns (uint256, uint256, uint8, uint8, address)</code></pre><p>Gets the collateral to debt ratio, debt amount, debt amount id, collateral id, and buyer&#39;s address of an offer.</p>
-<h4 id="parameters-17"><a class="header-link" href="#parameters-17"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the offer we want to get info on</td>
-</tr>
-<tr>
-<td>_offerType</td>
-<td>uint8</td>
-<td>Type of offer: 0 for sale offer and 1 for buy offer.</td>
-</tr>
-</tbody></table>
-<h4 id="return-values-1"><a class="header-link" href="#return-values-1"></a>Return Values</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>[0]</td>
-<td>uint256</td>
-<td>uint256 Collateral to debt ratio</td>
-</tr>
-<tr>
-<td>[1]</td>
-<td>uint256</td>
-<td>uint256 Debt amount</td>
-</tr>
-<tr>
-<td>[2]</td>
-<td>uint8</td>
-<td>uint8 Id of the debt token</td>
-</tr>
-<tr>
-<td>[3]</td>
-<td>uint8</td>
-<td>uint8 Id of the collateral</td>
-</tr>
-<tr>
-<td>[4]</td>
-<td>address</td>
-<td>address Address of the buyer</td>
-</tr>
-</tbody></table>
-<h3 id="canliquidate"><a class="header-link" href="#canliquidate"></a>canLiquidate</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> can<span class="hljs-constructor">Liquidate(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_offerType</span>)</span> <span class="hljs-keyword">external</span> view returns (<span class="hljs-built_in">bool</span>)</code></pre><p>Checks if an offer can be liquidated</p>
-<h4 id="parameters-18"><a class="header-link" href="#parameters-18"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the offer we want to check</td>
-</tr>
-<tr>
-<td>_offerType</td>
-<td>uint8</td>
-<td>Type of offer: 0 for sale offer and 1 for buy offer.</td>
-</tr>
-</tbody></table>
-<h4 id="return-values-2"><a class="header-link" href="#return-values-2"></a>Return Values</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>[0]</td>
-<td>bool</td>
-<td>bool If the offer can be liquidated or not</td>
-</tr>
-</tbody></table>
-<h3 id="isliquidationloss"><a class="header-link" href="#isliquidationloss"></a>isLiquidationLoss</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> is<span class="hljs-constructor">LiquidationLoss(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_offerType</span>)</span> <span class="hljs-keyword">external</span> view returns (<span class="hljs-built_in">bool</span>)</code></pre><p>Determines if a liquidation will incur a loss</p>
-<h4 id="parameters-19"><a class="header-link" href="#parameters-19"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the offer we want to check</td>
-</tr>
-<tr>
-<td>_offerType</td>
-<td>uint8</td>
-<td>Type of offer: 0 for sale offer and 1 for buy offer.</td>
-</tr>
-</tbody></table>
-<h4 id="return-values-3"><a class="header-link" href="#return-values-3"></a>Return Values</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>[0]</td>
-<td>bool</td>
-<td>bool If the liquidation will incur a loss or not</td>
-</tr>
-</tbody></table>
-<h3 id="getliquidationpricecollateral"><a class="header-link" href="#getliquidationpricecollateral"></a>getLiquidationPriceCollateral</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> get<span class="hljs-constructor">LiquidationPriceCollateral(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_offerType</span>)</span> <span class="hljs-keyword">external</span> view returns (uint256)</code></pre><p>Gets the price of the collateral token at which the offer will be liquidable</p>
-<h4 id="parameters-20"><a class="header-link" href="#parameters-20"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the offer we want the liquidation price</td>
-</tr>
-<tr>
-<td>_offerType</td>
-<td>uint8</td>
-<td>Type of offer: 0 for sale offer and 1 for buy offer.</td>
-</tr>
-</tbody></table>
-<h4 id="return-values-4"><a class="header-link" href="#return-values-4"></a>Return Values</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>[0]</td>
-<td>uint256</td>
-<td>uint256 The liquidation price of the collateral token</td>
-</tr>
-</tbody></table>
-<h3 id="getliquidationpriceamountfor"><a class="header-link" href="#getliquidationpriceamountfor"></a>getLiquidationPriceAmountFor</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> get<span class="hljs-constructor">LiquidationPriceAmountFor(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_offerType</span>)</span> <span class="hljs-keyword">external</span> view returns (uint256)</code></pre><p>Gets the price of the debt token at which the offer will be liquidable</p>
-<h4 id="parameters-21"><a class="header-link" href="#parameters-21"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the offer we want the liquidation price</td>
-</tr>
-<tr>
-<td>_offerType</td>
-<td>uint8</td>
-<td>Type of offer: 0 for sale offer and 1 for buy offer.</td>
-</tr>
-</tbody></table>
-<h4 id="return-values-5"><a class="header-link" href="#return-values-5"></a>Return Values</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>[0]</td>
-<td>uint256</td>
-<td>uint256 The liquidation price of the debt token</td>
-</tr>
-</tbody></table>
+<h3 id="getsaleofferfromid"><a class="header-link" href="#getsaleofferfromid"></a>getSaleOfferFromId</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> get<span class="hljs-constructor">SaleOfferFromId(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span> view returns (<span class="hljs-keyword">struct</span> SpectrrData.SaleOffer)</code></pre><p>Gets data of a sale offer from its Id (e.g. amount selling, seller address...)</p>
+<h3 id="getbuyofferfromid"><a class="header-link" href="#getbuyofferfromid"></a>getBuyOfferFromId</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> get<span class="hljs-constructor">BuyOfferFromId(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span> view returns (<span class="hljs-keyword">struct</span> SpectrrData.BuyOffer)</code></pre><p>Gets data of a buy offer from its Id (e.g. amount selling, seller address...)</p>
 <h2 id="spectrrmanager"><a class="header-link" href="#spectrrmanager"></a>SpectrrManager</h2>
 <p>This contract handles functions that can only be called by the dev address (e.g.: Adding new tradable tokens).</p>
-<h3 id="feeaddress"><a class="header-link" href="#feeaddress"></a>feeAddress</h3>
-<pre class="hljs"><code><span class="hljs-selector-tag">address</span> feeAddress</code></pre><p>address where transaction fees will be sent</p>
 <h3 id="fee_percent"><a class="header-link" href="#fee_percent"></a>FEE_PERCENT</h3>
-<pre class="hljs"><code><span class="hljs-built_in">uint</span>16 FEE_PERCENT</code></pre><p>Fee corresponding to 0.1% (amount * (100 / 0.1) = 1000,
+<pre class="hljs"><code><span class="hljs-built_in">uint</span>16 FEE_PERCENT</code></pre><p>Fee corresponding to 0.1% (100 / 0.1 = 1000),
                 taken when an offer is created and accepted.</p>
 <h3 id="tokencount"><a class="header-link" href="#tokencount"></a>tokenCount</h3>
 <pre class="hljs"><code><span class="hljs-built_in">uint</span>8 tokenCount</code></pre><p>The number of tokens tradable by this contract</p>
@@ -709,20 +582,18 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <pre class="hljs"><code><span class="hljs-function"><span class="hljs-title">mapping</span><span class="hljs-params">(uint8 =&gt; struct SpectrrManager.Token)</span></span> tokens</code></pre><p><em>Map of the number of tokens and Token struct</em></p>
 <h3 id="token"><a class="header-link" href="#token"></a>Token</h3>
 <pre class="hljs"><code><span class="hljs-attribute">struct</span> Token {
-  <span class="hljs-attribute">uint8</span> tokenId;
+  <span class="hljs-attribute">string</span> name;
   <span class="hljs-attribute">uint8</span> decimals;
-  <span class="hljs-attribute">string</span> tokenName;
-  <span class="hljs-attribute">address</span> tokenAddress;
+  <span class="hljs-attribute">uint8</span> chainlinkPriceDecimals;
+  <span class="hljs-attribute">address</span> dividendContractAddress;
   <span class="hljs-attribute">address</span> chainlinkOracleAddress;
-  <span class="hljs-attribute">contract</span> IERC20 Itoken;
+  <span class="hljs-attribute">address</span> addr;
 }</code></pre><h3 id="newtokenadded"><a class="header-link" href="#newtokenadded"></a>NewTokenAdded</h3>
-<pre class="hljs"><code>event <span class="hljs-constructor">NewTokenAdded(<span class="hljs-params">uint8</span> <span class="hljs-params">tokenId</span>, <span class="hljs-params">string</span> <span class="hljs-params">tokenName</span>, <span class="hljs-params">address</span> <span class="hljs-params">tokenAddress</span>, <span class="hljs-params">address</span> <span class="hljs-params">chainlinkOracleAddress</span>)</span></code></pre><p>Event emitted when a new token is added</p>
-<h3 id="feeaddresschanged"><a class="header-link" href="#feeaddresschanged"></a>FeeAddressChanged</h3>
-<pre class="hljs"><code>event <span class="hljs-constructor">FeeAddressChanged(<span class="hljs-params">address</span> <span class="hljs-params">newAddress</span>)</span></code></pre><p>Event emitted when the fee address is changed</p>
+<pre class="hljs"><code>event <span class="hljs-constructor">NewTokenAdded(<span class="hljs-params">string</span> <span class="hljs-params">tokenName</span>, <span class="hljs-params">address</span> <span class="hljs-params">tokenAddress</span>, <span class="hljs-params">address</span> <span class="hljs-params">dividendTokenContractAddress</span>, <span class="hljs-params">address</span> <span class="hljs-params">chainlinkOracleAddress</span>)</span></code></pre><p>Event emitted when a new token is added</p>
 <h3 id="addtoken"><a class="header-link" href="#addtoken"></a>addToken</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> add<span class="hljs-constructor">Token(<span class="hljs-params">string</span> <span class="hljs-params">_tokenName</span>, <span class="hljs-params">address</span> <span class="hljs-params">_tokenAddress</span>, <span class="hljs-params">address</span> <span class="hljs-params">_chainlinkOracleAddress</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_decimals</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Adds a token to the array of tokens tradable by this contract</p>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> add<span class="hljs-constructor">Token(<span class="hljs-params">string</span> <span class="hljs-params">_tokenName</span>, <span class="hljs-params">address</span> <span class="hljs-params">_tokenAddress</span>, <span class="hljs-params">address</span> <span class="hljs-params">_chainlinkOracleAddress</span>, <span class="hljs-params">address</span> <span class="hljs-params">_dividendContractAddress</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_chainlinkOracleDecimals</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_decimals</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Adds a token to the array of tokens tradable by this contract</p>
 <p><em>Only callable by owner</em></p>
-<h4 id="parameters-22"><a class="header-link" href="#parameters-22"></a>Parameters</h4>
+<h4 id="parameters-18"><a class="header-link" href="#parameters-18"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -734,7 +605,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <tbody><tr>
 <td>_tokenName</td>
 <td>string</td>
-<td>Name of the token to add in the following format: &quot;btc&quot;</td>
+<td>Name of the token to add in the format: &quot;wbtc&quot;</td>
 </tr>
 <tr>
 <td>_tokenAddress</td>
@@ -747,15 +618,25 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>Address of the chainlink contract used to take the price from</td>
 </tr>
 <tr>
-<td>_decimals</td>
+<td>_dividendContractAddress</td>
+<td>address</td>
+<td></td>
+</tr>
+<tr>
+<td>_chainlinkOracleDecimals</td>
 <td>uint8</td>
 <td>Number of decimals the chainlink price has</td>
+</tr>
+<tr>
+<td>_decimals</td>
+<td>uint8</td>
+<td>Number of decimals the token contract has</td>
 </tr>
 </tbody></table>
 <h3 id="changechainlinkoracleaddress"><a class="header-link" href="#changechainlinkoracleaddress"></a>changeChainlinkOracleAddress</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> change<span class="hljs-constructor">ChainlinkOracleAddress(<span class="hljs-params">uint8</span> <span class="hljs-params">_tokenId</span>, <span class="hljs-params">address</span> <span class="hljs-params">_newChainlinkOracleAddress</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Changes the address of the chainlink oracle of a token</p>
 <p><em>Only callable by the current owner</em></p>
-<h4 id="parameters-23"><a class="header-link" href="#parameters-23"></a>Parameters</h4>
+<h4 id="parameters-19"><a class="header-link" href="#parameters-19"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -775,10 +656,11 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>address of the new chainlink oracle</td>
 </tr>
 </tbody></table>
-<h3 id="changefeeaddress"><a class="header-link" href="#changefeeaddress"></a>changeFeeAddress</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> change<span class="hljs-constructor">FeeAddress(<span class="hljs-params">address</span> <span class="hljs-params">_newFeeAddress</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Changes the fee address</p>
-<p><em>Only callable by the current owner</em></p>
-<h4 id="parameters-24"><a class="header-link" href="#parameters-24"></a>Parameters</h4>
+<h2 id="spectrrprices"><a class="header-link" href="#spectrrprices"></a>SpectrrPrices</h2>
+<p>Fetches the prices of various currency pairs from Chainlink price feed oracles</p>
+<h3 id="getchainlinkprice"><a class="header-link" href="#getchainlinkprice"></a>getChainlinkPrice</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> getChainlinkPrice(address _chainlinkOracleAddress) <span class="hljs-built_in">public</span> <span class="hljs-keyword">view</span> <span class="hljs-keyword">returns</span> (int256)</code></pre><p>Gets the price of a token from a chainlink oracle address</p>
+<h4 id="parameters-20"><a class="header-link" href="#parameters-20"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -788,22 +670,16 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tr>
 </thead>
 <tbody><tr>
-<td>_newFeeAddress</td>
+<td>_chainlinkOracleAddress</td>
 <td>address</td>
-<td>The new fee address</td>
+<td>The address of the chainlink oracle</td>
 </tr>
 </tbody></table>
-<h2 id="spectrrpaymentsplitter"><a class="header-link" href="#spectrrpaymentsplitter"></a>SpectrrPaymentSplitter</h2>
-<p>This contract receives and distributes the fees generated by Spectrr Finance to different receivers.</p>
-<h3 id="constructor-1"><a class="header-link" href="#constructor-1"></a>constructor</h3>
-<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">constructor</span><span class="hljs-params">()</span> <span class="hljs-title">public</span></span></code></pre><h2 id="spectrrprices"><a class="header-link" href="#spectrrprices"></a>SpectrrPrices</h2>
-<p>Fetches the prices of various currency pairs from Chainlink price feed oracles</p>
-<h3 id="getchainlinkprice"><a class="header-link" href="#getchainlinkprice"></a>getChainlinkPrice</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> getChainlinkPrice(address _chainlinkOracleAddress) <span class="hljs-built_in">public</span> <span class="hljs-keyword">view</span> <span class="hljs-keyword">returns</span> (int256)</code></pre><h2 id="spectrrutils"><a class="header-link" href="#spectrrutils"></a>SpectrrUtils</h2>
+<h2 id="spectrrutils"><a class="header-link" href="#spectrrutils"></a>SpectrrUtils</h2>
 <p>This contract handles &#39;secondary&#39; functions, such as transferring tokens and calculating collateral tokens.</p>
 <h3 id="getblocktimestamp"><a class="header-link" href="#getblocktimestamp"></a>getBlockTimestamp</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> getBlockTimestamp() <span class="hljs-keyword">external</span> <span class="hljs-keyword">view</span> <span class="hljs-keyword">returns</span> (uint256)</code></pre><p>Gets the current block timestamp</p>
-<h4 id="return-values-6"><a class="header-link" href="#return-values-6"></a>Return Values</h4>
+<h4 id="return-values-1"><a class="header-link" href="#return-values-1"></a>Return Values</h4>
 <table>
 <thead>
 <tr>
@@ -820,7 +696,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tbody></table>
 <h3 id="getitokenfromid"><a class="header-link" href="#getitokenfromid"></a>getITokenFromId</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> getITokenFromId(uint8 _tokenId) <span class="hljs-built_in">public</span> <span class="hljs-keyword">view</span> <span class="hljs-keyword">returns</span> (contract IERC20)</code></pre><p>Gets the interface of a token based on its id</p>
-<h4 id="parameters-25"><a class="header-link" href="#parameters-25"></a>Parameters</h4>
+<h4 id="parameters-21"><a class="header-link" href="#parameters-21"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -832,10 +708,10 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <tbody><tr>
 <td>_tokenId</td>
 <td>uint8</td>
-<td>Id of the token we want the interface</td>
+<td>Id of the ERC20 token we want the interface</td>
 </tr>
 </tbody></table>
-<h4 id="return-values-7"><a class="header-link" href="#return-values-7"></a>Return Values</h4>
+<h4 id="return-values-2"><a class="header-link" href="#return-values-2"></a>Return Values</h4>
 <table>
 <thead>
 <tr>
@@ -847,12 +723,118 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <tbody><tr>
 <td>[0]</td>
 <td>contract IERC20</td>
-<td>IERC20 The Interface of the token</td>
+<td>IERC20 The ERC20 Interface of the token</td>
+</tr>
+</tbody></table>
+<h3 id="gettokendecimalsfromid"><a class="header-link" href="#gettokendecimalsfromid"></a>getTokenDecimalsFromId</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> getTokenDecimalsFromId(uint8 _tokenId) <span class="hljs-built_in">public</span> <span class="hljs-keyword">view</span> <span class="hljs-keyword">returns</span> (uint8)</code></pre><p>Gets the number of decimals of an ERC20 token</p>
+<h4 id="parameters-22"><a class="header-link" href="#parameters-22"></a>Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>_tokenId</td>
+<td>uint8</td>
+<td>Id of the ERC20 token</td>
+</tr>
+</tbody></table>
+<h4 id="return-values-3"><a class="header-link" href="#return-values-3"></a>Return Values</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[0]</td>
+<td>uint8</td>
+<td>uint8 The number of decimals</td>
+</tr>
+</tbody></table>
+<h3 id="amounttowei"><a class="header-link" href="#amounttowei"></a>amountToWei</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> amount<span class="hljs-constructor">ToWei(<span class="hljs-params">uint256</span> <span class="hljs-params">_amount</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>)</span> public view returns (uint256)</code></pre><p>Converts an amount to wei, based on the decimals the amount has</p>
+<h4 id="parameters-23"><a class="header-link" href="#parameters-23"></a>Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>_amount</td>
+<td>uint256</td>
+<td>The amount to convert</td>
+</tr>
+<tr>
+<td>_amountTokenId</td>
+<td>uint8</td>
+<td>Id of the amount we want to convert</td>
+</tr>
+</tbody></table>
+<h4 id="return-values-4"><a class="header-link" href="#return-values-4"></a>Return Values</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[0]</td>
+<td>uint256</td>
+<td>uint256 The converted amount in wei</td>
+</tr>
+</tbody></table>
+<h3 id="amountfromwei"><a class="header-link" href="#amountfromwei"></a>amountFromWei</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> amount<span class="hljs-constructor">FromWei(<span class="hljs-params">uint256</span> <span class="hljs-params">_amount</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>)</span> public view returns (uint256)</code></pre><p>Converts an amount from wei, based on the decimals the amount has</p>
+<h4 id="parameters-24"><a class="header-link" href="#parameters-24"></a>Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>_amount</td>
+<td>uint256</td>
+<td>The amount to convert</td>
+</tr>
+<tr>
+<td>_amountTokenId</td>
+<td>uint8</td>
+<td>Id of the amount we want to convert</td>
+</tr>
+</tbody></table>
+<h4 id="return-values-5"><a class="header-link" href="#return-values-5"></a>Return Values</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[0]</td>
+<td>uint256</td>
+<td>uint256 The converted amount</td>
 </tr>
 </tbody></table>
 <h3 id="tokenidtoprice"><a class="header-link" href="#tokenidtoprice"></a>tokenIdToPrice</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> tokenIdToPrice(uint8 _tokenId) <span class="hljs-built_in">public</span> <span class="hljs-keyword">view</span> <span class="hljs-keyword">returns</span> (uint256)</code></pre><p>Gets the price of a token from Chainlink</p>
-<h4 id="parameters-26"><a class="header-link" href="#parameters-26"></a>Parameters</h4>
+<h4 id="parameters-25"><a class="header-link" href="#parameters-25"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -867,7 +849,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>Id of the token we want the price</td>
 </tr>
 </tbody></table>
-<h4 id="return-values-8"><a class="header-link" href="#return-values-8"></a>Return Values</h4>
+<h4 id="return-values-6"><a class="header-link" href="#return-values-6"></a>Return Values</h4>
 <table>
 <thead>
 <tr>
@@ -882,9 +864,9 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>uint256 The price of the token</td>
 </tr>
 </tbody></table>
-<h3 id="getliquidationpricecollateral-1"><a class="header-link" href="#getliquidationpricecollateral-1"></a>getLiquidationPriceCollateral</h3>
+<h3 id="getliquidationpricecollateral"><a class="header-link" href="#getliquidationpricecollateral"></a>getLiquidationPriceCollateral</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> get<span class="hljs-constructor">LiquidationPriceCollateral(<span class="hljs-params">uint256</span> <span class="hljs-params">_collateralTokenAmountWei</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountForTokenWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountForTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_liquidationLimit</span>)</span> public view returns (uint256)</code></pre><p>Calculates the liquidation price of the collateral token</p>
-<h4 id="return-values-9"><a class="header-link" href="#return-values-9"></a>Return Values</h4>
+<h4 id="return-values-7"><a class="header-link" href="#return-values-7"></a>Return Values</h4>
 <table>
 <thead>
 <tr>
@@ -899,9 +881,9 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>liquidationPrice Price of the collateral token at which a liquidation will be possible</td>
 </tr>
 </tbody></table>
-<h3 id="getliquidationpriceamountfor-1"><a class="header-link" href="#getliquidationpriceamountfor-1"></a>getLiquidationPriceAmountFor</h3>
+<h3 id="getliquidationpriceamountfor"><a class="header-link" href="#getliquidationpriceamountfor"></a>getLiquidationPriceAmountFor</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> get<span class="hljs-constructor">LiquidationPriceAmountFor(<span class="hljs-params">uint256</span> <span class="hljs-params">_collateralTokenAmountWei</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountForTokenWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_collateralTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_liquidationLimit</span>)</span> public view returns (uint256)</code></pre><p>Calculates the liquidation price of the debt token</p>
-<h4 id="return-values-10"><a class="header-link" href="#return-values-10"></a>Return Values</h4>
+<h4 id="return-values-8"><a class="header-link" href="#return-values-8"></a>Return Values</h4>
 <table>
 <thead>
 <tr>
@@ -917,15 +899,15 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tr>
 </tbody></table>
 <h3 id="transfersendertocontract"><a class="header-link" href="#transfersendertocontract"></a>transferSenderToContract</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> transfer<span class="hljs-constructor">SenderToContract(<span class="hljs-params">address</span> <span class="hljs-params">_sender</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountTokenWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>)</span> internal</code></pre><p>Transfers tokens from the sender to this contract</p>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> transfer<span class="hljs-constructor">SenderToContract(<span class="hljs-params">address</span> <span class="hljs-params">_sender</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountToken</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>)</span> internal</code></pre><p>Transfers tokens from the sender to this contract</p>
 <p><em>Only callable internally by this contract</em></p>
 <h3 id="transfercontracttosender"><a class="header-link" href="#transfercontracttosender"></a>transferContractToSender</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> transfer<span class="hljs-constructor">ContractToSender(<span class="hljs-params">address</span> <span class="hljs-params">_sender</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountTokenWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>)</span> internal</code></pre><p>Transfers tokens from this contract to the sender of the tx</p>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> transfer<span class="hljs-constructor">ContractToSender(<span class="hljs-params">address</span> <span class="hljs-params">_sender</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountToken</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>)</span> internal</code></pre><p>Transfers tokens from this contract to the sender of the tx</p>
 <p><em>Only callable internally by this contract</em></p>
 <h3 id="transferacceptsale"><a class="header-link" href="#transferacceptsale"></a>transferAcceptSale</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> transfer<span class="hljs-constructor">AcceptSale(<span class="hljs-params">address</span> <span class="hljs-params">_sender</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_collateralTokenAmountWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_collateralTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountTokenWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>)</span> internal</code></pre><p>Handles the transfer of the collateral, fee, and amount bought</p>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> transfer<span class="hljs-constructor">AcceptSale(<span class="hljs-params">address</span> <span class="hljs-params">_sender</span>, <span class="hljs-params">address</span> <span class="hljs-params">_dividendTokenContractAddress</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_collateralTokenAmount</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_collateralTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountToken</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>)</span> internal</code></pre><p>Handles the transfer of the collateral, fee, and amount bought</p>
 <p><em>Only callable internally by this contract</em></p>
-<h4 id="parameters-27"><a class="header-link" href="#parameters-27"></a>Parameters</h4>
+<h4 id="parameters-26"><a class="header-link" href="#parameters-26"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -940,7 +922,12 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>Address sending the tokens</td>
 </tr>
 <tr>
-<td>_collateralTokenAmountWei</td>
+<td>_dividendTokenContractAddress</td>
+<td>address</td>
+<td></td>
+</tr>
+<tr>
+<td>_collateralTokenAmount</td>
 <td>uint256</td>
 <td>Collateral amount to transfer from the sender</td>
 </tr>
@@ -950,7 +937,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>Id of the collateral token</td>
 </tr>
 <tr>
-<td>_amountTokenWei</td>
+<td>_amountToken</td>
 <td>uint256</td>
 <td>Amount bought by the sender</td>
 </tr>
@@ -961,9 +948,9 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tr>
 </tbody></table>
 <h3 id="transferbuyertoseller"><a class="header-link" href="#transferbuyertoseller"></a>transferBuyerToSeller</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> transfer<span class="hljs-constructor">BuyerToSeller(<span class="hljs-params">address</span> <span class="hljs-params">_sender</span>, <span class="hljs-params">address</span> <span class="hljs-params">_receiver</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountTokenWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>)</span> internal</code></pre><p>Transfers token from the buyer to the seller of an offer</p>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> transfer<span class="hljs-constructor">BuyerToSeller(<span class="hljs-params">address</span> <span class="hljs-params">_sender</span>, <span class="hljs-params">address</span> <span class="hljs-params">_receiver</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountToken</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>)</span> internal</code></pre><p>Transfers token from the buyer to the seller of an offer</p>
 <p><em>Only callable internally by this contract</em></p>
-<h4 id="parameters-28"><a class="header-link" href="#parameters-28"></a>Parameters</h4>
+<h4 id="parameters-27"><a class="header-link" href="#parameters-27"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -983,7 +970,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>Address receiving the tokens</td>
 </tr>
 <tr>
-<td>_amountTokenWei</td>
+<td>_amountToken</td>
 <td>uint256</td>
 <td>Amount to send</td>
 </tr>
@@ -995,7 +982,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tbody></table>
 <h3 id="getcollateral"><a class="header-link" href="#getcollateral"></a>getCollateral</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> get<span class="hljs-constructor">Collateral(<span class="hljs-params">uint256</span> <span class="hljs-params">_amountTokenWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_collateralTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_collateralTokenAmountWeiToDebtRatio</span>)</span> public view returns (uint256)</code></pre><p>Calculates the collateral needed to create a buy offer or accept a sale offer</p>
-<h4 id="parameters-29"><a class="header-link" href="#parameters-29"></a>Parameters</h4>
+<h4 id="parameters-28"><a class="header-link" href="#parameters-28"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1025,7 +1012,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>Collateral to debt ratio, used to calculate the collateral amount.</td>
 </tr>
 </tbody></table>
-<h4 id="return-values-11"><a class="header-link" href="#return-values-11"></a>Return Values</h4>
+<h4 id="return-values-9"><a class="header-link" href="#return-values-9"></a>Return Values</h4>
 <table>
 <thead>
 <tr>
@@ -1042,7 +1029,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tbody></table>
 <h3 id="getratio"><a class="header-link" href="#getratio"></a>getRatio</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> get<span class="hljs-constructor">Ratio(<span class="hljs-params">uint256</span> <span class="hljs-params">_amountTokenWei</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_collateralTokenAmountWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_collateralTokenId</span>)</span> public view returns (uint256)</code></pre><p>Calculates the ratio of the collateral over the debt</p>
-<h4 id="parameters-30"><a class="header-link" href="#parameters-30"></a>Parameters</h4>
+<h4 id="parameters-29"><a class="header-link" href="#parameters-29"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1072,7 +1059,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>Id of the collateral</td>
 </tr>
 </tbody></table>
-<h4 id="return-values-12"><a class="header-link" href="#return-values-12"></a>Return Values</h4>
+<h4 id="return-values-10"><a class="header-link" href="#return-values-10"></a>Return Values</h4>
 <table>
 <thead>
 <tr>
@@ -1087,9 +1074,9 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>ratio Calculated ratio</td>
 </tr>
 </tbody></table>
-<h3 id="canliquidate-1"><a class="header-link" href="#canliquidate-1"></a>canLiquidate</h3>
+<h3 id="canliquidate"><a class="header-link" href="#canliquidate"></a>canLiquidate</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> can<span class="hljs-constructor">Liquidate(<span class="hljs-params">uint256</span> <span class="hljs-params">_amountTokenWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_collateralTokenAmountWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_collateralTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_liquidationLimitRatio</span>)</span> public view returns (<span class="hljs-built_in">bool</span>)</code></pre><p>Determines if the collateral to debt ratio has reached the liquidation limit</p>
-<h4 id="parameters-31"><a class="header-link" href="#parameters-31"></a>Parameters</h4>
+<h4 id="parameters-30"><a class="header-link" href="#parameters-30"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1124,7 +1111,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>Ratio at which liquidation will be possible</td>
 </tr>
 </tbody></table>
-<h4 id="return-values-13"><a class="header-link" href="#return-values-13"></a>Return Values</h4>
+<h4 id="return-values-11"><a class="header-link" href="#return-values-11"></a>Return Values</h4>
 <table>
 <thead>
 <tr>
@@ -1141,7 +1128,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tbody></table>
 <h3 id="canliquidatetimeover"><a class="header-link" href="#canliquidatetimeover"></a>canLiquidateTimeOver</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> can<span class="hljs-constructor">LiquidateTimeOver(<span class="hljs-params">uint256</span> <span class="hljs-params">_timeAccepted</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_repayInSeconds</span>)</span> public view returns (<span class="hljs-built_in">bool</span>)</code></pre><p>Determines if the repayment period has passed</p>
-<h4 id="parameters-32"><a class="header-link" href="#parameters-32"></a>Parameters</h4>
+<h4 id="parameters-31"><a class="header-link" href="#parameters-31"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1161,7 +1148,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>Repayment period of the offer</td>
 </tr>
 </tbody></table>
-<h4 id="return-values-14"><a class="header-link" href="#return-values-14"></a>Return Values</h4>
+<h4 id="return-values-12"><a class="header-link" href="#return-values-12"></a>Return Values</h4>
 <table>
 <thead>
 <tr>
@@ -1177,7 +1164,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tr>
 </tbody></table>
 <h3 id="liquidatetokens"><a class="header-link" href="#liquidatetokens"></a>liquidateTokens</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> liquidate<span class="hljs-constructor">Tokens(<span class="hljs-params">uint256</span> <span class="hljs-params">_amountTokenWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_collateralTokenAmountWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_collateralTokenId</span>, <span class="hljs-params">address</span> <span class="hljs-params">_seller</span>, <span class="hljs-params">address</span> <span class="hljs-params">_buyer</span>, <span class="hljs-params">address</span> <span class="hljs-params">_sender</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_liquidationLossRatio</span>)</span> internal</code></pre><h4 id="parameters-33"><a class="header-link" href="#parameters-33"></a>Parameters</h4>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> liquidate<span class="hljs-constructor">Tokens(<span class="hljs-params">uint256</span> <span class="hljs-params">_amountTokenWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_collateralTokenAmountWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_collateralTokenId</span>, <span class="hljs-params">address</span> <span class="hljs-params">_seller</span>, <span class="hljs-params">address</span> <span class="hljs-params">_buyer</span>, <span class="hljs-params">address</span> <span class="hljs-params">_sender</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_liquidationLossRatio</span>)</span> internal</code></pre><h4 id="parameters-32"><a class="header-link" href="#parameters-32"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1228,7 +1215,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tr>
 </tbody></table>
 <h3 id="liquidatetokensbyseller"><a class="header-link" href="#liquidatetokensbyseller"></a>liquidateTokensBySeller</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> liquidate<span class="hljs-constructor">TokensBySeller(<span class="hljs-params">uint256</span> <span class="hljs-params">_amountTokenWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_collateralTokenAmountWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_collateralTokenId</span>, <span class="hljs-params">address</span> <span class="hljs-params">_buyer</span>, <span class="hljs-params">address</span> <span class="hljs-params">_seller</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_liquidationLossRatio</span>)</span> internal</code></pre><h4 id="parameters-34"><a class="header-link" href="#parameters-34"></a>Parameters</h4>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> liquidate<span class="hljs-constructor">TokensBySeller(<span class="hljs-params">uint256</span> <span class="hljs-params">_amountTokenWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_collateralTokenAmountWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_collateralTokenId</span>, <span class="hljs-params">address</span> <span class="hljs-params">_buyer</span>, <span class="hljs-params">address</span> <span class="hljs-params">_seller</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_liquidationLossRatio</span>)</span> internal</code></pre><h4 id="parameters-33"><a class="header-link" href="#parameters-33"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1276,7 +1263,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <h3 id="liquidatetokensbybuyer"><a class="header-link" href="#liquidatetokensbybuyer"></a>liquidateTokensByBuyer</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> liquidate<span class="hljs-constructor">TokensByBuyer(<span class="hljs-params">uint256</span> <span class="hljs-params">_amountTokenWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_collateralTokenAmountWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_collateralTokenId</span>, <span class="hljs-params">address</span> <span class="hljs-params">_buyer</span>, <span class="hljs-params">address</span> <span class="hljs-params">_seller</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_liquidationLossRatio</span>)</span> internal</code></pre><p>Liquidates an offer when the liquidator is the buyer</p>
 <p><em>Only callable internally by this contract, reverts if it incurs a loss to the seller.</em></p>
-<h4 id="parameters-35"><a class="header-link" href="#parameters-35"></a>Parameters</h4>
+<h4 id="parameters-34"><a class="header-link" href="#parameters-34"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1324,7 +1311,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <h3 id="repay"><a class="header-link" href="#repay"></a>repay</h3>
 <pre class="hljs"><code>function repay(uint256 <span class="hljs-variable">_amountToRepay</span>, uint8 <span class="hljs-variable">_amountToRepayId</span>, uint256 <span class="hljs-variable">_collateralTokenAmountWei</span>, uint8 <span class="hljs-variable">_collateralTokenId</span>, address <span class="hljs-variable">_seller</span>, address <span class="hljs-variable">_buyer</span>) internal</code></pre><p>Repays a debt, and transfers back the collateral.</p>
 <p><em>Only callable internally by this contract</em></p>
-<h4 id="parameters-36"><a class="header-link" href="#parameters-36"></a>Parameters</h4>
+<h4 id="parameters-35"><a class="header-link" href="#parameters-35"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1365,9 +1352,9 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tr>
 </tbody></table>
 <h3 id="transferfee"><a class="header-link" href="#transferfee"></a>transferFee</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> transfer<span class="hljs-constructor">Fee(<span class="hljs-params">uint256</span> <span class="hljs-params">_amountTokenWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>, <span class="hljs-params">address</span> <span class="hljs-params">_sender</span>)</span> internal</code></pre><p>Transfers the fee from the sender to the fee address</p>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> transfer<span class="hljs-constructor">Fee(<span class="hljs-params">uint256</span> <span class="hljs-params">_amountToken</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_amountTokenId</span>, <span class="hljs-params">address</span> <span class="hljs-params">_dividendTokenContractAddress</span>, <span class="hljs-params">address</span> <span class="hljs-params">_sender</span>)</span> internal</code></pre><p>Transfers the fee from the sender to the fee address</p>
 <p><em>Only callable internally by this contract</em></p>
-<h4 id="parameters-37"><a class="header-link" href="#parameters-37"></a>Parameters</h4>
+<h4 id="parameters-36"><a class="header-link" href="#parameters-36"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1377,14 +1364,19 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tr>
 </thead>
 <tbody><tr>
-<td>_amountTokenWei</td>
+<td>_amountToken</td>
 <td>uint256</td>
-<td>Amount on which 0.1% will be taken</td>
+<td>Amount of which 0.1% will be taken</td>
 </tr>
 <tr>
 <td>_amountTokenId</td>
 <td>uint8</td>
 <td>Id of the amount</td>
+</tr>
+<tr>
+<td>_dividendTokenContractAddress</td>
+<td>address</td>
+<td></td>
 </tr>
 <tr>
 <td>_sender</td>
@@ -1394,7 +1386,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tbody></table>
 <h3 id="checktokenidinrange"><a class="header-link" href="#checktokenidinrange"></a>checkTokenIdInRange</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> check<span class="hljs-constructor">TokenIdInRange(<span class="hljs-params">uint8</span> <span class="hljs-params">_id</span>)</span> internal view</code></pre><p>Checks if token Id is a tradable token</p>
-<h4 id="parameters-38"><a class="header-link" href="#parameters-38"></a>Parameters</h4>
+<h4 id="parameters-37"><a class="header-link" href="#parameters-37"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1411,7 +1403,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tbody></table>
 <h3 id="checkaddressnotzero"><a class="header-link" href="#checkaddressnotzero"></a>checkAddressNotZero</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> check<span class="hljs-constructor">AddressNotZero(<span class="hljs-params">address</span> <span class="hljs-params">_address</span>)</span> internal pure</code></pre><p>Checks if address is zero address</p>
-<h4 id="parameters-39"><a class="header-link" href="#parameters-39"></a>Parameters</h4>
+<h4 id="parameters-38"><a class="header-link" href="#parameters-38"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1428,7 +1420,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tbody></table>
 <h3 id="checkaddressnotsender"><a class="header-link" href="#checkaddressnotsender"></a>checkAddressNotSender</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> check<span class="hljs-constructor">AddressNotSender(<span class="hljs-params">address</span> <span class="hljs-params">_address</span>)</span> internal view</code></pre><p>Checks if address matches with sender of transaction, reverts if true</p>
-<h4 id="parameters-40"><a class="header-link" href="#parameters-40"></a>Parameters</h4>
+<h4 id="parameters-39"><a class="header-link" href="#parameters-39"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1445,7 +1437,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tbody></table>
 <h3 id="checkaddresssender"><a class="header-link" href="#checkaddresssender"></a>checkAddressSender</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> check<span class="hljs-constructor">AddressSender(<span class="hljs-params">address</span> <span class="hljs-params">_address</span>)</span> internal view</code></pre><p>Checks if address matches with sender of transaction, reverts if false</p>
-<h4 id="parameters-41"><a class="header-link" href="#parameters-41"></a>Parameters</h4>
+<h4 id="parameters-40"><a class="header-link" href="#parameters-40"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1462,7 +1454,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tbody></table>
 <h3 id="checkispositive"><a class="header-link" href="#checkispositive"></a>checkIsPositive</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> check<span class="hljs-constructor">IsPositive(<span class="hljs-params">uint256</span> <span class="hljs-params">_amountTokenWei</span>)</span> internal pure</code></pre><p>Checks if amount is positive, reverts if false</p>
-<h4 id="parameters-42"><a class="header-link" href="#parameters-42"></a>Parameters</h4>
+<h4 id="parameters-41"><a class="header-link" href="#parameters-41"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1479,7 +1471,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tbody></table>
 <h3 id="checktokensidnotsame"><a class="header-link" href="#checktokensidnotsame"></a>checkTokensIdNotSame</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> check<span class="hljs-constructor">TokensIdNotSame(<span class="hljs-params">uint8</span> <span class="hljs-params">_id</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">id_</span>)</span> internal pure</code></pre><p>Checks if id of two tokens are the same, reverts if true</p>
-<h4 id="parameters-43"><a class="header-link" href="#parameters-43"></a>Parameters</h4>
+<h4 id="parameters-42"><a class="header-link" href="#parameters-42"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1501,7 +1493,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tbody></table>
 <h3 id="checkofferisopen"><a class="header-link" href="#checkofferisopen"></a>checkOfferIsOpen</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> check<span class="hljs-constructor">OfferIsOpen(<span class="hljs-params">enum</span> SpectrrData.OfferStatus <span class="hljs-params">_offerStatus</span>)</span> internal pure</code></pre><p>Checks if offer is open (i.e. not accepted or closed), reverts if false</p>
-<h4 id="parameters-44"><a class="header-link" href="#parameters-44"></a>Parameters</h4>
+<h4 id="parameters-43"><a class="header-link" href="#parameters-43"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1518,7 +1510,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tbody></table>
 <h3 id="checkofferisaccepted"><a class="header-link" href="#checkofferisaccepted"></a>checkOfferIsAccepted</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> check<span class="hljs-constructor">OfferIsAccepted(<span class="hljs-params">enum</span> SpectrrData.OfferStatus <span class="hljs-params">_offerStatus</span>)</span> internal pure</code></pre><p>Checks if offer is accepted (i.e. not open or closed), reverts if false</p>
-<h4 id="parameters-45"><a class="header-link" href="#parameters-45"></a>Parameters</h4>
+<h4 id="parameters-44"><a class="header-link" href="#parameters-44"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1535,7 +1527,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tbody></table>
 <h3 id="checkofferisclosed"><a class="header-link" href="#checkofferisclosed"></a>checkOfferIsClosed</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> check<span class="hljs-constructor">OfferIsClosed(<span class="hljs-params">enum</span> SpectrrData.OfferStatus <span class="hljs-params">_offerStatus</span>)</span> internal pure</code></pre><p>Checks if offer is closed (i.e. not open or closed), reverts if false</p>
-<h4 id="parameters-46"><a class="header-link" href="#parameters-46"></a>Parameters</h4>
+<h4 id="parameters-45"><a class="header-link" href="#parameters-45"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1552,7 +1544,7 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tbody></table>
 <h3 id="checkofferisnotclosed"><a class="header-link" href="#checkofferisnotclosed"></a>checkOfferIsNotClosed</h3>
 <pre class="hljs"><code><span class="hljs-keyword">function</span> check<span class="hljs-constructor">OfferIsNotClosed(<span class="hljs-params">enum</span> SpectrrData.OfferStatus <span class="hljs-params">_offerStatus</span>)</span> internal pure</code></pre><p>Checks if offer is closed (i.e. not open or closed), reverts if false</p>
-<h4 id="parameters-47"><a class="header-link" href="#parameters-47"></a>Parameters</h4>
+<h4 id="parameters-46"><a class="header-link" href="#parameters-46"></a>Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -1567,8 +1559,25 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 <td>Current state of the offer</td>
 </tr>
 </tbody></table>
+<h3 id="checkminratio"><a class="header-link" href="#checkminratio"></a>checkMinRatio</h3>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> check<span class="hljs-constructor">MinRatio(<span class="hljs-params">uint256</span> <span class="hljs-params">_ratio</span>)</span> internal pure</code></pre><p>Checks if ratio is at least 1.0</p>
+<h4 id="parameters-47"><a class="header-link" href="#parameters-47"></a>Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>_ratio</td>
+<td>uint256</td>
+<td>The ratio value to check</td>
+</tr>
+</tbody></table>
 <h3 id="checkislessthan"><a class="header-link" href="#checkislessthan"></a>checkIsLessThan</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> check<span class="hljs-constructor">IsLessThan(<span class="hljs-params">uint256</span> <span class="hljs-params">_amountTokenWei</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_debt</span>)</span> internal pure</code></pre><p>Checks if amount sent is bigger than debt, reverts if true</p>
+<pre class="hljs"><code><span class="hljs-keyword">function</span> check<span class="hljs-constructor">IsLessThan(<span class="hljs-params">uint256</span> <span class="hljs-params">_val1</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_val2</span>)</span> internal pure</code></pre><p>Checks if first value is less than second value</p>
 <h4 id="parameters-48"><a class="header-link" href="#parameters-48"></a>Parameters</h4>
 <table>
 <thead>
@@ -1579,601 +1588,19 @@ Transaction is reverted if it incurs a loss to the seller</em></p>
 </tr>
 </thead>
 <tbody><tr>
-<td>_amountTokenWei</td>
+<td>_val1</td>
 <td>uint256</td>
-<td>The amount to send</td>
+<td>The first value</td>
 </tr>
 <tr>
-<td>_debt</td>
+<td>_val2</td>
 <td>uint256</td>
-<td>The debt owed</td>
+<td>The second value</td>
 </tr>
 </tbody></table>
-<h2 id="spectrrcore-1"><a class="header-link" href="#spectrrcore-1"></a>SpectrrCore</h2>
-<h3 id="constructor-2"><a class="header-link" href="#constructor-2"></a>constructor</h3>
-<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">constructor</span><span class="hljs-params">()</span> <span class="hljs-title">public</span></span></code></pre><p><em>EIP712 Constructor
-EIP712&#39;s params are the name and version of the contract</em></p>
-<h3 id="createsaleoffer-1"><a class="header-link" href="#createsaleoffer-1"></a>createSaleOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> create<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_sellingTokenAmountWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_sellingTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_exchangeRateWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_sellingForTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_repayInSeconds</span>)</span> <span class="hljs-keyword">external</span> returns (uint256)</code></pre><h4 id="return-values-15"><a class="header-link" href="#return-values-15"></a>Return Values</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>[0]</td>
-<td>uint256</td>
-<td>uint256 Id of the offer created</td>
-</tr>
-</tbody></table>
-<h3 id="acceptsaleoffer-1"><a class="header-link" href="#acceptsaleoffer-1"></a>acceptSaleOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> accept<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_collateralTokenId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h4 id="parameters-49"><a class="header-link" href="#parameters-49"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td></td>
-</tr>
-<tr>
-<td>_collateralTokenId</td>
-<td>uint8</td>
-<td>Id of the token to be pledged as collateral,         cannot be same than id of selling token.</td>
-</tr>
-</tbody></table>
-<h3 id="cancelsaleoffer-1"><a class="header-link" href="#cancelsaleoffer-1"></a>cancelSaleOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> cancel<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Cancels a sale offer, given that it is not accepted yet</p>
-<h4 id="parameters-50"><a class="header-link" href="#parameters-50"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the sale offer to cancel</td>
-</tr>
-</tbody></table>
-<h3 id="addcollateralsaleoffer-1"><a class="header-link" href="#addcollateralsaleoffer-1"></a>addCollateralSaleOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> add<span class="hljs-constructor">CollateralSaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountToAdd</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Adds collateral to a sale offer</p>
-<p><em>Can only be called by the buyer of the sale offer</em></p>
-<h4 id="parameters-51"><a class="header-link" href="#parameters-51"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the sale offer to add collateral to</td>
-</tr>
-<tr>
-<td>_amountToAdd</td>
-<td>uint256</td>
-<td>Amount of collateral to add</td>
-</tr>
-</tbody></table>
-<h3 id="repaysaleoffer-1"><a class="header-link" href="#repaysaleoffer-1"></a>repaySaleOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> repay<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Fully repays the debt of a sale offer</p>
-<h4 id="parameters-52"><a class="header-link" href="#parameters-52"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the sale offer to repay</td>
-</tr>
-</tbody></table>
-<h3 id="repaysaleofferpart-1"><a class="header-link" href="#repaysaleofferpart-1"></a>repaySaleOfferPart</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> repay<span class="hljs-constructor">SaleOfferPart(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountToRepay</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Partially repays the debt of a sale offer</p>
-<h4 id="parameters-53"><a class="header-link" href="#parameters-53"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the sale offer to partially repay</td>
-</tr>
-<tr>
-<td>_amountToRepay</td>
-<td>uint256</td>
-<td>Amount to partially repay</td>
-</tr>
-</tbody></table>
-<h3 id="liquidatesaleoffer-1"><a class="header-link" href="#liquidatesaleoffer-1"></a>liquidateSaleOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> liquidate<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h4 id="parameters-54"><a class="header-link" href="#parameters-54"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the sale offer to liquidate</td>
-</tr>
-</tbody></table>
-<h3 id="forfeitsaleoffer-1"><a class="header-link" href="#forfeitsaleoffer-1"></a>forfeitSaleOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> forfeit<span class="hljs-constructor">SaleOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Forfeits a sale offer</p>
-<p><em>Only callable by the buyer
-Transaction is reverted if it incurs a loss to the seller</em></p>
-<h4 id="parameters-55"><a class="header-link" href="#parameters-55"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the sale offer to forfeit</td>
-</tr>
-</tbody></table>
-<h3 id="createbuyoffer-1"><a class="header-link" href="#createbuyoffer-1"></a>createBuyOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> create<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_buyingTokenAmountWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_buyingTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_exchangeRateWei</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_buyingForTokenId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_collateralTokenId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_repayInSeconds</span>)</span> <span class="hljs-keyword">external</span> returns (uint256)</code></pre><h4 id="parameters-56"><a class="header-link" href="#parameters-56"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_buyingTokenAmountWei</td>
-<td>uint256</td>
-<td></td>
-</tr>
-<tr>
-<td>_buyingTokenId</td>
-<td>uint8</td>
-<td></td>
-</tr>
-<tr>
-<td>_exchangeRateWei</td>
-<td>uint256</td>
-<td></td>
-</tr>
-<tr>
-<td>_buyingForTokenId</td>
-<td>uint8</td>
-<td></td>
-</tr>
-<tr>
-<td>_collateralTokenId</td>
-<td>uint8</td>
-<td></td>
-</tr>
-<tr>
-<td>_repayInSeconds</td>
-<td>uint256</td>
-<td>Repayment timeframe in unix seconds,         a value of 0 will allow an unlimited repayment time .</td>
-</tr>
-</tbody></table>
-<h3 id="acceptbuyoffer-1"><a class="header-link" href="#acceptbuyoffer-1"></a>acceptBuyOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> accept<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Accepts a buy offer by transferring the amount buying from the seller to the buyer
-There is a 0.1% fee of the buying amount, paid by the seller.</p>
-<h4 id="parameters-57"><a class="header-link" href="#parameters-57"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the buy offer to accept</td>
-</tr>
-</tbody></table>
-<h3 id="cancelbuyoffer-1"><a class="header-link" href="#cancelbuyoffer-1"></a>cancelBuyOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> cancel<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Cancels a buy offer, given that it not accepted yet</p>
-<h4 id="parameters-58"><a class="header-link" href="#parameters-58"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the buy offer to cancel</td>
-</tr>
-</tbody></table>
-<h3 id="addcollateralbuyoffer-1"><a class="header-link" href="#addcollateralbuyoffer-1"></a>addCollateralBuyOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> add<span class="hljs-constructor">CollateralBuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountToAdd</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Adds collateral to a buy offer</p>
-<p><em>Can only be called by the buyer of the buy offer</em></p>
-<h4 id="parameters-59"><a class="header-link" href="#parameters-59"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the buy offer to add collateral to</td>
-</tr>
-<tr>
-<td>_amountToAdd</td>
-<td>uint256</td>
-<td>The amount of collateral to add</td>
-</tr>
-</tbody></table>
-<h3 id="repaybuyoffer-1"><a class="header-link" href="#repaybuyoffer-1"></a>repayBuyOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> repay<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Fully repays the debt of the buy offer</p>
-<h4 id="parameters-60"><a class="header-link" href="#parameters-60"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the buy offer to repay</td>
-</tr>
-</tbody></table>
-<h3 id="repaybuyofferpart-1"><a class="header-link" href="#repaybuyofferpart-1"></a>repayBuyOfferPart</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> repay<span class="hljs-constructor">BuyOfferPart(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint256</span> <span class="hljs-params">_amountToRepay</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Partially repays the debt of a buy offer</p>
-<h4 id="parameters-61"><a class="header-link" href="#parameters-61"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the buy offer to partially repay</td>
-</tr>
-<tr>
-<td>_amountToRepay</td>
-<td>uint256</td>
-<td>Amount to partially repay</td>
-</tr>
-</tbody></table>
-<h3 id="liquidatebuyoffer-1"><a class="header-link" href="#liquidatebuyoffer-1"></a>liquidateBuyOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> liquidate<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><h4 id="parameters-62"><a class="header-link" href="#parameters-62"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the buy offer to liquidate</td>
-</tr>
-</tbody></table>
-<h3 id="forfeitbuyoffer-1"><a class="header-link" href="#forfeitbuyoffer-1"></a>forfeitBuyOffer</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> forfeit<span class="hljs-constructor">BuyOffer(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>)</span> <span class="hljs-keyword">external</span></code></pre><p>Forfeits a buy offer</p>
-<p><em>Only callable by the buyer
-Transaction is reverted if it incurs a loss to the seller</em></p>
-<h4 id="parameters-63"><a class="header-link" href="#parameters-63"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the buy offer to forfeit</td>
-</tr>
-</tbody></table>
-<h3 id="changeaddresssale-1"><a class="header-link" href="#changeaddresssale-1"></a>changeAddressSale</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> change<span class="hljs-constructor">AddressSale(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">_newAddress</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_addressType</span>)</span> <span class="hljs-keyword">external</span></code></pre><h4 id="parameters-64"><a class="header-link" href="#parameters-64"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the offer we want to change addresses</td>
-</tr>
-<tr>
-<td>_newAddress</td>
-<td>address</td>
-<td>New address to replace the old one with</td>
-</tr>
-<tr>
-<td>_addressType</td>
-<td>uint8</td>
-<td>Type of address: 0 for seller address, and 1 for buyer address.</td>
-</tr>
-</tbody></table>
-<h3 id="changeaddressbuy-1"><a class="header-link" href="#changeaddressbuy-1"></a>changeAddressBuy</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> change<span class="hljs-constructor">AddressBuy(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">address</span> <span class="hljs-params">_newAddress</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_addressType</span>)</span> <span class="hljs-keyword">external</span></code></pre><h4 id="parameters-65"><a class="header-link" href="#parameters-65"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the offer we want to change addresses</td>
-</tr>
-<tr>
-<td>_newAddress</td>
-<td>address</td>
-<td>New address to replace the old one with</td>
-</tr>
-<tr>
-<td>_addressType</td>
-<td>uint8</td>
-<td>Type of address: 0 for seller address, and 1 for buyer address.</td>
-</tr>
-</tbody></table>
-<h3 id="getratioinfo-1"><a class="header-link" href="#getratioinfo-1"></a>getRatioInfo</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> get<span class="hljs-constructor">RatioInfo(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_offerType</span>)</span> <span class="hljs-keyword">external</span> view returns (uint256, uint256, uint8, uint8, address)</code></pre><p>Gets the collateral to debt ratio, debt amount, debt amount id, collateral id, and buyer&#39;s address of an offer.</p>
-<h4 id="parameters-66"><a class="header-link" href="#parameters-66"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the offer we want to get info on</td>
-</tr>
-<tr>
-<td>_offerType</td>
-<td>uint8</td>
-<td>Type of offer: 0 for sale offer and 1 for buy offer.</td>
-</tr>
-</tbody></table>
-<h4 id="return-values-16"><a class="header-link" href="#return-values-16"></a>Return Values</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>[0]</td>
-<td>uint256</td>
-<td>uint256 Collateral to debt ratio</td>
-</tr>
-<tr>
-<td>[1]</td>
-<td>uint256</td>
-<td>uint256 Debt amount</td>
-</tr>
-<tr>
-<td>[2]</td>
-<td>uint8</td>
-<td>uint8 Id of the debt token</td>
-</tr>
-<tr>
-<td>[3]</td>
-<td>uint8</td>
-<td>uint8 Id of the collateral</td>
-</tr>
-<tr>
-<td>[4]</td>
-<td>address</td>
-<td>address Address of the buyer</td>
-</tr>
-</tbody></table>
-<h3 id="canliquidate-2"><a class="header-link" href="#canliquidate-2"></a>canLiquidate</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> can<span class="hljs-constructor">Liquidate(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_offerType</span>)</span> <span class="hljs-keyword">external</span> view returns (<span class="hljs-built_in">bool</span>)</code></pre><p>Checks if an offer can be liquidated</p>
-<h4 id="parameters-67"><a class="header-link" href="#parameters-67"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the offer we want to check</td>
-</tr>
-<tr>
-<td>_offerType</td>
-<td>uint8</td>
-<td>Type of offer: 0 for sale offer and 1 for buy offer.</td>
-</tr>
-</tbody></table>
-<h4 id="return-values-17"><a class="header-link" href="#return-values-17"></a>Return Values</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>[0]</td>
-<td>bool</td>
-<td>bool If the offer can be liquidated or not</td>
-</tr>
-</tbody></table>
-<h3 id="isliquidationloss-1"><a class="header-link" href="#isliquidationloss-1"></a>isLiquidationLoss</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> is<span class="hljs-constructor">LiquidationLoss(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_offerType</span>)</span> <span class="hljs-keyword">external</span> view returns (<span class="hljs-built_in">bool</span>)</code></pre><p>Determines if a liquidation will incur a loss</p>
-<h4 id="parameters-68"><a class="header-link" href="#parameters-68"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the offer we want to check</td>
-</tr>
-<tr>
-<td>_offerType</td>
-<td>uint8</td>
-<td>Type of offer: 0 for sale offer and 1 for buy offer.</td>
-</tr>
-</tbody></table>
-<h4 id="return-values-18"><a class="header-link" href="#return-values-18"></a>Return Values</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>[0]</td>
-<td>bool</td>
-<td>bool If the liquidation will incur a loss or not</td>
-</tr>
-</tbody></table>
-<h3 id="getliquidationpricecollateral-2"><a class="header-link" href="#getliquidationpricecollateral-2"></a>getLiquidationPriceCollateral</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> get<span class="hljs-constructor">LiquidationPriceCollateral(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_offerType</span>)</span> <span class="hljs-keyword">external</span> view returns (uint256)</code></pre><p>Gets the price of the collateral token at which the offer will be liquidable</p>
-<h4 id="parameters-69"><a class="header-link" href="#parameters-69"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the offer we want the liquidation price</td>
-</tr>
-<tr>
-<td>_offerType</td>
-<td>uint8</td>
-<td>Type of offer: 0 for sale offer and 1 for buy offer.</td>
-</tr>
-</tbody></table>
-<h4 id="return-values-19"><a class="header-link" href="#return-values-19"></a>Return Values</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>[0]</td>
-<td>uint256</td>
-<td>uint256 The liquidation price of the collateral token</td>
-</tr>
-</tbody></table>
-<h3 id="getliquidationpriceamountfor-2"><a class="header-link" href="#getliquidationpriceamountfor-2"></a>getLiquidationPriceAmountFor</h3>
-<pre class="hljs"><code><span class="hljs-keyword">function</span> get<span class="hljs-constructor">LiquidationPriceAmountFor(<span class="hljs-params">uint256</span> <span class="hljs-params">_offerId</span>, <span class="hljs-params">uint8</span> <span class="hljs-params">_offerType</span>)</span> <span class="hljs-keyword">external</span> view returns (uint256)</code></pre><p>Gets the price of the debt token at which the offer will be liquidable</p>
-<h4 id="parameters-70"><a class="header-link" href="#parameters-70"></a>Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_offerId</td>
-<td>uint256</td>
-<td>Id of the offer we want the liquidation price</td>
-</tr>
-<tr>
-<td>_offerType</td>
-<td>uint8</td>
-<td>Type of offer: 0 for sale offer and 1 for buy offer.</td>
-</tr>
-</tbody></table>
-<h4 id="return-values-20"><a class="header-link" href="#return-values-20"></a>Return Values</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>[0]</td>
-<td>uint256</td>
-<td>uint256 The liquidation price of the debt token</td>
-</tr>
-</tbody></table>
-    </article>
+<h2 id="spectrrpaymentsplitter"><a class="header-link" href="#spectrrpaymentsplitter"></a>SpectrrPaymentSplitter</h2>
+<p>This contract receives and distributes the fees generated by Spectrr Finance to different receivers.</p>
+<h3 id="constructor-1"><a class="header-link" href="#constructor-1"></a>constructor</h3>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">constructor</span><span class="hljs-params">()</span> <span class="hljs-title">public</span></span></code></pre>    </article>
   </body>
 </html>

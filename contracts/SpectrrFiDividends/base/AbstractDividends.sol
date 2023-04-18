@@ -3,6 +3,8 @@ pragma solidity >=0.8.7 <0.9.0;
 
 import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import "../interfaces/IAbstractDividends.sol";
+import "@openzeppelin/contracts/utils/math/SignedSafeMath.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 /**
  * @dev Many functions in this contract were taken from this repository:
@@ -15,9 +17,11 @@ import "../interfaces/IAbstractDividends.sol";
  * into this abstract contract which can be inherited by anything tracking ownership of dividend shares.
  */
 abstract contract AbstractDividends is IAbstractDividends {
+    using SafeMath for uint256;
     using SafeCast for uint128;
     using SafeCast for uint256;
     using SafeCast for int256;
+    using SignedSafeMath for int256;
 
     /* ========  Constants  ======== */
     uint128 internal constant POINTS_MULTIPLIER = type(uint128).max;
@@ -48,7 +52,7 @@ abstract contract AbstractDividends is IAbstractDividends {
     function withdrawableDividendsOf(
         address account
     ) public view override returns (uint256) {
-        return cumulativeDividendsOf(account) - withdrawnDividends[account];
+        return cumulativeDividendsOf(account).sub(withdrawnDividends[account]);
     }
 
     /**
@@ -73,10 +77,11 @@ abstract contract AbstractDividends is IAbstractDividends {
         address account
     ) public view override returns (uint256) {
         return
-            (
-                ((pointsPerShare * getSharesOf(account)).toInt256() +
-                    pointsCorrection[account]).toUint256()
-            ) / POINTS_MULTIPLIER;
+            pointsPerShare
+                .mul(getSharesOf(account))
+                .toInt256()
+                .add(pointsCorrection[account])
+                .toUint256() / POINTS_MULTIPLIER;
     }
 
     /* ========  Dividend Utility Functions  ======== */
@@ -96,9 +101,9 @@ abstract contract AbstractDividends is IAbstractDividends {
         require(shares > 0, "SHARES");
 
         if (amount > 0) {
-            pointsPerShare =
-                (pointsPerShare + (amount * POINTS_MULTIPLIER)) /
-                shares;
+            pointsPerShare = pointsPerShare.add(
+                amount.mul(POINTS_MULTIPLIER) / shares
+            );
             emit DividendsDistributed(msg.sender, amount);
         }
     }
@@ -111,9 +116,9 @@ abstract contract AbstractDividends is IAbstractDividends {
     function _prepareCollect(address account) internal returns (uint256) {
         uint256 _withdrawableDividend = withdrawableDividendsOf(account);
         if (_withdrawableDividend > 0) {
-            withdrawnDividends[account] =
-                withdrawnDividends[account] +
-                _withdrawableDividend;
+            withdrawnDividends[account] = withdrawnDividends[account].add(
+                _withdrawableDividend
+            );
             emit DividendsWithdrawn(account, _withdrawableDividend);
         }
         return _withdrawableDividend;
@@ -124,9 +129,9 @@ abstract contract AbstractDividends is IAbstractDividends {
         address to,
         uint256 shares
     ) internal {
-        int256 _magCorrection = (pointsPerShare * shares).toInt256();
-        pointsCorrection[from] = pointsCorrection[from] + _magCorrection;
-        pointsCorrection[to] = pointsCorrection[to] - _magCorrection;
+        int256 _magCorrection = pointsPerShare.mul(shares).toInt256();
+        pointsCorrection[from] = pointsCorrection[from].add(_magCorrection);
+        pointsCorrection[to] = pointsCorrection[to].sub(_magCorrection);
     }
 
     /**
@@ -134,8 +139,8 @@ abstract contract AbstractDividends is IAbstractDividends {
      * `shares*pointsPerShare`.
      */
     function _correctPoints(address account, int256 shares) internal {
-        pointsCorrection[account] =
-            pointsCorrection[account] +
-            (shares * int256(pointsPerShare));
+        pointsCorrection[account] = pointsCorrection[account].add(
+            shares.mul(int256(pointsPerShare))
+        );
     }
 }

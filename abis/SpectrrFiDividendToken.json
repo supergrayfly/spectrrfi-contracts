@@ -23,7 +23,7 @@
       },
       {
         "internalType": "address",
-        "name": "_SpectrrFiContractAddress",
+        "name": "_spectrrFiContractAddress",
         "type": "address"
       }
     ],
@@ -103,6 +103,25 @@
       }
     ],
     "name": "DelegateVotesChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_receiver",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "DividendsCollected",
     "type": "event"
   },
   {

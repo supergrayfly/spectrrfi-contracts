@@ -57,10 +57,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         checkTokensIdNotSame(_sellingForTokenId, _sellingTokenId);
         checkMinRatio(_collateralToDebtRatio);
         checkMinRatio(_liquidationRatio);
-        require(
-            _collateralToDebtRatio > _liquidationRatio,
-            "Collateral to Debt Ratio less than Liquidation Ratio"
-        );
+        checkIsLessThan(_liquidationRatio, _collateralToDebtRatio);
 
         transferSenderToContract(
             msg.sender,
@@ -86,10 +83,10 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         );
         uint256 sellingForTokenAmountWei = (exchangeRateWei *
             sellingTokenAmountWei) / WEI;
-        SaleOffer memory offer = SaleOffer(
+
+        saleOffers[offerId] = SaleOffer(
             OfferStatus.open,
             OfferLockState.unlocked,
-            offerId,
             sellingTokenAmountWei,
             sellingForTokenAmountWei,
             0,
@@ -100,10 +97,9 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
             _sellingTokenId,
             _sellingForTokenId,
             0,
-            [msg.sender, address(0)]
+            msg.sender,
+            address(0)
         );
-
-        saleOffers[offerId] = offer;
 
         emit SaleOfferCreated(
             offerId,
@@ -132,7 +128,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         SaleOffer storage offer = saleOffers[_offerId];
 
         checkOfferIsOpen(offer.offerStatus);
-        checkAddressNotSender(offer.sellerBuyer[0]);
+        checkAddressNotSender(saleOffers[_offerId].buyer);
         checkTokensIdNotSame(_collateralTokenId, offer.sellingId);
 
         uint256 collateralTokenAmount = getCollateral(
@@ -155,7 +151,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         offer.offerStatus = OfferStatus.accepted;
         offer.collateral = collateralTokenAmount;
         offer.collateralId = _collateralTokenId;
-        offer.sellerBuyer[1] = msg.sender;
+        saleOffers[_offerId].seller = msg.sender;
 
         emit SaleOfferAccepted(
             _offerId,
@@ -174,7 +170,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         SaleOffer storage offer = saleOffers[_offerId];
 
         checkOfferIsOpen(offer.offerStatus);
-        checkAddressSender(offer.sellerBuyer[0]);
+        checkAddressSender(saleOffers[_offerId].buyer);
 
         transferContractToSender(msg.sender, offer.selling, offer.sellingId);
 
@@ -195,7 +191,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         checkIsPositive(_amountToAdd);
         checkOfferIsAccepted(offer.offerStatus);
-        checkAddressSender(offer.sellerBuyer[1]);
+        checkAddressSender(saleOffers[_offerId].seller);
 
         transferSenderToContract(msg.sender, _amountToAdd, offer.collateralId);
 
@@ -212,15 +208,15 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         SaleOffer storage offer = saleOffers[_offerId];
 
         checkOfferIsAccepted(offer.offerStatus);
-        checkAddressSender(offer.sellerBuyer[1]);
+        checkAddressSender(saleOffers[_offerId].seller);
 
         repay(
             offer.sellingFor,
             offer.sellingForId,
             offer.collateral,
             offer.collateralId,
-            offer.sellerBuyer[0],
-            offer.sellerBuyer[1]
+            saleOffers[_offerId].buyer,
+            saleOffers[_offerId].seller
         );
 
         offer.offerStatus = OfferStatus.closed;
@@ -249,11 +245,11 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         checkIsPositive(amountToRepayWei);
         checkIsLessThan(amountToRepayWei, offer.sellingFor);
         checkOfferIsAccepted(offer.offerStatus);
-        checkAddressSender(offer.sellerBuyer[1]);
+        checkAddressSender(saleOffers[_offerId].seller);
 
         transferBuyerToSeller(
             msg.sender,
-            offer.sellerBuyer[0],
+            saleOffers[_offerId].buyer,
             _amountToRepay,
             offer.sellingForId
         );
@@ -295,14 +291,14 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
             "Can not be liquidated...yet"
         );
 
-        if (msg.sender == offer.sellerBuyer[0]) {
+        if (msg.sender == saleOffers[_offerId].buyer) {
             liquidateTokensBySeller(
                 offer.sellingFor,
                 offer.sellingForId,
                 offer.collateral,
                 offer.collateralId,
-                offer.sellerBuyer[1],
-                offer.sellerBuyer[0],
+                saleOffers[_offerId].seller,
+                saleOffers[_offerId].buyer,
                 RATIO_LIQUIDATION_IS_LOSS
             );
         } else {
@@ -311,8 +307,8 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
                 offer.sellingForId,
                 offer.collateral,
                 offer.collateralId,
-                offer.sellerBuyer[0],
-                offer.sellerBuyer[1],
+                saleOffers[_offerId].buyer,
+                saleOffers[_offerId].seller,
                 msg.sender,
                 RATIO_LIQUIDATION_IS_LOSS
             );
@@ -333,15 +329,15 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         SaleOffer storage offer = saleOffers[_offerId];
 
         checkOfferIsAccepted(offer.offerStatus);
-        checkAddressSender(offer.sellerBuyer[1]);
+        checkAddressSender(saleOffers[_offerId].seller);
 
         liquidateTokensByBuyer(
             offer.sellingFor,
             offer.sellingForId,
             offer.collateral,
             offer.collateralId,
-            offer.sellerBuyer[1],
-            offer.sellerBuyer[0],
+            saleOffers[_offerId].seller,
+            saleOffers[_offerId].buyer,
             RATIO_LIQUIDATION_IS_LOSS
         );
 
@@ -380,18 +376,15 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         checkTokensIdNotSame(_collateralTokenId, _buyingTokenId);
         checkMinRatio(_collateralToDebtRatio);
         checkMinRatio(_liquidationRatio);
-        require(
-            _collateralToDebtRatio > _liquidationRatio,
-            "Collateral to Debt Ratio less than Liquidation Ratio"
-        );
+        checkIsLessThan(_liquidationRatio, _collateralToDebtRatio);
 
-        uint256[2] memory amounts = [
+        uint256[2] memory values = [
             amountToWei(_exchangeRate, _buyingForTokenId),
             amountToWei(_buyingTokenAmount, _buyingTokenId)
         ];
 
         uint256 collateralTokenAmountWei = getCollateral(
-            (amounts[0] * amounts[1]) / WEI,
+            (values[0] * values[1]) / WEI,
             _buyingForTokenId,
             _collateralTokenId,
             _collateralToDebtRatio
@@ -412,12 +405,11 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         uint256 offerId = ++buyOffersCount;
 
-        BuyOffer memory offer = BuyOffer(
+        buyOffers[offerId] = BuyOffer(
             OfferStatus.open,
             OfferLockState.unlocked,
-            offerId,
-            amounts[1],
-            (amounts[0] * amounts[1]) / WEI,
+            values[1],
+            (values[0] * values[1]) / WEI,
             collateralTokenAmountWei,
             _repayInSeconds,
             0,
@@ -426,18 +418,17 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
             _buyingTokenId,
             _buyingForTokenId,
             _collateralTokenId,
-            [msg.sender, address(0)]
+            address(0),
+            msg.sender
         );
-
-        buyOffers[offerId] = offer;
 
         emit BuyOfferCreated(
             offerId,
-            amounts[1],
+            values[1],
             _buyingTokenId,
-            (amounts[0] * amounts[1]) / WEI,
+            (values[0] * values[1]) / WEI,
             _buyingForTokenId,
-            amounts[0],
+            values[0],
             _collateralTokenId,
             _repayInSeconds,
             msg.sender
@@ -459,11 +450,11 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         );
 
         checkOfferIsOpen(offer.offerStatus);
-        checkAddressNotSender(offer.sellerBuyer[1]);
+        checkAddressNotSender(buyOffers[_offerId].seller);
 
         transferBuyerToSeller(
             msg.sender,
-            offer.sellerBuyer[1],
+            buyOffers[_offerId].seller,
             buyingAmountFromWei,
             offer.buyingId
         );
@@ -477,7 +468,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         offer.timeAccepted = block.timestamp;
         offer.offerStatus = OfferStatus.accepted;
-        offer.sellerBuyer[0] = msg.sender;
+        buyOffers[_offerId].buyer = msg.sender;
 
         emit BuyOfferAccepted(_offerId, msg.sender, block.timestamp);
     }
@@ -490,7 +481,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         BuyOffer storage offer = buyOffers[_offerId];
 
         checkOfferIsOpen(offer.offerStatus);
-        checkAddressSender(offer.sellerBuyer[1]);
+        checkAddressSender(buyOffers[_offerId].seller);
 
         transferContractToSender(
             msg.sender,
@@ -515,7 +506,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         checkIsPositive(_amountToAdd);
         checkOfferIsAccepted(offer.offerStatus);
-        checkAddressSender(offer.sellerBuyer[1]);
+        checkAddressSender(buyOffers[_offerId].seller);
 
         transferSenderToContract(msg.sender, _amountToAdd, offer.collateralId);
 
@@ -532,15 +523,15 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         BuyOffer storage offer = buyOffers[_offerId];
 
         checkOfferIsAccepted(offer.offerStatus);
-        checkAddressSender(offer.sellerBuyer[1]);
+        checkAddressSender(buyOffers[_offerId].seller);
 
         repay(
             offer.buyingFor,
             offer.buyingForId,
             offer.collateral,
             offer.collateralId,
-            offer.sellerBuyer[0],
-            offer.sellerBuyer[1]
+            buyOffers[_offerId].buyer,
+            buyOffers[_offerId].seller
         );
 
         offer.offerStatus = OfferStatus.closed;
@@ -566,11 +557,11 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         checkIsPositive(_amountToRepay);
         checkIsLessThan(amountToRepayWei, offer.buyingFor);
         checkOfferIsAccepted(offer.offerStatus);
-        checkAddressSender(offer.sellerBuyer[1]);
+        checkAddressSender(buyOffers[_offerId].seller);
 
         transferBuyerToSeller(
             msg.sender,
-            offer.sellerBuyer[0],
+            buyOffers[_offerId].buyer,
             _amountToRepay,
             offer.buyingForId
         );
@@ -612,14 +603,14 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
             "Can not be liquidated...yet"
         );
 
-        if (msg.sender == offer.sellerBuyer[0]) {
+        if (msg.sender == buyOffers[_offerId].buyer) {
             liquidateTokensBySeller(
                 offer.buyingFor,
                 offer.buyingForId,
                 offer.collateral,
                 offer.collateralId,
-                offer.sellerBuyer[1],
-                offer.sellerBuyer[0],
+                buyOffers[_offerId].seller,
+                buyOffers[_offerId].buyer,
                 RATIO_LIQUIDATION_IS_LOSS
             );
         } else {
@@ -628,8 +619,8 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
                 offer.buyingForId,
                 offer.collateral,
                 offer.collateralId,
-                offer.sellerBuyer[0],
-                offer.sellerBuyer[1],
+                buyOffers[_offerId].buyer,
+                buyOffers[_offerId].seller,
                 msg.sender,
                 RATIO_LIQUIDATION_IS_LOSS
             );
@@ -650,7 +641,7 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
         BuyOffer storage offer = buyOffers[_offerId];
 
         checkOfferIsAccepted(offer.offerStatus);
-        checkAddressSender(offer.sellerBuyer[1]);
+        checkAddressSender(buyOffers[_offerId].seller);
 
         if (
             !canLiquidate(
@@ -666,8 +657,8 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
                 offer.buyingForId,
                 offer.collateral,
                 offer.collateralId,
-                offer.sellerBuyer[1],
-                offer.sellerBuyer[0],
+                buyOffers[_offerId].seller,
+                buyOffers[_offerId].buyer,
                 RATIO_LIQUIDATION_IS_LOSS
             );
         } else {
@@ -696,38 +687,38 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         if (_addressType == 0) {
             require(
-                saleOffers[_offerId].sellerBuyer[0] == msg.sender,
+                saleOffers[_offerId].buyer == msg.sender,
                 "Sender is not seller"
             );
             require(
-                saleOffers[_offerId].sellerBuyer[1] != _newAddress,
+                saleOffers[_offerId].seller != _newAddress,
                 "Address is buyer"
             );
             require(
-                saleOffers[_offerId].sellerBuyer[0] != _newAddress,
+                saleOffers[_offerId].buyer != _newAddress,
                 "Address is seller"
             );
             checkAddressNotZero(_newAddress);
 
-            saleOffers[_offerId].sellerBuyer[0] = _newAddress;
+            saleOffers[_offerId].buyer = _newAddress;
 
             emit SaleOfferSellerAddressChanged(_offerId, _newAddress);
         } else if (_addressType == 1) {
             require(
-                saleOffers[_offerId].sellerBuyer[1] == msg.sender,
+                saleOffers[_offerId].seller == msg.sender,
                 "Sender is not buyer"
             );
             require(
-                saleOffers[_offerId].sellerBuyer[0] != _newAddress,
+                saleOffers[_offerId].buyer != _newAddress,
                 "Address is seller"
             );
             require(
-                saleOffers[_offerId].sellerBuyer[1] != _newAddress,
+                saleOffers[_offerId].seller != _newAddress,
                 "Address is buyer"
             );
             checkAddressNotZero(_newAddress);
 
-            saleOffers[_offerId].sellerBuyer[1] = _newAddress;
+            saleOffers[_offerId].seller = _newAddress;
 
             emit SaleOfferBuyerAddressChanged(_offerId, _newAddress);
         } else {
@@ -753,42 +744,56 @@ contract SpectrrFi is SpectrrUtils, EIP712, ReentrancyGuard {
 
         if (_addressType == 0) {
             require(
-                buyOffers[_offerId].sellerBuyer[0] == msg.sender,
+                buyOffers[_offerId].buyer == msg.sender,
                 "Sender is not seller"
             );
             require(
-                buyOffers[_offerId].sellerBuyer[1] != _newAddress,
+                buyOffers[_offerId].seller != _newAddress,
                 "Address is buyer"
             );
             require(
-                buyOffers[_offerId].sellerBuyer[0] != _newAddress,
+                buyOffers[_offerId].buyer != _newAddress,
                 "Address is seller"
             );
             checkAddressNotZero(_newAddress);
 
-            buyOffers[_offerId].sellerBuyer[0] = _newAddress;
+            buyOffers[_offerId].buyer = _newAddress;
 
             emit BuyOfferSellerAddressChanged(_offerId, _newAddress);
         } else if (_addressType == 1) {
             require(
-                buyOffers[_offerId].sellerBuyer[1] == msg.sender,
+                buyOffers[_offerId].seller == msg.sender,
                 "Sender is not buyer"
             );
             require(
-                buyOffers[_offerId].sellerBuyer[0] != _newAddress,
+                buyOffers[_offerId].buyer != _newAddress,
                 "Address is seller"
             );
             require(
-                buyOffers[_offerId].sellerBuyer[1] != _newAddress,
+                buyOffers[_offerId].seller != _newAddress,
                 "Address is buyer"
             );
             checkAddressNotZero(_newAddress);
 
-            buyOffers[_offerId].sellerBuyer[1] = _newAddress;
+            buyOffers[_offerId].seller = _newAddress;
 
             emit BuyOfferBuyerAddressChanged(_offerId, _newAddress);
         } else {
             revert("Invalid Address Type");
         }
+    }
+
+    /// @notice Gets data of a sale offer from its Id (e.g. amount selling, seller address...)
+    function getSaleOfferFromId(
+        uint256 _offerId
+    ) external view returns (SaleOffer memory) {
+        return saleOffers[_offerId];
+    }
+
+    /// @notice Gets data of a buy offer from its Id (e.g. amount selling, seller address...)
+    function getBuyOfferFromId(
+        uint256 _offerId
+    ) external view returns (BuyOffer memory) {
+        return buyOffers[_offerId];
     }
 }

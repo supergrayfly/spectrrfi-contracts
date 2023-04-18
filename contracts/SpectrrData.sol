@@ -5,16 +5,10 @@ pragma solidity >=0.8.7 <0.9.0;
 /// @author Supergrayfly
 /// @notice Defines and initializes the data for the SpectrrCore Contract
 contract SpectrrData {
-    /// @notice The default collateral to debt ratio allowing a liquidation (1.25)
-    uint256 public constant DEFAULT_RATIO_LIQUIDATION = 125 * 10 ** 16;
-
     /// @notice The collateral to debt ratio when the value of the collateral is equal to the value of the debt (1.00)
     uint256 public constant RATIO_LIQUIDATION_IS_LOSS = 1 * 10 ** 18;
 
-    /// @notice The default collateral to debt ratio needed to create an offer (1.50)
-    uint256 public constant DEFAULT_RATIO_COLLATERAL_TO_DEBT = 15 * 10 ** 17;
-
-    /// @notice Constant used to multiply numbers by 10e18
+    /// @notice Constant used to multiply numbers by 10^18
     uint256 public constant WEI = 10 ** 18;
 
     /** @dev Number of existing sale offers, initialized as 0 in the beginning,
@@ -28,10 +22,10 @@ contract SpectrrData {
     uint256 public buyOffersCount = 0;
 
     /// @dev Map of offer id (saleOffersCount) and sale offer struct
-    mapping(uint256 => SaleOffer) public saleOffers;
+    mapping(uint256 => SaleOffer) internal saleOffers;
 
     /// @dev Map of offer id (buyOffersCount) and buy offer struct
-    mapping(uint256 => BuyOffer) public buyOffers;
+    mapping(uint256 => BuyOffer) internal buyOffers;
 
     /// @dev Enum set tracking the status of an offer
     enum OfferStatus {
@@ -50,7 +44,6 @@ contract SpectrrData {
     struct SaleOffer {
         OfferStatus offerStatus;
         OfferLockState offerLockState;
-        uint256 offerId;
         uint256 selling;
         uint256 sellingFor;
         uint256 collateral;
@@ -61,14 +54,14 @@ contract SpectrrData {
         uint8 sellingId;
         uint8 sellingForId;
         uint8 collateralId;
-        address[2] sellerBuyer;
+        address seller;
+        address buyer;
     }
 
     /// @dev BuyOffer struct, containing all the data composing a buy offer.
     struct BuyOffer {
         OfferStatus offerStatus;
         OfferLockState offerLockState;
-        uint256 offerId;
         uint256 buying;
         uint256 buyingFor;
         uint256 collateral;
@@ -79,7 +72,8 @@ contract SpectrrData {
         uint8 buyingId;
         uint8 buyingForId;
         uint8 collateralId;
-        address[2] sellerBuyer;
+        address seller;
+        address buyer;
     }
 
     /// @notice Event emitted when a sale offer is created

@@ -22,7 +22,6 @@ contract SpectrrManager is Ownable {
     /// @dev Token struct, containing info on a ERC20 token
     struct Token {
         string name;
-        uint8 id;
         uint8 decimals;
         uint8 chainlinkPriceDecimals;
         address dividendContractAddress;
@@ -32,7 +31,6 @@ contract SpectrrManager is Ownable {
 
     /// @notice Event emitted when a new token is added
     event NewTokenAdded(
-        uint8 tokenId,
         string tokenName,
         address tokenAddress,
         address dividendTokenContractAddress,
@@ -56,9 +54,8 @@ contract SpectrrManager is Ownable {
     ) external onlyOwner {
         uint8 id = ++tokenCount;
 
-        Token memory token = Token(
+        tokens[id] = Token(
             _tokenName,
-            id,
             _decimals,
             _chainlinkOracleDecimals,
             _dividendContractAddress,
@@ -66,10 +63,7 @@ contract SpectrrManager is Ownable {
             _tokenAddress
         );
 
-        tokens[id] = token;
-
         emit NewTokenAdded(
-            id,
             _tokenName,
             _tokenAddress,
             _dividendContractAddress,
@@ -86,7 +80,7 @@ contract SpectrrManager is Ownable {
         address _newChainlinkOracleAddress
     ) external onlyOwner {
         require(_tokenId > 0 && _tokenId <= tokenCount, "Invalid Id");
-        require(_newChainlinkOracleAddress != address(0), "Address is Zero");
+        require(_newChainlinkOracleAddress != address(0), "Address is zero");
 
         tokens[_tokenId].chainlinkOracleAddress = _newChainlinkOracleAddress;
     }

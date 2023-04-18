@@ -445,32 +445,6 @@
   },
   {
     "inputs": [],
-    "name": "DEFAULT_RATIO_COLLATERAL_TO_DEBT",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "DEFAULT_RATIO_LIQUIDATION",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "RATIO_LIQUIDATION_IS_LOSS",
     "outputs": [
       {
@@ -496,85 +470,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "buyOffers",
-    "outputs": [
-      {
-        "internalType": "enum SpectrrData.OfferStatus",
-        "name": "offerStatus",
-        "type": "uint8"
-      },
-      {
-        "internalType": "enum SpectrrData.OfferLockState",
-        "name": "offerLockState",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint256",
-        "name": "offerId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "buying",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "buyingFor",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "collateral",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "repayInSeconds",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "timeAccepted",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "collateralToDebtRatio",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "liquidationRatio",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "buyingId",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "buyingForId",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "collateralId",
-        "type": "uint8"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "buyOffersCount",
     "outputs": [
@@ -582,85 +477,6 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "saleOffers",
-    "outputs": [
-      {
-        "internalType": "enum SpectrrData.OfferStatus",
-        "name": "offerStatus",
-        "type": "uint8"
-      },
-      {
-        "internalType": "enum SpectrrData.OfferLockState",
-        "name": "offerLockState",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint256",
-        "name": "offerId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "selling",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "sellingFor",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "collateral",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "repayInSeconds",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "timeAccepted",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "collateralToDebtRatio",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "liquidationRatio",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "sellingId",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "sellingForId",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "collateralId",
-        "type": "uint8"
       }
     ],
     "stateMutability": "view",

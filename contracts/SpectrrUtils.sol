@@ -570,17 +570,16 @@ contract SpectrrUtils is SpectrrPrices, SpectrrData, SpectrrManager {
         require(_offerStatus != OfferStatus.closed, "Offer is closed");
     }
 
-    function checkMinRatio(uint256 ratio) internal pure {
-        require(ratio >= 1 * WEI, "Ratio less than 1.0");
+    /// @notice Checks if ratio is at least 1.0
+    /// @param  _ratio The ratio value to check
+    function checkMinRatio(uint256 _ratio) internal pure {
+        require(_ratio >= 1 * WEI, "Ratio less than 1.0");
     }
 
-    /// @notice Checks if amount sent is bigger than debt, reverts if true
-    /// @param _amountTokenWei The amount to send
-    /// @param _debt The debt owed
-    function checkIsLessThan(
-        uint256 _amountTokenWei,
-        uint256 _debt
-    ) internal pure {
-        require(_amountTokenWei < _debt, "Amount greater than debt");
+    /// @notice Checks if first value is less than second value
+    /// @param _val1 The first value
+    /// @param _val2 The second value
+    function checkIsLessThan(uint256 _val1, uint256 _val2) internal pure {
+        require(_val1 < _val2, "First value greater than second value");
     }
 }

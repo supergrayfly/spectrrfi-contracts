@@ -7,8 +7,9 @@
     "compile": "hardhat compile",
     "docgen": "hardhat docgen",
     "flat": "rm ./flat/flat.sol && hardhat flatten ./contracts/SpectrrFi.sol >> ./flat/flat.sol",
-    "deploy": "hardhat run ./scripts/deploy.js --network fantomOpera",
-    "deployTest": "hardhat run ./scripts/deploy.js --network fantomTestnet"
+    "deploy": "hardhat run ./scripts/deploy.js --network polygon",
+    "deployTest": "hardhat run ./scripts/deploy.js --network mumbai",
+		"test": "hardhat test --network hardhat"
   },
   "author": "Supergrayfly",
   "license": "BSD-3-Clause-Attribution",

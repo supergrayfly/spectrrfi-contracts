@@ -1,16 +1,118 @@
 # Solidity API
 
+## ISpectrrFi
+
+### createSaleOffer
+
+```solidity
+function createSaleOffer(uint256 sellingTokenAmount, uint8 sellingTokenId, uint256 exchangeRate, uint8 sellingForTokenId, uint256 repayInSeconds, uint256 collateralToDebtRatio, uint256 liquidationRatio) external returns (uint256)
+```
+
+### acceptSaleOffer
+
+```solidity
+function acceptSaleOffer(uint256 offerId, uint8 collateralTokenId) external
+```
+
+### cancelSaleOffer
+
+```solidity
+function cancelSaleOffer(uint256 offerId) external
+```
+
+### addCollateralSaleOffer
+
+```solidity
+function addCollateralSaleOffer(uint256 offerId, uint256 amountToAdd) external
+```
+
+### repaySaleOffer
+
+```solidity
+function repaySaleOffer(uint256 offerId) external
+```
+
+### repaySaleOfferPart
+
+```solidity
+function repaySaleOfferPart(uint256 offerId, uint256 amountToRepay) external
+```
+
+### liquidateSaleOffer
+
+```solidity
+function liquidateSaleOffer(uint256 offerId) external
+```
+
+### forfeitSaleOffer
+
+```solidity
+function forfeitSaleOffer(uint256 offerId) external
+```
+
+### changeAddressSale
+
+```solidity
+function changeAddressSale(uint256 offerId, address newAddress, uint8 addressType) external
+```
+
+### createBuyOffer
+
+```solidity
+function createBuyOffer(uint256 buyingTokenAmount, uint8 buyingTokenId, uint256 exchangeRate, uint8 buyingForTokenId, uint8 collateralTokenId, uint256 repayInSeconds, uint256 collateralToDebtRatio, uint256 liquidationRatio) external
+```
+
+### acceptBuyOffer
+
+```solidity
+function acceptBuyOffer(uint256 offerId) external
+```
+
+### cancelBuyOffer
+
+```solidity
+function cancelBuyOffer(uint256 offerId) external
+```
+
+### addCollateralBuyOffer
+
+```solidity
+function addCollateralBuyOffer(uint256 offerId, uint256 amountToAdd) external
+```
+
+### repayBuyOffer
+
+```solidity
+function repayBuyOffer(uint256 offerId) external
+```
+
+### repayBuyOfferPart
+
+```solidity
+function repayBuyOfferPart(uint256 offerId, uint256 amountToRepay) external
+```
+
+### liquidateBuyOffer
+
+```solidity
+function liquidateBuyOffer(uint256 offerId) external
+```
+
+### forfeitBuyOffer
+
+```solidity
+function forfeitBuyOffer(uint256 offerId) external
+```
+
+### changeAddressBuy
+
+```solidity
+function changeAddressBuy(uint256 offerId, address newAddress, uint8 addressType) external
+```
+
 ## SpectrrData
 
 Defines and initializes the data for the SpectrrCore Contract
-
-### DEFAULT_RATIO_LIQUIDATION
-
-```solidity
-uint256 DEFAULT_RATIO_LIQUIDATION
-```
-
-The default collateral to debt ratio allowing a liquidation (1.25)
 
 ### RATIO_LIQUIDATION_IS_LOSS
 
@@ -20,21 +122,13 @@ uint256 RATIO_LIQUIDATION_IS_LOSS
 
 The collateral to debt ratio when the value of the collateral is equal to the value of the debt (1.00)
 
-### DEFAULT_RATIO_COLLATERAL_TO_DEBT
-
-```solidity
-uint256 DEFAULT_RATIO_COLLATERAL_TO_DEBT
-```
-
-The default collateral to debt ratio needed to create an offer (1.50)
-
 ### WEI
 
 ```solidity
 uint256 WEI
 ```
 
-Constant used to multiply numbers by 10e18
+Constant used to multiply numbers by 10^18
 
 ### saleOffersCount
 
@@ -95,7 +189,6 @@ enum OfferLockState {
 struct SaleOffer {
   enum SpectrrData.OfferStatus offerStatus;
   enum SpectrrData.OfferLockState offerLockState;
-  uint256 offerId;
   uint256 selling;
   uint256 sellingFor;
   uint256 collateral;
@@ -106,7 +199,8 @@ struct SaleOffer {
   uint8 sellingId;
   uint8 sellingForId;
   uint8 collateralId;
-  address[2] sellerBuyer;
+  address seller;
+  address buyer;
 }
 ```
 
@@ -116,7 +210,6 @@ struct SaleOffer {
 struct BuyOffer {
   enum SpectrrData.OfferStatus offerStatus;
   enum SpectrrData.OfferLockState offerLockState;
-  uint256 offerId;
   uint256 buying;
   uint256 buyingFor;
   uint256 collateral;
@@ -127,7 +220,8 @@ struct BuyOffer {
   uint8 buyingId;
   uint8 buyingForId;
   uint8 collateralId;
-  address[2] sellerBuyer;
+  address seller;
+  address buyer;
 }
 ```
 
@@ -585,417 +679,21 @@ function changeAddressBuy(uint256 _offerId, address _newAddress, uint8 _addressT
 | _newAddress | address | New address to replace the old one with |
 | _addressType | uint8 | Type of address: 0 for seller address, and 1 for buyer address. |
 
-## SpectrrFiDividendToken
-
-### paymentTokenAddress
+### getSaleOfferFromId
 
 ```solidity
-address paymentTokenAddress
+function getSaleOfferFromId(uint256 _offerId) external view returns (struct SpectrrData.SaleOffer)
 ```
 
-The address of the ERC20 contract in which dividends will be paid in
+Gets data of a sale offer from its Id (e.g. amount selling, seller address...)
 
-### constructor
+### getBuyOfferFromId
 
 ```solidity
-constructor(string _dividendTokenName, string _dividendTokenSymbol, uint256 _dividendTokenSupply, address _paymentTokenAddress, address _SpectrrFiContractAddress) public
+function getBuyOfferFromId(uint256 _offerId) external view returns (struct SpectrrData.BuyOffer)
 ```
 
-_ERC20Dividends constructor
-Mints the initial supply to msg.sender
-Transfers the ownership from msg.sender to the SpectrrFi Contract address, 
-since fees will be generated and distributed by that contract. 
-Sets the address of the ERC20 contract in which dividends will be paid in_
-
-### distributeDividends
-
-```solidity
-function distributeDividends(uint256 _amount) external
-```
-
-Distribute dividends to all SpectrrDividendToken Holders
-
-_OnlyOwner modifier restricts call to only SpectrrFi Contract Address_
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _amount | uint256 | The amount to distribute between SpectrrDividendToken holders |
-
-### collectDividends
-
-```solidity
-function collectDividends(address _account) external
-```
-
-Collect dividends by shareholders
-Dividends of an account can only be withdrawn by SpectrrDividendToken holders
-
-_Token transfer reverts if dividends are 0_
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _account | address | The address on which dividends will be withdrawn |
-
-## AbstractDividends
-
-_Many functions in this contract were taken from this repository:
-https://github.com/atpar/funds-distribution-token/blob/master/contracts/FundsDistributionToken.sol
-which is an example implementation of ERC 2222, the draft for which can be found at
-https://github.com/atpar/funds-distribution-token/blob/master/EIP-DRAFT.md
-
-This contract has been substantially modified from the original and does not comply with ERC 2222.
-Many functions were renamed as "dividends" rather than "funds" and the core functionality was separated
-into this abstract contract which can be inherited by anything tracking ownership of dividend shares._
-
-### POINTS_MULTIPLIER
-
-```solidity
-uint128 POINTS_MULTIPLIER
-```
-
-### pointsPerShare
-
-```solidity
-uint256 pointsPerShare
-```
-
-### pointsCorrection
-
-```solidity
-mapping(address => int256) pointsCorrection
-```
-
-### constructor
-
-```solidity
-constructor(function (address) view returns (uint256) getSharesOf_, function () view returns (uint256) getTotalShares_) internal
-```
-
-### withdrawableDividendsOf
-
-```solidity
-function withdrawableDividendsOf(address account) public view returns (uint256)
-```
-
-_Returns the total amount of dividends a given address is able to withdraw._
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| account | address | Address of a dividend recipient |
-
-#### Return Values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | A uint256 representing the dividends `account` can withdraw |
-
-### withdrawnDividendsOf
-
-```solidity
-function withdrawnDividendsOf(address account) public view returns (uint256)
-```
-
-View the amount of dividends that an address has withdrawn.
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| account | address | The address of a token holder. |
-
-#### Return Values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | The amount of dividends that `account` has withdrawn. |
-
-### cumulativeDividendsOf
-
-```solidity
-function cumulativeDividendsOf(address account) public view returns (uint256)
-```
-
-View the amount of dividends that an address has earned in total.
-
-_accumulativeFundsOf(account) = withdrawableDividendsOf(account) + withdrawnDividendsOf(account)
-= (pointsPerShare * balanceOf(account) + pointsCorrection[account]) / POINTS_MULTIPLIER_
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| account | address | The address of a token holder. |
-
-#### Return Values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | The amount of dividends that `account` has earned in total. |
-
-### _distributeDividends
-
-```solidity
-function _distributeDividends(uint256 amount) internal
-```
-
-Distributes dividends to token holders.
-
-_It reverts if the total supply is 0.
-It emits the `FundsDistributed` event if the amount to distribute is greater than 0.
-About undistributed dividends:
-  In each distribution, there is a small amount which does not get distributed,
-  which is `(amount * POINTS_MULTIPLIER) % totalShares()`.
-  With a well-chosen `POINTS_MULTIPLIER`, the amount of funds that are not getting
-  distributed in a distribution can be less than 1 (base unit)._
-
-### _prepareCollect
-
-```solidity
-function _prepareCollect(address account) internal returns (uint256)
-```
-
-Prepares collection of owed dividends
-
-_It emits a `DividendsWithdrawn` event if the amount of withdrawn dividends is
-greater than 0._
-
-### _correctPointsForTransfer
-
-```solidity
-function _correctPointsForTransfer(address from, address to, uint256 shares) internal
-```
-
-### _correctPoints
-
-```solidity
-function _correctPoints(address account, int256 shares) internal
-```
-
-_Increases or decreases the points correction for `account` by
-`shares*pointsPerShare`._
-
-## ERC20Dividends
-
-### constructor
-
-```solidity
-constructor(string name, string symbol) public
-```
-
-### _transfer
-
-```solidity
-function _transfer(address from, address to, uint96 value) internal virtual
-```
-
-_Internal function that transfer tokens from one address to another.
-Update pointsCorrection to keep funds unchanged._
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| from | address | The address to transfer from. |
-| to | address | The address to transfer to. |
-| value | uint96 | The amount to be transferred. |
-
-### _mint
-
-```solidity
-function _mint(address account, uint256 amount) internal virtual
-```
-
-_Internal function that mints tokens to an account.
-Update pointsCorrection to keep funds unchanged._
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| account | address | The account that will receive the created tokens. |
-| amount | uint256 | The amount that will be created. |
-
-### _burn
-
-```solidity
-function _burn(address account, uint256 amount) internal virtual
-```
-
-_Internal function that burns an amount of the token of a given account.
-Update pointsCorrection to keep funds unchanged._
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| account | address | The account whose tokens will be burnt. |
-| amount | uint256 | The amount that will be burnt. |
-
-## IAbstractDividends
-
-### withdrawableDividendsOf
-
-```solidity
-function withdrawableDividendsOf(address account) external view returns (uint256)
-```
-
-_Returns the total amount of dividends a given address is able to withdraw._
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| account | address | Address of a dividend recipient |
-
-#### Return Values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | A uint256 representing the dividends `account` can withdraw |
-
-### withdrawnDividendsOf
-
-```solidity
-function withdrawnDividendsOf(address account) external view returns (uint256)
-```
-
-_View the amount of funds that an address has withdrawn._
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| account | address | The address of a token holder. |
-
-#### Return Values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | The amount of funds that `account` has withdrawn. |
-
-### cumulativeDividendsOf
-
-```solidity
-function cumulativeDividendsOf(address account) external view returns (uint256)
-```
-
-_View the amount of funds that an address has earned in total.
-accumulativeFundsOf(account) = withdrawableDividendsOf(account) + withdrawnDividendsOf(account)
-= (pointsPerShare * balanceOf(account) + pointsCorrection[account]) / POINTS_MULTIPLIER_
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| account | address | The address of a token holder. |
-
-#### Return Values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | The amount of funds that `account` has earned in total. |
-
-### DividendsDistributed
-
-```solidity
-event DividendsDistributed(address by, uint256 dividendsDistributed)
-```
-
-_This event emits when new funds are distributed_
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| by | address | the address of the sender who distributed funds |
-| dividendsDistributed | uint256 | the amount of funds received for distribution |
-
-### DividendsWithdrawn
-
-```solidity
-event DividendsWithdrawn(address by, uint256 fundsWithdrawn)
-```
-
-_This event emits when distributed funds are withdrawn by a token holder._
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| by | address | the address of the receiver of funds |
-| fundsWithdrawn | uint256 | the amount of funds that were withdrawn |
-
-## IERC20Dividends
-
-### withdrawableDividendsOf
-
-```solidity
-function withdrawableDividendsOf(address owner) external view returns (uint256)
-```
-
-_Returns the total amount of dividends a given address is able to withdraw currently._
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| owner | address | Address of FundsDistributionToken holder |
-
-#### Return Values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | A uint256 representing the available funds for a given account |
-
-### DividendsDistributed
-
-```solidity
-event DividendsDistributed(address by, uint256 dividendsDistributed)
-```
-
-_This event emits when new funds are distributed_
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| by | address | the address of the sender who distributed funds |
-| dividendsDistributed | uint256 | the amount of funds received for distribution |
-
-### DividendsWithdrawn
-
-```solidity
-event DividendsWithdrawn(address by, uint256 fundsWithdrawn)
-```
-
-_This event emits when distributed funds are withdrawn by a token holder._
-
-#### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| by | address | the address of the receiver of funds |
-| fundsWithdrawn | uint256 | the amount of funds that were withdrawn |
-
-## ISpectrrDividendToken
-
-### distributeDividends
-
-```solidity
-function distributeDividends(uint256 amount) external
-```
-
-### collectDividends
-
-```solidity
-function collectDividends(address account) external
-```
+Gets data of a buy offer from its Id (e.g. amount selling, seller address...)
 
 ## SpectrrManager
 
@@ -1033,7 +731,6 @@ _Map of the number of tokens and Token struct_
 ```solidity
 struct Token {
   string name;
-  uint8 id;
   uint8 decimals;
   uint8 chainlinkPriceDecimals;
   address dividendContractAddress;
@@ -1045,7 +742,7 @@ struct Token {
 ### NewTokenAdded
 
 ```solidity
-event NewTokenAdded(uint8 tokenId, string tokenName, address tokenAddress, address dividendTokenContractAddress, address chainlinkOracleAddress)
+event NewTokenAdded(string tokenName, address tokenAddress, address dividendTokenContractAddress, address chainlinkOracleAddress)
 ```
 
 Event emitted when a new token is added
@@ -1097,6 +794,14 @@ Fetches the prices of various currency pairs from Chainlink price feed oracles
 ```solidity
 function getChainlinkPrice(address _chainlinkOracleAddress) public view returns (int256)
 ```
+
+Gets the price of a token from a chainlink oracle address
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _chainlinkOracleAddress | address | The address of the chainlink oracle |
 
 ## SpectrrUtils
 
@@ -1640,141 +1345,31 @@ Checks if offer is closed (i.e. not open or closed), reverts if false
 ### checkMinRatio
 
 ```solidity
-function checkMinRatio(uint256 ratio) internal pure
+function checkMinRatio(uint256 _ratio) internal pure
 ```
 
-### checkIsLessThan
-
-```solidity
-function checkIsLessThan(uint256 _amountTokenWei, uint256 _debt) internal pure
-```
-
-Checks if amount sent is bigger than debt, reverts if true
+Checks if ratio is at least 1.0
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _amountTokenWei | uint256 | The amount to send |
-| _debt | uint256 | The debt owed |
+| _ratio | uint256 | The ratio value to check |
 
-## ISpectrrFi
-
-### createSaleOffer
+### checkIsLessThan
 
 ```solidity
-function createSaleOffer(uint256 sellingTokenAmount, uint8 sellingTokenId, uint256 exchangeRate, uint8 sellingForTokenId, uint256 repayInSeconds, uint256 collateralToDebtRatio, uint256 liquidationRatio) external returns (uint256)
+function checkIsLessThan(uint256 _val1, uint256 _val2) internal pure
 ```
 
-### acceptSaleOffer
+Checks if first value is less than second value
 
-```solidity
-function acceptSaleOffer(uint256 offerId, uint8 collateralTokenId) external
-```
+#### Parameters
 
-### cancelSaleOffer
-
-```solidity
-function cancelSaleOffer(uint256 offerId) external
-```
-
-### addCollateralSaleOffer
-
-```solidity
-function addCollateralSaleOffer(uint256 offerId, uint256 amountToAdd) external
-```
-
-### repaySaleOffer
-
-```solidity
-function repaySaleOffer(uint256 offerId) external
-```
-
-### repaySaleOfferPart
-
-```solidity
-function repaySaleOfferPart(uint256 offerId, uint256 amountToRepay) external
-```
-
-### liquidateSaleOffer
-
-```solidity
-function liquidateSaleOffer(uint256 offerId) external
-```
-
-### forfeitSaleOffer
-
-```solidity
-function forfeitSaleOffer(uint256 offerId) external
-```
-
-### changeAddressSale
-
-```solidity
-function changeAddressSale(uint256 offerId, address newAddress, uint8 addressType) external
-```
-
-### createBuyOffer
-
-```solidity
-function createBuyOffer(uint256 buyingTokenAmount, uint8 buyingTokenId, uint256 exchangeRate, uint8 buyingForTokenId, uint8 collateralTokenId, uint256 repayInSeconds, uint256 collateralToDebtRatio, uint256 liquidationRatio) external
-```
-
-### acceptBuyOffer
-
-```solidity
-function acceptBuyOffer(uint256 offerId) external
-```
-
-### cancelBuyOffer
-
-```solidity
-function cancelBuyOffer(uint256 offerId) external
-```
-
-### addCollateralBuyOffer
-
-```solidity
-function addCollateralBuyOffer(uint256 offerId, uint256 amountToAdd) external
-```
-
-### repayBuyOffer
-
-```solidity
-function repayBuyOffer(uint256 offerId) external
-```
-
-### repayBuyOfferPart
-
-```solidity
-function repayBuyOfferPart(uint256 offerId, uint256 amountToRepay) external
-```
-
-### liquidateBuyOffer
-
-```solidity
-function liquidateBuyOffer(uint256 offerId) external
-```
-
-### forfeitBuyOffer
-
-```solidity
-function forfeitBuyOffer(uint256 offerId) external
-```
-
-### changeAddressBuy
-
-```solidity
-function changeAddressBuy(uint256 offerId, address newAddress, uint8 addressType) external
-```
-
-## Spectrr
-
-### constructor
-
-```solidity
-constructor() public
-```
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _val1 | uint256 | The first value |
+| _val2 | uint256 | The second value |
 
 ## SpectrrPaymentSplitter
 
