@@ -5,7 +5,6 @@ Interest-Free Lending and Borrowing like Decentralised Application.
 ## Motivation
 
 - Provide an alternative to interest based lending and borrowing DApps
-- Buy Bugatti
 
 ## Overview
 
